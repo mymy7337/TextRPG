@@ -34,7 +34,7 @@ namespace TextRPG
             Gold = gold;
         }
 
-        public void DisplayPlayerInfo()
+        public void DisplayPlayerInfo() // 플레이어 상태 정보 표시
         {
             Console.WriteLine("상태보기");
             Console.WriteLine("플레이어의 정보가 표시됩니다.");
@@ -47,8 +47,8 @@ namespace TextRPG
             Console.WriteLine($"Gold : {Gold}");
         }
 
-        // 매개변수의 수치 만큼 회복
-        public void Heal(int amount)
+        
+        public void Heal(int amount) // 매개변수의 수치 만큼 회복
         {
             if (amount <= 0)
             {
@@ -58,14 +58,14 @@ namespace TextRPG
             {
                 Hp += amount;
             }
-            if (Hp < 0)
+            if (Hp > MaxHp) // hp가 최대hp을 넘지 않는다.
             {
-                Hp = 0;
+                Hp = MaxHp;
             }
         }
         
-        //데미지를 받으면 hp 감소
-        public void TakeDamage(int amount)
+        
+        public void TakeDamage(int amount) //데미지를 받으면 hp 감소
         {
             int finalDamage = amount - Def; //플레이어의 방어력 만큼 데미지 감소
 
