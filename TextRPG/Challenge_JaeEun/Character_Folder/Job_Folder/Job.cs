@@ -16,4 +16,5 @@ namespace TextRPG.Challenge_JaeEun.Character.Job_Folder
 
 
     }
+
 }
