@@ -13,5 +13,9 @@ namespace TextRPG
         public string Name { get; set; }
         public string Atk { get; set; }
 
+        public Monster() 
+        { 
+        
+        }
     }
 }
