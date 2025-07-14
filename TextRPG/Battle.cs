@@ -12,22 +12,35 @@ namespace TextRPG
     internal class Battle
     {
         Random random = new Random();
+        Player player = new Player();
 
         bool isWrong;
-        bool isMade;
         int choice;
         string message;
+        int deadCount;
+        int currentHp;
 
         public Battle()
         {
-            SpawnMonster();
-            StartUI();
+            StartUI(player);
         }
 
-        void StartUI()
+        void StartUI(Player player)
         {
-            Player player = new Player();
-            
+            currentHp = player.hp;
+            if(monsterSpanwed.Count == 0)
+            {
+                SpawnMonster();
+            }
+            deadCount = 0;
+            for (int i = 0; i < monsterSpanwed.Count; i++)
+            {
+                if (monsterSpanwed[i].hp <= 0)
+                    deadCount++;
+            }
+            if (deadCount == monsterSpanwed.Count)
+                result(player);
+
             while (true)
             {
                 Monster monster;
@@ -38,7 +51,8 @@ namespace TextRPG
                 for (int i = 0; i < monsterSpanwed.Count; i++)
                 {
                     monster = monsterSpanwed[i];
-                    Console.WriteLine($"Lv.{monster.level:D2} {monster.name} HP {monster.hp}");
+                    string hpMessage = (monster.hp <= 0) ? "Dead" : $"HP {monster.hp}";
+                    Console.WriteLine($"Lv.{monster.level:D2} {monster.name} {hpMessage}");
                 }
                 Console.WriteLine();
                 Console.WriteLine();
@@ -66,6 +80,15 @@ namespace TextRPG
 
         void AttackUI(Player player)
         {
+            deadCount = 0;
+            for(int i = 0; i < monsterSpanwed.Count; i++)
+            {
+                if (monsterSpanwed[i].hp <= 0)
+                    deadCount++;
+            }
+            if (deadCount == monsterSpanwed.Count)
+                result(player);
+
             while (true)
             {
                 Console.Clear();
@@ -79,6 +102,8 @@ namespace TextRPG
                 }
                 Console.WriteLine();
                 Console.WriteLine("[내정보]");
+                Console.WriteLine($"Lv.{player.level:D2} {player.name} ({player.job})");
+                Console.WriteLine($"HP {player.hp}/100");
                 //플레이어 정보
                 Console.WriteLine();
                 Console.WriteLine("0. 취소");
@@ -94,7 +119,7 @@ namespace TextRPG
             switch(choice)
             {
                 case 0:
-                    StartUI();
+                    StartUI(player);
                     break;
                 case 1:
                     if (monsterSpanwed[0].hp <= 0)
@@ -167,17 +192,73 @@ namespace TextRPG
             Console.WriteLine($"Lv.{player.level:D2}{player.name}");
             Console.Write($"HP {player.hp} -> ");
             player.hp -= atkDamage;
+            if(player.hp <=0)
+                player.hp = 0;
             Console.WriteLine(player.hp);
             Console.WriteLine();
             Console.WriteLine("다음");
             Console.Write(">>");
             Console.ReadLine();
-            AttackUI(player);
+            if(player.hp <= 0)
+                result(player);
+            else
+                AttackUI(player);
         }
 
-        void result()
+        void result(Player player)
         {
+            Console.Clear();
+            Console.WriteLine("Battle!! - Result");
+            Console.WriteLine();
+            if(player.hp > 0)
+            {
+                while (true)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Victory");
+                    Console.WriteLine();
+                    Console.WriteLine($"던전에서 몬스터를 {monsterSpanwed.Count}마리를 잡았습니다.");
+                    Console.WriteLine();
+                    Console.WriteLine($"Lv{player.level:D2} {player.name}");
+                    Console.WriteLine($"HP {currentHp}-> {player.hp}");
+                    Console.WriteLine();
+                    Console.WriteLine("1. 던전 탐사\n0. 마을");
+                    Console.WriteLine();
+                    message = (isWrong == true) ? "잘못된 입력입니다." : "원하시는 행동을 입력해주세요.";
+                    Console.WriteLine(message);
+                    Console.Write(">>");
+                    for(int i = monsterSpanwed.Count-1; i >= 0;i--)
+                    {
+                        monsterSpanwed.RemoveAt(i);
+                    }
+                    isWrong = ChoiceCheck(0, 1);
 
+                    switch (choice)
+                    {
+                        case 0:
+
+                            break;
+                        case 1:
+                            StartUI(player);
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("You Lose");
+                Console.WriteLine();
+                Console.WriteLine($"Lv{player.level:D2} {player.name}");
+                Console.WriteLine($"HP  -> 0");
+                Console.WriteLine();
+                Console.WriteLine("다음");
+                Console.WriteLine(">>");
+                for (int i = monsterSpanwed.Count - 1; i >= 0; i--)
+                {
+                    monsterSpanwed.RemoveAt(i);
+                }
+                Console.ReadLine();
+            }
         }
 
         class Player()
