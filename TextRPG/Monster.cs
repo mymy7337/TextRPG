@@ -13,9 +13,11 @@ namespace TextRPG
         public string Name { get; set; }
         public int Atk { get; set; }
 
-        public Monster() 
+        public Monster(int level, string name, int atk) 
         { 
-        
+            Level = level;
+            Name = name;
+            Atk = atk;
         }
     }
 }
