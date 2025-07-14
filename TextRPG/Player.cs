@@ -71,6 +71,10 @@ namespace TextRPG
             {
                 Hp -= finalDamage;
             }
+            if (Hp < 0) // hp가 0 이하가 되지 않게 설정
+            {
+                Hp = 0;
+            }
         }
     }
 }
