@@ -24,7 +24,7 @@ namespace TextRPG
 
         public void DisplayMonsterInfo()
         {
-
+            Console.WriteLine($"Lv.{Level} {Name} HP {Hp}");
         }
     }
 }
