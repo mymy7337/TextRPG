@@ -44,5 +44,10 @@ namespace TextRPG
             Console.WriteLine($"체 력 : {Hp}");
             Console.WriteLine($"Gold : {Gold}");
         }
+
+        public void Heal(int amount)
+        {
+            
+        }
     }
 }
