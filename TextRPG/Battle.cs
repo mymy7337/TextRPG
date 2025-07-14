@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace TextRPG
 {
-    internal class FightScene
+    internal class Battle
     {
+        public Battle()
+        {
+
+        }
     }
 }
