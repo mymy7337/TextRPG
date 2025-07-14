@@ -19,5 +19,10 @@ namespace TextRPG
             Name = name;
             Atk = atk;
         }
+
+        public void DisplayMonsterInfo()
+        {
+
+        }
     }
 }
