@@ -11,7 +11,7 @@ namespace TextRPG
         //몬스터 필드 설정
         public int Level { get; set; }
         public string Name { get; set; }
-        public string Atk { get; set; }
+        public int Atk { get; set; }
 
         public Monster() 
         { 
