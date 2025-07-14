@@ -56,7 +56,21 @@ namespace TextRPG
             {
                 Hp += amount;
             }
+        }
+        
+        //데미지를 받으면 hp 감소
+        public void TakeDamage(int amount)
+        {
+            int finalDamage = amount - Def; //플레이어의 방어력 만큼 데미지 감소
 
+            if(finalDamage  <= 0)
+            {
+                return;
+            }
+            else
+            {
+                Hp -= finalDamage;
+            }
         }
     }
 }
