@@ -9,6 +9,14 @@ using System.Threading.Tasks;
 
 namespace TextRPG
 {
+    public class Player
+    {
+        public int level = 1;
+        public string name = "Chad";
+        public string job = "전사";
+        public int hp = 100;
+        public int atk = 10;
+    }
     internal class Battle
     {
         Random random = new Random();
@@ -20,12 +28,8 @@ namespace TextRPG
         int deadCount;
         int currentHp;
 
-        public Battle()
-        {
-            StartUI(player);
-        }
-
-        void StartUI(Player player)
+        
+        public void StartUI(Player player)
         {
             currentHp = player.hp;
             if(monsterSpanwed.Count == 0)
@@ -261,14 +265,7 @@ namespace TextRPG
             }
         }
 
-        class Player()
-        {
-            public int level = 1;
-            public string name = "Chad";
-            public string job = "전사";
-            public int hp = 100;
-            public int atk = 10;
-        }
+        
 
         public class Monster()
         {
