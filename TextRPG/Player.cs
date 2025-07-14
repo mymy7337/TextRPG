@@ -45,9 +45,18 @@ namespace TextRPG
             Console.WriteLine($"Gold : {Gold}");
         }
 
+        // 매개변수의 수치 만큼 회복
         public void Heal(int amount)
         {
-            
+            if (amount <= 0)
+            {
+                return;
+            }
+            else
+            {
+                Hp += amount;
+            }
+
         }
     }
 }
