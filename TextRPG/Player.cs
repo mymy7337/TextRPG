@@ -18,5 +18,17 @@ namespace TextRPG
         public int Gold { get; private set; }
         public int ExtraAtk { get; private set; } // 추가공격력
         public int ExtraDef { get; private set; } // 추가방어력
+
+        // 
+        public Player(int level, string name, string job, int atk, int def, int hp, int gold)
+        {
+            Level = level;
+            Name = name;
+            Job = job;
+            Atk = atk;
+            Def = def;
+            Hp = hp;
+            Gold = gold;
+        }
     }
 }
