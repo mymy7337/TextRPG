@@ -16,19 +16,21 @@ namespace TextRPG
         public int Atk { get; set; }
         public int Def { get; set; }
         public int Hp { get; set; }
+        public int MaxHp { get; set; } // 최대체력: 오버힐 방지에 필요
         public int Gold { get; private set; }
         public int ExtraAtk { get; private set; } // 추가공격력
         public int ExtraDef { get; private set; } // 추가방어력
 
         // 
-        public Player(int level, string name, string job, int atk, int def, int hp, int gold)
+        public Player(int level, string name, string job, int atk, int def, int maxHp, int gold)
         {
             Level = level;
             Name = name;
             Job = job;
             Atk = atk;
             Def = def;
-            Hp = hp;
+            Hp = maxHp; // 체력 초기값은 최대체력
+            MaxHp = maxHp; 
             Gold = gold;
         }
 
@@ -55,6 +57,10 @@ namespace TextRPG
             else
             {
                 Hp += amount;
+            }
+            if (Hp < 0)
+            {
+                Hp = 0;
             }
         }
         
