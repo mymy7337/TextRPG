@@ -22,6 +22,7 @@ namespace TextRPG
             Hp = hp;
         }
 
+        //몬스터 상태 정보 표시
         public void DisplayMonsterInfo()
         {
             Console.WriteLine($"Lv.{Level} {Name} HP {Hp}");
