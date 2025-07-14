@@ -4,12 +4,12 @@ namespace TextRPG;
 
 public class Equipment
 {
-    public string EquipName { get; set; }
-    public string EquipScript { get; set; }
-    public int EquipAttack { get; set; }
-    public int EquipDefense { get; set; }
+    public string ItemName { get; set; }
+    public string ItemScript { get; set; }
+    public int ItemAttack { get; set; }
+    public int ItemDefense { get; set; }
     public int Price { get; set; } 
-    public ItemType EquipType { get; set; }
+    public ItemType IType { get; set; }
 
     public enum ItemType
     {
@@ -17,14 +17,14 @@ public class Equipment
         Shop,
     }
 
-    public Equipment(string equipName, string equipScript, int equipAttack, int equipDefense, int price, ItemType equiptype)
+    public Equipment(string itemName, string itemScript, int itemAttack, int itemDefense, int price, ItemType iType)
     {
-        EquipName = equipName;
-        EquipScript = equipScript;
-        EquipAttack = equipAttack;
-        EquipDefense = equipDefense;
+        ItemName = itemName;
+        ItemScript = itemScript;
+        ItemAttack = itemAttack;
+        ItemDefense = itemDefense;
         Price = price;
-        EquipType = equiptype;
+        IType = iType;
     }
     public static List<Equipment> equipments = new List<Equipment>
     {
