@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextRPG.Challenge_JaeEun.Character.Job
+namespace TextRPG.Challenge_JaeEun.Character.Job_Folder
 {
-    public class Warrior : CharacterJob
+    public class Warrior : Job
     {
         public Warrior()
         {

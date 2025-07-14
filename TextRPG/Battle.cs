@@ -8,5 +8,8 @@ namespace TextRPG
 {
     internal class FightScene
     {
+
+
+
     }
 }

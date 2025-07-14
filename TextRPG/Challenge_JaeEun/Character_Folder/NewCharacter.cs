@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TextRPG.Challenge_JaeEun.Character.Job;
+using TextRPG.Challenge_JaeEun.Character.Job_Folder;
+
 
 namespace TextRPG.Challenge_JaeEun.Character
 {
     public class NewCharacter
     {
         public string Name;
-        public CharacterJob SelectedJob;
+        public Job SelectedJob;
 
-        public NewCharacter(string name, CharacterJob job)
+        public NewCharacter(string name, Job job)
         {
             Name = name;
             SelectedJob = job;

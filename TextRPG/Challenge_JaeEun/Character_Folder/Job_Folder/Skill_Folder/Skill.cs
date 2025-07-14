@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextRPG.Challenge_JaeEun.Character.Job
+namespace TextRPG.Challenge_JaeEun.Character.Job_Folder.Skill_Folder
 {
     public class Skill
     {

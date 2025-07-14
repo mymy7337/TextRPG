@@ -1,10 +1,50 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Workspace\\TextRPG\\",
+  "WorkspaceRootPath": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|d:\\workspace\\textrpg\\textrpg\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|c:\\users\\jean\\desktop\\team_sparta\\git_projects\\textrpg\\textrpg\\challenge_jaeeun\\character_folder\\newcharacter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|solutionrelative:textrpg\\challenge_jaeeun\\character_folder\\newcharacter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|c:\\users\\jean\\desktop\\team_sparta\\git_projects\\textrpg\\textrpg\\challenge_jaeeun\\character_folder\\job_folder\\warrior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|solutionrelative:textrpg\\challenge_jaeeun\\character_folder\\job_folder\\warrior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|c:\\users\\jean\\desktop\\team_sparta\\git_projects\\textrpg\\textrpg\\challenge_jaeeun\\character_folder\\job_folder\\job.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|solutionrelative:textrpg\\challenge_jaeeun\\character_folder\\job_folder\\job.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|c:\\users\\jean\\desktop\\team_sparta\\git_projects\\textrpg\\textrpg\\challenge_jaeeun\\character_folder\\job_folder\\mage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|solutionrelative:textrpg\\challenge_jaeeun\\character_folder\\job_folder\\mage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|c:\\users\\jean\\desktop\\team_sparta\\git_projects\\textrpg\\textrpg\\challenge_jaeeun\\character_folder\\job_folder\\skill_folder\\skill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|solutionrelative:textrpg\\challenge_jaeeun\\character_folder\\job_folder\\skill_folder\\skill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|c:\\users\\jean\\desktop\\team_sparta\\git_projects\\textrpg\\textrpg\\challenge_jaeeun\\character_folder\\job_folder\\archer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|solutionrelative:textrpg\\challenge_jaeeun\\character_folder\\job_folder\\archer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|c:\\users\\jean\\desktop\\team_sparta\\git_projects\\textrpg\\textrpg\\equipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|solutionrelative:textrpg\\equipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|c:\\users\\jean\\desktop\\team_sparta\\git_projects\\textrpg\\textrpg\\battle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|solutionrelative:textrpg\\battle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|c:\\users\\jean\\desktop\\team_sparta\\git_projects\\textrpg\\textrpg\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|solutionrelative:textrpg\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|c:\\users\\jean\\desktop\\team_sparta\\git_projects\\textrpg\\textrpg\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|solutionrelative:textrpg\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|c:\\users\\jean\\desktop\\team_sparta\\git_projects\\textrpg\\textrpg\\textrpg.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{82654E70-D36A-4ADB-B5E4-4ED4FEA20702}|TextRPG\\TextRPG.csproj|solutionrelative:textrpg\\textrpg.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,21 +54,151 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Skill.cs",
+              "DocumentMoniker": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Skill_Folder\\Skill.cs",
+              "RelativeDocumentMoniker": "TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Skill_Folder\\Skill.cs",
+              "ToolTip": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Skill_Folder\\Skill.cs",
+              "RelativeToolTip": "TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Skill_Folder\\Skill.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwoAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-14T13:42:11.614Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Job.cs",
+              "DocumentMoniker": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Job.cs",
+              "RelativeDocumentMoniker": "TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Job.cs",
+              "ToolTip": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Job.cs",
+              "RelativeToolTip": "TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Job.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-14T13:32:15.093Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "NewCharacter.cs",
+              "DocumentMoniker": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Challenge_JaeEun\\Character_Folder\\NewCharacter.cs",
+              "RelativeDocumentMoniker": "TextRPG\\Challenge_JaeEun\\Character_Folder\\NewCharacter.cs",
+              "ToolTip": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Challenge_JaeEun\\Character_Folder\\NewCharacter.cs",
+              "RelativeToolTip": "TextRPG\\Challenge_JaeEun\\Character_Folder\\NewCharacter.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-14T13:31:55.535Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Warrior.cs",
+              "DocumentMoniker": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Warrior.cs",
+              "RelativeDocumentMoniker": "TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Warrior.cs",
+              "ToolTip": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Warrior.cs",
+              "RelativeToolTip": "TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Warrior.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwkAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-14T13:31:48.629Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Mage.cs",
+              "DocumentMoniker": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Mage.cs",
+              "RelativeDocumentMoniker": "TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Mage.cs",
+              "ToolTip": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Mage.cs",
+              "RelativeToolTip": "TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Mage.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwoAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-14T13:31:45.962Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Archer.cs",
+              "DocumentMoniker": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Archer.cs",
+              "RelativeDocumentMoniker": "TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Archer.cs",
+              "ToolTip": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Archer.cs",
+              "RelativeToolTip": "TextRPG\\Challenge_JaeEun\\Character_Folder\\Job_Folder\\Archer.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwYAAAA3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-14T13:31:41.4Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "TextRPG",
+              "DocumentMoniker": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\TextRPG.csproj",
+              "RelativeDocumentMoniker": "TextRPG\\TextRPG.csproj",
+              "ToolTip": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\TextRPG.csproj*",
+              "RelativeToolTip": "TextRPG\\TextRPG.csproj*",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-07-14T11:02:42.923Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 8,
+              "Title": "Player.cs",
+              "DocumentMoniker": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Player.cs",
+              "RelativeDocumentMoniker": "TextRPG\\Player.cs",
+              "ToolTip": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Player.cs",
+              "RelativeToolTip": "TextRPG\\Player.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-14T11:02:34.563Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Equipment.cs",
+              "DocumentMoniker": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Equipment.cs",
+              "RelativeDocumentMoniker": "TextRPG\\Equipment.cs",
+              "ToolTip": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Equipment.cs",
+              "RelativeToolTip": "TextRPG\\Equipment.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-14T11:02:34.134Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Battle.cs",
+              "DocumentMoniker": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Battle.cs",
+              "RelativeDocumentMoniker": "TextRPG\\Battle.cs",
+              "ToolTip": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Battle.cs",
+              "RelativeToolTip": "TextRPG\\Battle.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-14T11:02:33.582Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Workspace\\TextRPG\\TextRPG\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Program.cs",
               "RelativeDocumentMoniker": "TextRPG\\Program.cs",
-              "ToolTip": "D:\\Workspace\\TextRPG\\TextRPG\\Program.cs",
+              "ToolTip": "C:\\Users\\Jean\\Desktop\\Team_Sparta\\Git_Projects\\TextRPG\\TextRPG\\Program.cs",
               "RelativeToolTip": "TextRPG\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-14T01:56:29.904Z",
               "EditorCaption": ""
