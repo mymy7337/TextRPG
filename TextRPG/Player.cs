@@ -34,7 +34,15 @@ namespace TextRPG
 
         public void DisplayPlayerInfo()
         {
-
+            Console.WriteLine("상태보기");
+            Console.WriteLine("플레이어의 정보가 표시됩니다.");
+            Console.WriteLine();
+            Console.WriteLine($"Lv.{Level:D2}");
+            Console.WriteLine($"{Name} ({Job})");
+            Console.WriteLine($"공격력 : {Atk}");
+            Console.WriteLine($"방어력 : {Def}");
+            Console.WriteLine($"체 력 : {Hp}");
+            Console.WriteLine($"Gold : {Gold}");
         }
     }
 }
