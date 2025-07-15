@@ -76,7 +76,8 @@ namespace TextRPG
         public void Attack(Monster target) // 플레이어의 공격 행동
         {
             Console.WriteLine($"{Name} 의 공격!");
-            Console.WriteLine($"Lv.{target.Level} {target.Name} 을(를) 맞췄습니다. [데미지 : {target.Atk}");
+            
+            Console.WriteLine($"Lv.{target.Level} {target.Name} 을(를) 맞췄습니다. [데미지 : {Atk}");
         }
 
         public void Heal(int amount) // 매개변수의 수치 만큼 회복
