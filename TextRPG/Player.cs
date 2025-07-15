@@ -131,7 +131,7 @@ namespace TextRPG
             }
         }
 
-        public void EquipItem(bool item) // 아이템 장착 기능 
+        public void EquipItem(Item item) // 아이템 장착 기능 
         {
             if (IsEquipped(item))
             {
