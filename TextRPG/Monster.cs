@@ -58,5 +58,11 @@ namespace TextRPG
             string nowHp = Hp <= 0 ? "Dead" : Hp.ToString(); // hp가 0 이하면 Dead 표시
             Console.WriteLine($"Hp {Hp} -> {nowHp}");
         }
+
+        public void Attack(Player target) // 몬스터의 공격 행동
+        {
+            Console.WriteLine($"{Name} 의 공격!");
+            Console.WriteLine($"Lv.{target.Level} {target.Name} 을(를) 맞췄습니다. [데미지 : {target.Atk}");
+        }
     }
 }
