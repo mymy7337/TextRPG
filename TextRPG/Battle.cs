@@ -20,7 +20,7 @@ namespace TextRPG
     internal class Battle
     {
         Random random = new Random();
-        Player player = new Player();
+        PlayerTest player = new PlayerTest();
 
         bool isWrong;
         int choice;
