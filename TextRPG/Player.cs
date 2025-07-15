@@ -23,8 +23,8 @@ namespace TextRPG
         public int ExtraDef { get; private set; } // 추가방어력
 
         //인벤토리 공간
-        List<int>Inventory = new List<int>(); // develop 브랜치에 머지 전에 int -> item으로 변경
-        List<int>EquipList = new List<int>(); // int -> item
+        List<Item>Inventory = new List<Item>(); // develop 브랜치에 머지 전에 int -> item으로 변경
+        List<Item>EquipList = new List<Item>(); // int -> item
 
         public int InventoryCount // 인벤토리 아이템 갯수
             {
@@ -105,7 +105,7 @@ namespace TextRPG
             }
             for (int i = 0; i < Inventory.Count; i++)
             {
-                int targetItem = Inventory[i]; //int -> item 으로 변경 필요 
+                Item targetItem = Inventory[i]; //int -> item 으로 변경 필요 
                 string displayIdx = showIdx ? $"{i + 1} " : "";
                 string displayEquipped = IsEquipped(targetItem) ? "[E]" : "";
                 Console.WriteLine($"- {displayIdx}{displayEquipped} {targetItem.ItemInfoText()}"); // - 아이템 번호 [E] 아이템 정보
