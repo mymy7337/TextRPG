@@ -22,6 +22,8 @@ namespace TextRPG
         public int ExtraAtk { get; private set; } // 추가공격력
         public int ExtraDef { get; private set; } // 추가방어력
 
+        Random rand = new Random(); // 난수 생성(공격력 및 여러 난수) 
+
         //인벤토리 공간
         List<Item>Inventory = new List<Item>(); 
         List<Item>EquipList = new List<Item>(); 
@@ -76,8 +78,11 @@ namespace TextRPG
         public void Attack(Monster target) // 플레이어의 공격 행동
         {
             Console.WriteLine($"{Name} 의 공격!");
-            
-            Console.WriteLine($"Lv.{target.Level} {target.Name} 을(를) 맞췄습니다. [데미지 : {Atk}");
+
+            // 공격 시 공격력은 +- 10%의 오차를 가진다
+            double errorRate = rand.NextDouble() * 0.2 + 0.9; // 공격력 오차 0.9~1.1
+            int finalAtk = (int)Math.Ceiling(Atk * errorRate);
+            Console.WriteLine($"Lv.{target.Level} {target.Name} 을(를) 맞췄습니다. [데미지 : {finalAtk}");
         }
 
         public void Heal(int amount) // 매개변수의 수치 만큼 회복
@@ -124,14 +129,14 @@ namespace TextRPG
             }
             for (int i = 0; i < Inventory.Count; i++)
             {
-                Item targetItem = Inventory[i]; //int -> item 으로 변경 필요 
+                Item targetItem = Inventory[i]; 
                 string displayIdx = showIdx ? $"{i + 1} " : "";
                 string displayEquipped = IsEquipped(targetItem) ? "[E]" : "";
                 Console.WriteLine($"- {displayIdx}{displayEquipped} {targetItem.ItemInfoText()}"); // - 아이템 번호 [E] 아이템 정보
             }
         }
 
-        public void EquipItem(bool item) // 아이템 장착 기능 
+        public void EquipItem(Item item) // 아이템 장착 기능 
         {
             if (IsEquipped(item))
             {
@@ -143,15 +148,14 @@ namespace TextRPG
             }
         }
 
-        public void IsEquipped(bool item) // 아이템 장착 여부 판단
+        public bool IsEquipped(Item item) // 아이템 장착 여부 판단
         {
             return EquipList.Contains(item);
         }
 
-        public void HasItem(bool item) // 아이템 소지 여부 판단
+        public bool HasItem(Item item) // 아이템 소지 여부 판단
         {
             return Inventory.Contains(item);
         }
-
     }
 }
