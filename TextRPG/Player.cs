@@ -18,8 +18,10 @@ namespace TextRPG
         public int Hp { get; set; }
         public int MaxHp { get; set; } // 최대체력: 오버힐 방지에 필요
         public int Gold { get; private set; }
+
         public int ExtraAtk { get; private set; } // 추가공격력
         public int ExtraDef { get; private set; } // 추가방어력
+
 
         // 
         public Player(int level, string name, string job, int atk, int def, int maxHp, int gold)
