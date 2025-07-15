@@ -25,6 +25,14 @@ namespace TextRPG
         //인벤토리 공간
         List<int>Inventory = new List<int>();
 
+        public int InventoryCount // 인벤토리 아이템 갯수
+            {
+            get
+                {
+                    return Inventory.Count;
+                }
+            }
+
         // 
         public Player(int level, string name, string job, int atk, int def, int maxHp, int gold)
         {
