@@ -143,15 +143,14 @@ namespace TextRPG
             }
         }
 
-        public bool IsEquipped(bool item) // 아이템 장착 여부 판단
+        public bool IsEquipped(Item item) // 아이템 장착 여부 판단
         {
             return EquipList.Contains(item);
         }
 
-        public bool HasItem(bool item) // 아이템 소지 여부 판단
+        public bool HasItem(Item item) // 아이템 소지 여부 판단
         {
             return Inventory.Contains(item);
         }
-
     }
 }
