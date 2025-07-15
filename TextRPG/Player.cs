@@ -148,7 +148,7 @@ namespace TextRPG
             return EquipList.Contains(item);
         }
 
-        public void HasItem(bool item) // 아이템 소지 여부 판단
+        public bool HasItem(bool item) // 아이템 소지 여부 판단
         {
             return Inventory.Contains(item);
         }
