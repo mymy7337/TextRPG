@@ -15,14 +15,14 @@ namespace TextRPG
         public int Hp { get; set; }
         public int MaxHp { get; set; }
 
-        public Monster(int level, string name, int atk, int maxHp) 
-        { 
-            Level = level;
-            Name = name;
-            Atk = atk;
-            Hp = maxHp;
-            MaxHp = maxHp;
-        }
+        //public Monster(int level, string name, int atk, int maxHp) 
+        //{ 
+        //    Level = level;
+        //    Name = name;
+        //    Atk = atk;
+        //    Hp = maxHp;
+        //    MaxHp = maxHp;
+        //}
 
         public void DisplayMonsterInfo() //몬스터 상태 정보 표시
         {
