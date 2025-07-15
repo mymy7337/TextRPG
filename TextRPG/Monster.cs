@@ -13,13 +13,15 @@ namespace TextRPG
         public string Name { get; set; }
         public int Atk { get; set; }
         public int Hp { get; set; }
+        public int MaxHp { get; set; }
 
-        public Monster(int level, string name, int atk, int hp) 
+        public Monster(int level, string name, int atk, int maxHp) 
         { 
             Level = level;
             Name = name;
             Atk = atk;
-            Hp = hp;
+            Hp = maxHp;
+            MaxHp = maxHp;
         }
 
         
