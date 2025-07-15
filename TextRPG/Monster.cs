@@ -45,5 +45,11 @@ namespace TextRPG
                 Hp = 0;
             }
         }
+
+        public void DisplayBattleInfo() // 전투 시작 전 몬스터 정보
+        {
+            Console.WriteLine($"Lv. {Level} {Name}");
+            Console.WriteLine($"Hp {Hp}/{MaxHp}");
+        }
     }
 }
