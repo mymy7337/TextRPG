@@ -111,5 +111,10 @@ namespace TextRPG
                 Console.WriteLine($"- {displayIdx}{displayEquipped} {targetItem.ItemInfoText()}");
             }
         }
+
+        public void IsEquipped(bool item) // 장비 장착 여부 판단
+        {
+            return EquipList.Contains(item);
+        }
     }
 }
