@@ -23,7 +23,7 @@ namespace TextRPG
         public int ExtraDef { get; private set; } // 추가방어력
 
         //인벤토리 공간
-        List<int>Inventory = new List<int>();
+        List<int>Inventory = new List<int>(); // develop 브랜치에 머지 후 int -> item으로 변경
 
         public int InventoryCount // 인벤토리 아이템 갯수
             {
