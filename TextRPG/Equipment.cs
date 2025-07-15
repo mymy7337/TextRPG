@@ -1,12 +1,12 @@
+using System.Collections.Generic;
+
 namespace TextRPG;
 
-public class Equipment
+public class Equipment : Item
 {
-    public string EquipName { get; set; }
-    public string EquipScript { get; set; }
-    public int EquipAttack { get; set; }
-    public int EquipDefense { get; set; }
-    public ItemType EquipType { get; set; }
+    public int ItemAttack { get; set; }
+    public int ItemDefense { get; set; }
+    public ItemType IType { get; set; }
 
     public enum ItemType
     {
@@ -14,17 +14,17 @@ public class Equipment
         Shop,
     }
 
-    public Equipment(string equipName, string equipScript, int equipAttack, int equipDefense, ItemType equiptype)
+    public Equipment(string itemName, string itemScript, int itemAttack, int itemDefense, int price, ItemType iType)
+        : base(itemName, itemScript, price)
     {
-        EquipName = equipName;
-        EquipScript = equipScript;
-        EquipAttack = equipAttack;
-        EquipDefense = equipDefense;
-        EquipType = equiptype;
+        ItemAttack = itemAttack;
+        ItemDefense = itemDefense;
+        IType = iType;
     }
-    private List<Equipment> equipments = new List<Equipment>
+
+    public static List<Equipment> Items = new List<Equipment>
     {
-        new Equipment("이름","어떤 아이템이다", 2, 3, Equipment.ItemType.Shop),
-        new Equipment("이름2", "어떤 아이템일까", 4, 5, ItemType.Drop)
+        new Equipment("이름", "어떤 아이템이다", 2, 3, 10, ItemType.Shop),
+        new Equipment("이름2", "어떤 아이템일까", 4, 5, 10, ItemType.Drop)
     };
 }
