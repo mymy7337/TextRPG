@@ -96,7 +96,7 @@ namespace TextRPG
             }
         }
 
-        public void DisplayInventory(bool showIdx)
+        public void DisplayInventory(bool showIdx) // 인벤토리 리스트(장착여부 및 번호표시 유무 설정)
         {
             if(Inventory.Count == 0)
             {
