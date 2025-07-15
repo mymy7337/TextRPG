@@ -23,8 +23,8 @@ namespace TextRPG
         public int ExtraDef { get; private set; } // 추가방어력
 
         //인벤토리 공간
-        List<Item>Inventory = new List<Item>(); // develop 브랜치에 머지 전에 int -> item으로 변경
-        List<Item>EquipList = new List<Item>(); // int -> item
+        List<Item>Inventory = new List<Item>(); 
+        List<Item>EquipList = new List<Item>(); 
 
         public int InventoryCount // 인벤토리 아이템 갯수
             {
@@ -117,7 +117,7 @@ namespace TextRPG
             }
         }
 
-        public void EquipItem(bool item) // 아이템 장착 기능 //bool -> Item
+        public void EquipItem(bool item) // 아이템 장착 기능 
         {
             if (IsEquipped(item))
             {
@@ -133,12 +133,12 @@ namespace TextRPG
         public void IsEquipped(bool item) // 아이템 장착 여부 판단
         {
             return EquipList.Contains(item);
-        }//bool -> Item
+        }
 
         public void HasItem(bool item) // 아이템 소지 여부 판단
         {
             return Inventory.Contains(item);
-        }//bool -> Item
+        }
 
     }
 }
