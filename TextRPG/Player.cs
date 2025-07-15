@@ -124,7 +124,7 @@ namespace TextRPG
             }
             for (int i = 0; i < Inventory.Count; i++)
             {
-                Item targetItem = Inventory[i]; //int -> item 으로 변경 필요 
+                Item targetItem = Inventory[i]; 
                 string displayIdx = showIdx ? $"{i + 1} " : "";
                 string displayEquipped = IsEquipped(targetItem) ? "[E]" : "";
                 Console.WriteLine($"- {displayIdx}{displayEquipped} {targetItem.ItemInfoText()}"); // - 아이템 번호 [E] 아이템 정보
