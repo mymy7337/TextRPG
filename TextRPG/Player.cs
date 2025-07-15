@@ -112,6 +112,19 @@ namespace TextRPG
             }
         }
 
+        public void EquipItem(bool item) // 아이템 장착 기능 //bool -> Item
+        {
+            if (IsEquipped(item))
+            {
+                EquipList.Remove(item);
+            }
+            else
+            {
+                EquipList.Add(item);
+            }
+        }
+
+
         public void IsEquipped(bool item) // 아이템 장착 여부 판단
         {
             return EquipList.Contains(item);
