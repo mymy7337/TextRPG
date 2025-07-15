@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG
 {
-    internal class Battle
+    internal class Item
     {
-        public Battle()
-        {
-
-        }
     }
 }
