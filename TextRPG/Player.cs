@@ -81,8 +81,8 @@ namespace TextRPG
 
             // 공격 시 공격력은 +- 10%의 오차를 가진다
             double errorRate = rand.NextDouble() * 0.2 + 0.9; // 공격력 오차 0.9~1.1
-            int finalDamage = (int)Math.Ceiling(Atk * errorRate);
-            Console.WriteLine($"Lv.{target.Level} {target.Name} 을(를) 맞췄습니다. [데미지 : {finalDamage}");
+            int finalAtk = (int)Math.Ceiling(Atk * errorRate);
+            Console.WriteLine($"Lv.{target.Level} {target.Name} 을(를) 맞췄습니다. [데미지 : {finalAtk}");
         }
 
         public void Heal(int amount) // 매개변수의 수치 만큼 회복
