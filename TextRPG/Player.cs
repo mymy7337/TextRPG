@@ -70,7 +70,7 @@ namespace TextRPG
         {
             Console.WriteLine($"Lv. {Level} {Name}");
             string nowHp = Hp <= 0 ? "Dead" : Hp.ToString(); // hp가 0 이하면 Dead 표시
-            Console.WriteLine($"Hp {MaxHp} -> {nowHp}");
+            Console.WriteLine($"Hp {Hp} -> {nowHp}");
         }
 
         public void Attack(Monster target) // 플레이어의 공격 행동
