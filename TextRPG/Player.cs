@@ -36,7 +36,7 @@ namespace TextRPG
             Hp = maxHp; // 체력 초기값은 최대체력
             MaxHp = maxHp; 
             Gold = gold;
-        }
+        } // 플레이어 초기값
 
         public void DisplayPlayerInfo() // 플레이어 상태 정보 표시
         {
