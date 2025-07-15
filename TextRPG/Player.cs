@@ -94,5 +94,21 @@ namespace TextRPG
                 Hp = 0;
             }
         }
+
+        public void DisplayInventory(bool showIdx)
+        {
+            if(Inventory.Count == 0)
+            {
+                //Console.WriteLine("소지한 아이템이 없습니다.");
+                return;
+            }
+            for (int i = 0; i < Inventory.Count; i++)
+            {
+                int targetItem = Inventory[i]; //int -> item 으로 변경 필요 
+                string displayIdx = showIdx ? $"{i + 1} " : "";
+                string displayEquipped = IsEquipped(targetItem) ? "[E]" : "";
+                Console.WriteLine($"- {displayIdx}{displayEquipped} {targetItem.ItemInfoText()}");
+            }
+        }
     }
 }
