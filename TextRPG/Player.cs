@@ -22,6 +22,8 @@ namespace TextRPG
         public int ExtraAtk { get; private set; } // 추가공격력
         public int ExtraDef { get; private set; } // 추가방어력
 
+        //인벤토리 공간
+        List<int>Inventory = new List<int>();
 
         // 
         public Player(int level, string name, string job, int atk, int def, int maxHp, int gold)
