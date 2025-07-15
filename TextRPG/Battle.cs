@@ -9,18 +9,10 @@ using System.Threading.Tasks;
 
 namespace TextRPG
 {
-    public class PlayerTest
-    {
-        public int level = 1;
-        public string name = "Chad";
-        public string job = "전사";
-        public int hp = 100;
-        public int atk = 10;
-    }
     internal class Battle
     {
         Random random = new Random();
-        PlayerTest player = new PlayerTest();
+        Player player = new Player(1 ,"Chad", "전사", 10, 5, 100, 1500);
 
         bool isWrong;
         int choice;
@@ -28,10 +20,9 @@ namespace TextRPG
         int deadCount;
         int currentHp;
 
-        
-        public void StartUI(PlayerTest player)
+        public void StartUI(Player player)
         {
-            currentHp = player.hp;
+            currentHp = player.Hp;
             if(monsterSpanwed.Count == 0)
             {
                 SpawnMonster();
@@ -61,8 +52,8 @@ namespace TextRPG
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("[내정보]");
-                Console.WriteLine($"Lv.{player.level:D2} {player.name} ({player.job})");
-                Console.WriteLine($"HP {player.hp}/100");
+                Console.WriteLine($"Lv.{player.Level:D2} {player.Name} ({player.Job})");
+                Console.WriteLine($"HP {player.Hp}/100");
                 //플레이어 정보
                 Console.WriteLine();
                 Console.WriteLine("1. 공격");
@@ -82,7 +73,7 @@ namespace TextRPG
 
         }
 
-        void AttackUI(PlayerTest player)
+        void AttackUI(Player player)
         {
             deadCount = 0;
             for(int i = 0; i < monsterSpanwed.Count; i++)
@@ -106,8 +97,8 @@ namespace TextRPG
                 }
                 Console.WriteLine();
                 Console.WriteLine("[내정보]");
-                Console.WriteLine($"Lv.{player.level:D2} {player.name} ({player.job})");
-                Console.WriteLine($"HP {player.hp}/100");
+                Console.WriteLine($"Lv.{player.Level:D2} {player.Name} ({player.Job})");
+                Console.WriteLine($"HP {player.Hp}/100");
                 //플레이어 정보
                 Console.WriteLine();
                 Console.WriteLine("0. 취소");
@@ -165,12 +156,12 @@ namespace TextRPG
 
         }
 
-        void PlayerPhase(PlayerTest player, Monster monster)
+        void PlayerPhase(Player player, Monster monster)
         {
             Console.Clear();
-            int atkDamage = random.Next((int)Math.Ceiling((float)player.atk * 0.9f), (int)Math.Ceiling((float)player.atk * 1.1f));
+            int atkDamage = random.Next((int)Math.Ceiling((float)player.Atk * 0.9f), (int)Math.Ceiling((float)player.Atk * 1.1f));
 
-            Console.WriteLine($"{player.name} 의 공격!");
+            Console.WriteLine($"{player.Name} 의 공격!");
             Console.WriteLine($"Lv.{monster.level:D2}{monster.name} 을(를) 맞췄습니다. [데미지 : {atkDamage}]");
             Console.WriteLine();
             Console.WriteLine($"Lv.{monster.level:D2}{monster.name}");
@@ -185,36 +176,36 @@ namespace TextRPG
             EnemyPhase(player, monster);
         }
 
-        void EnemyPhase(PlayerTest player, Monster monster)
+        void EnemyPhase(Player player, Monster monster)
         {
             Console.Clear();
             int atkDamage = random.Next((int)Math.Ceiling((float)monster.atk * 0.9f), (int)Math.Ceiling((float)monster.atk * 1.1f));
 
             Console.WriteLine($"{monster.name} 의 공격!");
-            Console.WriteLine($"{player.name} 을(를) 맞췄습니다. [데미지 : {atkDamage}]");
+            Console.WriteLine($"{player.Name} 을(를) 맞췄습니다. [데미지 : {atkDamage}]");
             Console.WriteLine();
-            Console.WriteLine($"Lv.{player.level:D2}{player.name}");
-            Console.Write($"HP {player.hp} -> ");
-            player.hp -= atkDamage;
-            if(player.hp <=0)
-                player.hp = 0;
-            Console.WriteLine(player.hp);
+            Console.WriteLine($"Lv.{player.Level:D2}{player.Name}");
+            Console.Write($"HP {player.Hp} -> ");
+            player.Hp -= atkDamage;
+            if(player.Hp <= 0)
+                player.Hp = 0;
+            Console.WriteLine(player.Hp);
             Console.WriteLine();
             Console.WriteLine("다음");
             Console.Write(">>");
             Console.ReadLine();
-            if(player.hp <= 0)
+            if(player.Hp <= 0)
                 result(player);
             else
                 AttackUI(player);
         }
 
-        void result(PlayerTest player)
+        void result(Player player)
         {
             Console.Clear();
             Console.WriteLine("Battle!! - Result");
             Console.WriteLine();
-            if(player.hp > 0)
+            if(player.Hp > 0)
             {
                 while (true)
                 {
@@ -223,8 +214,8 @@ namespace TextRPG
                     Console.WriteLine();
                     Console.WriteLine($"던전에서 몬스터를 {monsterSpanwed.Count}마리를 잡았습니다.");
                     Console.WriteLine();
-                    Console.WriteLine($"Lv{player.level:D2} {player.name}");
-                    Console.WriteLine($"HP {currentHp}-> {player.hp}");
+                    Console.WriteLine($"Lv{player.Level:D2} {player.Name}");
+                    Console.WriteLine($"HP {currentHp}-> {player.Hp}");
                     Console.WriteLine();
                     Console.WriteLine("1. 던전 탐사\n0. 마을");
                     Console.WriteLine();
@@ -252,7 +243,7 @@ namespace TextRPG
             {
                 Console.WriteLine("You Lose");
                 Console.WriteLine();
-                Console.WriteLine($"Lv{player.level:D2} {player.name}");
+                Console.WriteLine($"Lv{player.Level:D2} {player.Name}");
                 Console.WriteLine($"HP  -> 0");
                 Console.WriteLine();
                 Console.WriteLine("다음");
