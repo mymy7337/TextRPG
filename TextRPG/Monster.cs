@@ -22,11 +22,11 @@ namespace TextRPG
             Hp = hp;
         }
 
-        //몬스터 상태 정보 표시
+        
         public void DisplayMonsterInfo()
         {
             Console.WriteLine($"Lv.{Level} {Name} HP {Hp}");
-        }
+        }//몬스터 상태 정보 표시
 
         public void TakeDamage(int amount) //데미지를 받으면 hp 감소
         {
