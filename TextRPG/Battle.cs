@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG
 {
-    public class Player
+    public class PlayerTest
     {
         public int level = 1;
         public string name = "Chad";
@@ -29,7 +29,7 @@ namespace TextRPG
         int currentHp;
 
         
-        public void StartUI(Player player)
+        public void StartUI(PlayerTest player)
         {
             currentHp = player.hp;
             if(monsterSpanwed.Count == 0)
@@ -82,7 +82,7 @@ namespace TextRPG
 
         }
 
-        void AttackUI(Player player)
+        void AttackUI(PlayerTest player)
         {
             deadCount = 0;
             for(int i = 0; i < monsterSpanwed.Count; i++)
@@ -165,7 +165,7 @@ namespace TextRPG
 
         }
 
-        void PlayerPhase(Player player, Monster monster)
+        void PlayerPhase(PlayerTest player, Monster monster)
         {
             Console.Clear();
             int atkDamage = random.Next((int)Math.Ceiling((float)player.atk * 0.9f), (int)Math.Ceiling((float)player.atk * 1.1f));
@@ -185,7 +185,7 @@ namespace TextRPG
             EnemyPhase(player, monster);
         }
 
-        void EnemyPhase(Player player, Monster monster)
+        void EnemyPhase(PlayerTest player, Monster monster)
         {
             Console.Clear();
             int atkDamage = random.Next((int)Math.Ceiling((float)monster.atk * 0.9f), (int)Math.Ceiling((float)monster.atk * 1.1f));
@@ -209,7 +209,7 @@ namespace TextRPG
                 AttackUI(player);
         }
 
-        void result(Player player)
+        void result(PlayerTest player)
         {
             Console.Clear();
             Console.WriteLine("Battle!! - Result");
