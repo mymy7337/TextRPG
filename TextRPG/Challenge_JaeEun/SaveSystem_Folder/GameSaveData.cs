@@ -28,22 +28,22 @@ namespace TextRPG.Challenge_JaeEun.System_Folder
         }
 
 
-        //static void Main()
-        //{
-        //    SaveManager saveManager = new SaveManager();
+        static void Main()
+        {
+            SaveManager saveManager = new SaveManager();
 
-        //    // 저장용 데이터 입력
-        //    saveManager.CurrentSaveData.PlayerName = "재은";
-        //    saveManager.CurrentSaveData.JobName = "마법사";
-        //    saveManager.SaveToJson();
+            // 저장용 데이터 입력
+            saveManager.CurrentSaveData.PlayerName = "재은";
+            saveManager.CurrentSaveData.JobName = "마법사";
+            saveManager.SaveToJson();
 
-        //    // 현재 데이터 초기화 후 불러오기
-        //    saveManager.CurrentSaveData = new GameSaveData();
-        //    saveManager.LoadFromJson();
+            // 현재 데이터 초기화 후 불러오기
+            saveManager.CurrentSaveData = new GameSaveData();
+            saveManager.LoadFromJson();
 
-        //    // 결과 출력
-        //    Console.WriteLine($"[불러온 이름] {saveManager.CurrentSaveData.PlayerName}");
-        //    Console.WriteLine($"[불러온 직업] {saveManager.CurrentSaveData.JobName}");
-        //}
+            // 결과 출력
+            Console.WriteLine($"[불러온 이름] {saveManager.CurrentSaveData.PlayerName}");
+            Console.WriteLine($"[불러온 직업] {saveManager.CurrentSaveData.JobName}");
+        }
     }
 }
