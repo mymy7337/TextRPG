@@ -28,6 +28,7 @@ namespace TextRPG.Challenge_JaeEun.System_Folder
         }
 
 
+        /*
         static void Main()
         {
             SaveManager saveManager = new SaveManager();
@@ -45,5 +46,6 @@ namespace TextRPG.Challenge_JaeEun.System_Folder
             Console.WriteLine($"[불러온 이름] {saveManager.CurrentSaveData.PlayerName}");
             Console.WriteLine($"[불러온 직업] {saveManager.CurrentSaveData.JobName}");
         }
+        */
     }
 }
