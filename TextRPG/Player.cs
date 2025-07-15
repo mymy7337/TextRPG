@@ -60,6 +60,12 @@ namespace TextRPG
             Console.WriteLine($"Gold : {Gold}");
         }
 
+        public void DisplayBattleInfo() // 전투 시작 전 플레이어 정보
+        {
+            Console.WriteLine($"Lv. {Level} {Name}");
+            Console.WriteLine($"Hp {Hp}/{MaxHp}");
+        }
+
         public void Attack(Monster target) // 플레이어의 공격 행동
         {
             Console.WriteLine($"{Name} 의 공격!");
