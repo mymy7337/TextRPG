@@ -6,7 +6,7 @@ namespace TextRPG;
 public class GameManager
     {
     private Player player;
-    private Shop shop = new Shop();
+    private Shop shop;
     private Battle battle = new Battle();
 
     private string[] jobNames = { "검사", "마법사", "궁수", "도적", "해적" };
@@ -53,6 +53,7 @@ public class GameManager
         string chosenJob = jobNames[selectedJobIndex];
         int[] stats = GetJobStats(chosenJob);
         player = new Player(01, name, chosenJob, 10, 5, 100, 1500);
+        shop = new Shop(player);
     }
 
     private int[] GetJobStats(string job) // 주석처리 가능성 있음
