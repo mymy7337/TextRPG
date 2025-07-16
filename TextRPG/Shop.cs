@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace TextRPG;
 
-internal class Shop //Player.cs에 맞춰서 인터널로 바꿈. (골드 가져오기 위해) , 둘다 퍼블릭 할지 논의.
+public class Shop
 {
     Player player;
 
