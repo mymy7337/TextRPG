@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG
 {
-    internal class Player
+    public class Player
     {
         //player 기본상태
         public int Level { get; set; }
@@ -21,6 +21,24 @@ namespace TextRPG
 
         public int ExtraAtk { get; private set; } // 추가공격력
         public int ExtraDef { get; private set; } // 추가방어력
+        public int CritChance { get; private set; } = 15; // 치명타 확률
+        public float CritMultiplier { get; private set; } = 1.6f; //치명타 피해
+        public int DodgeChance { get; private set; } = 10; // 회피 확률
+
+        public int FinalAtk
+        {
+            get
+            {
+                return Atk + ExtraAtk;
+            }
+        }
+        public int FinalDef
+        {
+            get
+            {
+                return Def + ExtraDef;
+            }
+        }
 
         Random rand = new Random(); // 난수 생성(공격력 및 여러 난수) 
 
@@ -56,21 +74,21 @@ namespace TextRPG
             Console.WriteLine();
             Console.WriteLine($"Lv.{Level:D2}");
             Console.WriteLine($"{Name} ({Job})");
-            Console.WriteLine($"공격력 : {Atk}");
-            Console.WriteLine($"방어력 : {Def}");
+            Console.WriteLine($"공격력 : {FinalAtk}" + (ExtraAtk == 0 ? "" : $" (+{ExtraAtk})"));
+            Console.WriteLine($"방어력 : {FinalDef}" + (ExtraDef == 0 ? "" : $" (+{ExtraDef})"));
             Console.WriteLine($"체 력 : {Hp}");
             Console.WriteLine($"Gold : {Gold}");
         }
 
         public void DisplayBattleInfo() // 전투 시작 전 플레이어 정보
         {
-            Console.WriteLine($"Lv. {Level} {Name}");
+            Console.WriteLine($"Lv. {Level:D2} {Name}");
             Console.WriteLine($"Hp {Hp}/{MaxHp}");
         }
 
         public void DisplayHpInfo() // 전투 시 Hp 변화 정보 표시
         {
-            Console.WriteLine($"Lv. {Level} {Name}");
+            Console.WriteLine($"Lv. {Level:D2} {Name}");
             string nowHp = Hp <= 0 ? "Dead" : Hp.ToString(); // hp가 0 이하면 Dead 표시
             Console.WriteLine($"Hp {Hp} -> {nowHp}");
         }
@@ -78,11 +96,27 @@ namespace TextRPG
         public void Attack(Monster target) // 플레이어의 공격 행동
         {
             Console.WriteLine($"{Name} 의 공격!");
-
-            // 공격 시 공격력은 +- 10%의 오차를 가진다
             double errorRate = rand.NextDouble() * 0.2 + 0.9; // 공격력 오차 0.9~1.1
             int finalAtk = (int)Math.Ceiling(Atk * errorRate);
-            Console.WriteLine($"Lv.{target.Level} {target.Name} 을(를) 맞췄습니다. [데미지 : {finalAtk}");
+            bool isCritical = rand.Next(0, 100) < CritChance; // 15% 치명타 확률
+            bool isDodge = rand.Next(0, 100) < DodgeChance; // 10% 회피율
+
+            if (isDodge)
+            {
+                Console.WriteLine($"Lv.{target.Level:D2} {target.Name} 을(를) 공격했지만 아무일도 일어나지 않았다.");
+                return;
+            }
+           
+            if (isCritical)
+            { 
+                finalAtk = (int)Math.Ceiling(finalAtk * CritMultiplier);
+                Console.WriteLine($"Lv.{target.Level:D2} {target.Name} 을(를) 맞췄습니다. [데미지 : {finalAtk}] - 치명타 공격!!");
+            }
+            else
+            {
+                Console.WriteLine($"Lv.{target.Level:D2} {target.Name} 을(를) 맞췄습니다. [데미지 : {finalAtk}]");
+            }
+            target.TakeDamage(finalAtk);
         }
 
         public void Heal(int amount) // 매개변수의 수치 만큼 회복
@@ -104,7 +138,7 @@ namespace TextRPG
         
         public void TakeDamage(int amount) //데미지를 받으면 hp 감소
         {
-            int finalDamage = amount - Def; //플레이어의 방어력 만큼 데미지 감소
+            int finalDamage = amount - FinalDef; //플레이어의 방어력 만큼 데미지 감소
 
             if(finalDamage  <= 0)
             {

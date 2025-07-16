@@ -9,18 +9,10 @@ using System.Threading.Tasks;
 
 namespace TextRPG
 {
-    public class PlayerTest
-    {
-        public int level = 1;
-        public string name = "Chad";
-        public string job = "전사";
-        public int hp = 100;
-        public int atk = 10;
-    }
     internal class Battle
     {
         Random random = new Random();
-        PlayerTest player = new PlayerTest();
+        Player player = new Player(1 ,"Chad", "전사", 10, 5, 100, 1500);
 
         bool isWrong;
         int choice;
@@ -28,10 +20,9 @@ namespace TextRPG
         int deadCount;
         int currentHp;
 
-        
-        public void StartUI(PlayerTest player)
+        public void StartUI(Player player)
         {
-            currentHp = player.hp;
+            currentHp = player.Hp;
             if(monsterSpanwed.Count == 0)
             {
                 SpawnMonster();
@@ -39,12 +30,12 @@ namespace TextRPG
             deadCount = 0;
             for (int i = 0; i < monsterSpanwed.Count; i++)
             {
-                if (monsterSpanwed[i].hp <= 0)
+                if (monsterSpanwed[i].Hp <= 0)
                     deadCount++;
             }
             if (deadCount == monsterSpanwed.Count)
                 result(player);
-
+                
             while (true)
             {
                 Monster monster;
@@ -55,15 +46,12 @@ namespace TextRPG
                 for (int i = 0; i < monsterSpanwed.Count; i++)
                 {
                     monster = monsterSpanwed[i];
-                    string hpMessage = (monster.hp <= 0) ? "Dead" : $"HP {monster.hp}";
-                    Console.WriteLine($"Lv.{monster.level:D2} {monster.name} {hpMessage}");
+                    monster.DisplayMonsterInfo();
                 }
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("[내정보]");
-                Console.WriteLine($"Lv.{player.level:D2} {player.name} ({player.job})");
-                Console.WriteLine($"HP {player.hp}/100");
-                //플레이어 정보
+                player.DisplayBattleInfo();
                 Console.WriteLine();
                 Console.WriteLine("1. 공격");
                 Console.WriteLine();
@@ -82,12 +70,12 @@ namespace TextRPG
 
         }
 
-        void AttackUI(PlayerTest player)
+        void AttackUI(Player player)
         {
             deadCount = 0;
             for(int i = 0; i < monsterSpanwed.Count; i++)
             {
-                if (monsterSpanwed[i].hp <= 0)
+                if (monsterSpanwed[i].Hp <= 0)
                     deadCount++;
             }
             if (deadCount == monsterSpanwed.Count)
@@ -101,13 +89,13 @@ namespace TextRPG
                 for (int i = 0; i < monsterSpanwed.Count; i++)
                 {
                     Monster monster = monsterSpanwed[i];
-                    string hpMessage = (monster.hp <=0) ? "Dead" : $"HP {monster.hp}";
-                    Console.WriteLine($"{i + 1} Lv.{monster.level:D2} {monster.name} {hpMessage}");
+                    Console.Write($"{i} ");
+                    monster.DisplayMonsterInfo();
                 }
                 Console.WriteLine();
                 Console.WriteLine("[내정보]");
-                Console.WriteLine($"Lv.{player.level:D2} {player.name} ({player.job})");
-                Console.WriteLine($"HP {player.hp}/100");
+                Console.WriteLine($"Lv.{player.Level:D2} {player.Name} ({player.Job})");
+                Console.WriteLine($"HP {player.Hp}/100");
                 //플레이어 정보
                 Console.WriteLine();
                 Console.WriteLine("0. 취소");
@@ -126,7 +114,7 @@ namespace TextRPG
                     StartUI(player);
                     break;
                 case 1:
-                    if (monsterSpanwed[0].hp <= 0)
+                    if (monsterSpanwed[0].Hp <= 0)
                     {
                         isWrong = true;
                         AttackUI(player);
@@ -135,7 +123,7 @@ namespace TextRPG
                         PlayerPhase(player, monsterSpanwed[0]);
                     break;
                 case 2:
-                    if (monsterSpanwed[1].hp <= 0)
+                    if (monsterSpanwed[1].Hp <= 0)
                     {
                         isWrong = true;
                         AttackUI(player);
@@ -144,7 +132,7 @@ namespace TextRPG
                         PlayerPhase(player, monsterSpanwed[1]);
                     break;
                 case 3:
-                    if (monsterSpanwed[2].hp <= 0)
+                    if (monsterSpanwed[2].Hp <= 0)
                     {
                         isWrong = true;
                         AttackUI(player);
@@ -153,7 +141,7 @@ namespace TextRPG
                         PlayerPhase(player, monsterSpanwed[2]);
                     break;
                 case 4:
-                    if (monsterSpanwed[3].hp <= 0)
+                    if (monsterSpanwed[3].Hp <= 0)
                     {
                         isWrong = true;
                         AttackUI(player);
@@ -165,19 +153,14 @@ namespace TextRPG
 
         }
 
-        void PlayerPhase(PlayerTest player, Monster monster)
+        void PlayerPhase(Player player, Monster monster)
         {
             Console.Clear();
-            int atkDamage = random.Next((int)Math.Ceiling((float)player.atk * 0.9f), (int)Math.Ceiling((float)player.atk * 1.1f));
+            int atkDamage = random.Next((int)Math.Ceiling((float)player.Atk * 0.9f), (int)Math.Ceiling((float)player.Atk * 1.1f));
 
-            Console.WriteLine($"{player.name} 의 공격!");
-            Console.WriteLine($"Lv.{monster.level:D2}{monster.name} 을(를) 맞췄습니다. [데미지 : {atkDamage}]");
-            Console.WriteLine();
-            Console.WriteLine($"Lv.{monster.level:D2}{monster.name}");
-            Console.Write($"HP {monster.hp} -> ");
-            monster.hp -= atkDamage;
-            string resultMessage = (monster.hp <= 0) ? "Dead" : $"{monster.hp}";
-            Console.WriteLine(resultMessage);
+            Console.WriteLine($"{player.Name} 의 공격!");
+            player.Attack(monster);
+            monster.DisplayHpInfo();
             Console.WriteLine();
             Console.WriteLine("다음");
             Console.Write(">>");
@@ -185,36 +168,28 @@ namespace TextRPG
             EnemyPhase(player, monster);
         }
 
-        void EnemyPhase(PlayerTest player, Monster monster)
+        void EnemyPhase(Player player, Monster monster)
         {
             Console.Clear();
-            int atkDamage = random.Next((int)Math.Ceiling((float)monster.atk * 0.9f), (int)Math.Ceiling((float)monster.atk * 1.1f));
-
-            Console.WriteLine($"{monster.name} 의 공격!");
-            Console.WriteLine($"{player.name} 을(를) 맞췄습니다. [데미지 : {atkDamage}]");
-            Console.WriteLine();
-            Console.WriteLine($"Lv.{player.level:D2}{player.name}");
-            Console.Write($"HP {player.hp} -> ");
-            player.hp -= atkDamage;
-            if(player.hp <=0)
-                player.hp = 0;
-            Console.WriteLine(player.hp);
+            int atkDamage = random.Next((int)Math.Ceiling((float)monster.Atk * 0.9f), (int)Math.Ceiling((float)monster.Atk * 1.1f));
+            monster.Attack(player);
+            player.DisplayHpInfo();
             Console.WriteLine();
             Console.WriteLine("다음");
             Console.Write(">>");
             Console.ReadLine();
-            if(player.hp <= 0)
+            if(player.Hp <= 0)
                 result(player);
             else
                 AttackUI(player);
         }
 
-        void result(PlayerTest player)
+        void result(Player player)
         {
             Console.Clear();
             Console.WriteLine("Battle!! - Result");
             Console.WriteLine();
-            if(player.hp > 0)
+            if(player.Hp > 0)
             {
                 while (true)
                 {
@@ -223,8 +198,8 @@ namespace TextRPG
                     Console.WriteLine();
                     Console.WriteLine($"던전에서 몬스터를 {monsterSpanwed.Count}마리를 잡았습니다.");
                     Console.WriteLine();
-                    Console.WriteLine($"Lv{player.level:D2} {player.name}");
-                    Console.WriteLine($"HP {currentHp}-> {player.hp}");
+                    Console.WriteLine($"Lv{player.Level:D2} {player.Name}");
+                    Console.WriteLine($"HP {currentHp}-> {player.Hp}");
                     Console.WriteLine();
                     Console.WriteLine("1. 던전 탐사\n0. 마을");
                     Console.WriteLine();
@@ -252,7 +227,7 @@ namespace TextRPG
             {
                 Console.WriteLine("You Lose");
                 Console.WriteLine();
-                Console.WriteLine($"Lv{player.level:D2} {player.name}");
+                Console.WriteLine($"Lv{player.Level:D2} {player.Name}");
                 Console.WriteLine($"HP  -> 0");
                 Console.WriteLine();
                 Console.WriteLine("다음");
@@ -264,27 +239,7 @@ namespace TextRPG
                 Console.ReadLine();
             }
         }
-
-        
-
-        public class Monster()
-        {
-            public int level;
-            public int hp;
-            public int atk;
-            public string name;
-
-        }
-        List<Monster> monsterData = new List<Monster>()
-        {
-            new() {level = 2, hp = 15, atk = 5, name = "미니언"},
-            new() {level = 3, hp = 10, atk = 9, name = "공허충"},
-            new() {level = 5, hp = 25, atk = 8, name = "대포미니언"},
-        };
-
         List<Monster> monsterSpanwed = new List<Monster>();
-
-        
 
         void SpawnMonster()
         {
@@ -292,13 +247,13 @@ namespace TextRPG
             for (int i = 0; i < monNum; i++)
             {
                 int monId = random.Next(0, 3);
-                Monster baseMon = monsterData[monId];
+                Monster baseMon = MonsterDB.monsterData[monId];
                 Monster newMon = new Monster()
                 {
-                    name = baseMon.name,
-                    level = baseMon.level,
-                    hp = baseMon.hp,
-                    atk = baseMon.atk,
+                    Name = baseMon.Name,
+                    Level = baseMon.Level,
+                    Hp = baseMon.Hp,
+                    Atk = baseMon.Atk,
                 };
 
                  monsterSpanwed.Add(newMon);
