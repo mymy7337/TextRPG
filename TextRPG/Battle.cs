@@ -35,7 +35,7 @@ namespace TextRPG
             }
             if (deadCount == monsterSpanwed.Count)
                 result(player);
-
+                
             while (true)
             {
                 Monster monster;
@@ -46,15 +46,12 @@ namespace TextRPG
                 for (int i = 0; i < monsterSpanwed.Count; i++)
                 {
                     monster = monsterSpanwed[i];
-                    string hpMessage = (monster.Hp <= 0) ? "Dead" : $"HP {monster.Hp}";
-                    Console.WriteLine($"Lv.{monster.Level:D2} {monster.Name} {hpMessage}");
+                    monster.DisplayMonsterInfo();
                 }
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("[내정보]");
-                Console.WriteLine($"Lv.{player.Level:D2} {player.Name} ({player.Job})");
-                Console.WriteLine($"HP {player.Hp}/100");
-                //플레이어 정보
+                player.DisplayBattleInfo();
                 Console.WriteLine();
                 Console.WriteLine("1. 공격");
                 Console.WriteLine();
@@ -92,8 +89,8 @@ namespace TextRPG
                 for (int i = 0; i < monsterSpanwed.Count; i++)
                 {
                     Monster monster = monsterSpanwed[i];
-                    string hpMessage = (monster.Hp <= 0) ? "Dead" : $"HP {monster.Hp}";
-                    Console.WriteLine($"{i + 1} Lv.{monster.Level:D2} {monster.Name} {hpMessage}");
+                    Console.Write($"{i} ");
+                    monster.DisplayMonsterInfo();
                 }
                 Console.WriteLine();
                 Console.WriteLine("[내정보]");
@@ -162,13 +159,8 @@ namespace TextRPG
             int atkDamage = random.Next((int)Math.Ceiling((float)player.Atk * 0.9f), (int)Math.Ceiling((float)player.Atk * 1.1f));
 
             Console.WriteLine($"{player.Name} 의 공격!");
-            Console.WriteLine($"Lv.{monster.Level:D2}{monster.Name} 을(를) 맞췄습니다. [데미지 : {atkDamage}]");
-            Console.WriteLine();
-            Console.WriteLine($"Lv.{monster.Level:D2}{monster.Name}");
-            Console.Write($"HP {monster.Hp} -> ");
-            monster.Hp -= atkDamage;
-            string resultMessage = (monster.Hp <= 0) ? "Dead" : $"{monster.Hp}";
-            Console.WriteLine(resultMessage);
+            player.Attack(monster);
+            monster.DisplayHpInfo();
             Console.WriteLine();
             Console.WriteLine("다음");
             Console.Write(">>");
@@ -180,16 +172,8 @@ namespace TextRPG
         {
             Console.Clear();
             int atkDamage = random.Next((int)Math.Ceiling((float)monster.Atk * 0.9f), (int)Math.Ceiling((float)monster.Atk * 1.1f));
-
-            Console.WriteLine($"{monster.Name} 의 공격!");
-            Console.WriteLine($"{player.Name} 을(를) 맞췄습니다. [데미지 : {atkDamage}]");
-            Console.WriteLine();
-            Console.WriteLine($"Lv.{player.Level:D2}{player.Name}");
-            Console.Write($"HP {player.Hp} -> ");
-            player.Hp -= atkDamage;
-            if(player.Hp <= 0)
-                player.Hp = 0;
-            Console.WriteLine(player.Hp);
+            monster.Attack(player);
+            player.DisplayHpInfo();
             Console.WriteLine();
             Console.WriteLine("다음");
             Console.Write(">>");
