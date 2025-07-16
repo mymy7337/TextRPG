@@ -35,6 +35,7 @@ namespace TextRPG
                 Level = this.Level,
                 Hp = this.Hp,
                 Atk = this.Atk,
+                MaxHp = this.MaxHp
             };
         }
 
@@ -83,7 +84,7 @@ namespace TextRPG
                 Console.WriteLine($"Lv.{target.Level:D2} {target.Name} 을(를) 공격했지만 아무일도 일어나지 않았다.");
                 return;
             }
-            Console.WriteLine($"{target.Name} 을(를) 맞췄습니다. [데미지 : {finalAtk}");
+            Console.WriteLine($"{target.Name} 을(를) 맞췄습니다. [데미지 : {finalAtk}]");
             target.TakeDamage(finalAtk);
         }
     }
