@@ -52,15 +52,19 @@ namespace TextRPG
                 Console.WriteLine("[내정보]");
                 player.DisplayBattleInfo();
                 Console.WriteLine();
-                Console.WriteLine("1. 공격");
+                Console.WriteLine("1. 공격\n0. 돌아가기");
                 Console.WriteLine();
                 message = (isWrong == true) ? "잘못된 입력입니다." : "원하시는 행동을 입력해주세요.";
                 Console.WriteLine(message);
                 Console.Write(">>");
-                isWrong = ChoiceCheck(1, 1);
+                isWrong = ChoiceCheck(0, 1);
 
                 switch (choice)
                 {
+                    case 0:
+                        GameManager gm = new GameManager();
+                        gm.LoadMainScene(player);
+                        break;
                     case 1:
                         AttackUI(player);
                         break;
@@ -88,7 +92,7 @@ namespace TextRPG
                 for (int i = 0; i < monsterSpanwed.Count; i++)
                 {
                     Monster monster = monsterSpanwed[i];
-                    Console.Write($"{i} ");
+                    Console.Write($"{i+1} ");
                     monster.DisplayMonsterInfo();
                 }
                 Console.WriteLine();
@@ -155,9 +159,6 @@ namespace TextRPG
         void PlayerPhase(Player player, Monster monster)
         {
             Console.Clear();
-            int atkDamage = random.Next((int)Math.Ceiling((float)player.Atk * 0.9f), (int)Math.Ceiling((float)player.Atk * 1.1f));
-
-            Console.WriteLine($"{player.Name} 의 공격!");
             player.Attack(monster);
             monster.DisplayHpInfo();
             Console.WriteLine();
@@ -170,7 +171,6 @@ namespace TextRPG
         void EnemyPhase(Player player, Monster monster)
         {
             Console.Clear();
-            int atkDamage = random.Next((int)Math.Ceiling((float)monster.Atk * 0.9f), (int)Math.Ceiling((float)monster.Atk * 1.1f));
             monster.Attack(player);
             player.DisplayHpInfo();
             Console.WriteLine();
@@ -205,16 +205,14 @@ namespace TextRPG
                     message = (isWrong == true) ? "잘못된 입력입니다." : "원하시는 행동을 입력해주세요.";
                     Console.WriteLine(message);
                     Console.Write(">>");
-                    for(int i = monsterSpanwed.Count-1; i >= 0;i--)
-                    {
-                        monsterSpanwed.RemoveAt(i);
-                    }
+                    monsterSpanwed.Clear();
                     isWrong = ChoiceCheck(0, 1);
 
                     switch (choice)
                     {
                         case 0:
-
+                            GameManager gm = new GameManager();
+                            gm.LoadMainScene(player);
                             break;
                         case 1:
                             StartUI(player);
@@ -231,10 +229,7 @@ namespace TextRPG
                 Console.WriteLine();
                 Console.WriteLine("다음");
                 Console.WriteLine(">>");
-                for (int i = monsterSpanwed.Count - 1; i >= 0; i--)
-                {
-                    monsterSpanwed.RemoveAt(i);
-                }
+                monsterSpanwed.Clear();
                 Console.ReadLine();
             }
         }

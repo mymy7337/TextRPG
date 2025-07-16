@@ -93,7 +93,7 @@ public class GameManager
             }
             else if (input == "")
             {
-                LoadMainScene();
+                LoadMainScene(player);
                 stay = false;
             }
             else
@@ -104,7 +104,7 @@ public class GameManager
         }
     }
 
-    private void LoadMainScene()
+    public void LoadMainScene(Player player)
     {
         bool running = true;
         Shop shop = new Shop(player);

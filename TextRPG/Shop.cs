@@ -7,7 +7,7 @@ public class Shop
 {
     Player player;
 
-    public Shop(Player player) //생성자 2개인 상태. 게임매니저에서 뉴플레이어 만들어진 뒤에 뉴삽도 만들어지면 생성자 하나로 줄일수있나?
+    public Shop(Player player)
     {
         this.player = player;
     }
