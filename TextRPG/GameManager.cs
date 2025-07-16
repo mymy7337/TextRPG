@@ -133,7 +133,7 @@ public class GameManager
                     VisitTown();
                     break;
                 case "2":
-                    battle.EnterDungeon(player);
+                    battle.StartUI(player);
                     break;
                 case "3":
                     player.ShowInventory();
