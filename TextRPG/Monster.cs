@@ -33,7 +33,7 @@ namespace TextRPG
 
         public void DisplayBattleInfo() // 전투 시작 전 몬스터 정보
         {
-            Console.WriteLine($"Lv. {Level} {Name}");
+            Console.WriteLine($"Lv. {Level:D2} {Name}");
             Console.WriteLine($"Hp {Hp}/{MaxHp}");
         }
 
