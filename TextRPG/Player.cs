@@ -97,8 +97,16 @@ namespace TextRPG
         {
             Console.WriteLine($"{Name} 의 공격!");
             double errorRate = rand.NextDouble() * 0.2 + 0.9; // 공격력 오차 0.9~1.1
-            bool isCritical = rand.Next(0, 100) < CritChance; // 15% 확률
             int finalAtk = (int)Math.Ceiling(Atk * errorRate);
+            bool isCritical = rand.Next(0, 100) < CritChance; // 15% 치명타 확률
+            bool isDodge = rand.Next(0, 100) < DodgeChance; // 10% 회피율
+
+            if (isDodge)
+            {
+                Console.WriteLine($"Lv.{target.Level:D2} {target.Name} 을(를) 공격했지만 아무일도 일어나지 않았다.");
+                return;
+            }
+           
             if (isCritical)
             { 
                 finalAtk = (int)Math.Ceiling(finalAtk * CritMultiplier);
