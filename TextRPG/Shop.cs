@@ -3,12 +3,20 @@ using System.Linq;
 
 namespace TextRPG;
 
-public class Shop
+internal class Shop //Player.cs에 맞춰서 인터널로 바꿈. (골드 가져오기 위해) , 둘다 퍼블릭 할지 논의.
 {
-    public static void OpenShop()
+    Player player;
+
+    public Shop(Player player) //생성자 추가함. 게임매니저에서 뉴플레이어 만들어진 뒤에 뉴삽도 만들어달라고 컨택하기.
+    {
+        this.player = player;
+    }
+    public void OpenShop()
     {
         Console.Clear();
         Console.WriteLine("상점에 입장하였습니다.");
+        Console.WriteLine("[보유 골드]");
+        Console.WriteLine($"{player.Gold} G");
         Console.WriteLine("(E) 장비 / (P) 포션");
         string input = Console.ReadLine().ToLower();
 
@@ -26,11 +34,11 @@ public class Shop
         }
     }
 
-    private static void ShowRandomPotions(int count)
+    private void ShowRandomPotions(int count)
     {
         var shopPotions = Potion.Items.Where(p => p.IType == Potion.ItemType.Shop).ToList();
 
-        if (shopPotions.Count == 0)
+        if (shopPotions.Count == 0) //리스트에 0개가 될 수 없으니 더미인데 일단 냅두기
         {
             Console.WriteLine("상점 주인: 포션 다 팔렸어.");
             return;
@@ -45,7 +53,7 @@ public class Shop
         for (int i = 0; i < randomPotions.Count; i++)
         {
             var potion = randomPotions[i];
-            Console.WriteLine($"{i + 1}. {potion.ItemName} - {potion.Price}골드 | HP+{potion.ItemHP}, MP+{potion.ItemMP}");
+            Console.WriteLine($"{i + 1}. {potion.ItemName} - {potion.Gold}골드 | HP+{potion.ItemHP}, MP+{potion.ItemMP}");
             Console.WriteLine($"   설명: {potion.ItemScript}");
         }
 
@@ -61,16 +69,16 @@ public class Shop
         }
     }
 
-    static void BuyPotion(Potion potion)
+    void BuyPotion(Potion potion)
     {
-        Console.WriteLine($"{potion.ItemName}을(를) {potion.Price}골드에 구매하였다.");
+        Console.WriteLine($"{potion.ItemName}을(를) {potion.Gold}골드에 구매하였다.");
     }
     
-    private static void ShowRandomEquipments(int count)
+    private void ShowRandomEquipments(int count)
     {
         var shopEquipments = Equipment.Items.Where(e => e.IType == Equipment.ItemType.Shop).ToList();
 
-        if (shopEquipments.Count == 0)
+        if (shopEquipments.Count == 0) //더미
         {
             Console.WriteLine("상점 주인: 장비 다 팔렸어.");
             return;
@@ -86,7 +94,7 @@ public class Shop
         for (int i = 0; i < randomEquipments.Count; i++)
         {
             var equip = randomEquipments[i];
-            Console.WriteLine($"{i + 1}. {equip.ItemName} - {equip.Price}골드");
+            Console.WriteLine($"{i + 1}. {equip.ItemName} - {equip.Gold}골드");
             Console.WriteLine($"   설명: {equip.ItemScript}");
         }
 
@@ -102,9 +110,10 @@ public class Shop
         }
     }
 
-    static void BuyEquipment(Equipment equipment)
+    void BuyEquipment(Equipment equipment)
     {
-        Console.WriteLine($"{equipment.ItemName}을(를) {equipment.Price}골드에 구매하였다.");
+        Console.WriteLine($"{equipment.ItemName}을(를) {equipment.Gold}골드에 구매하였다.");
+        player.Inventory.add(equipment); //인벤토리가 private 상태이므로 public 해달라고하기, 혹은 Player.cs에 추가하는 함수 따로 만들기
     }
 }
 
