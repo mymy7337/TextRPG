@@ -6,7 +6,7 @@ namespace TextRPG;
 public class GameManager
     {
     private Player player;
-    private Shop shop = new Shop();
+    
     private Battle battle = new Battle();
 
     private string[] jobNames = { "검사", "마법사", "궁수", "도적", "해적" };
@@ -52,7 +52,7 @@ public class GameManager
 
         string chosenJob = jobNames[selectedJobIndex];
         int[] stats = GetJobStats(chosenJob);
-        player = new Player(name, chosenJob, stats);
+        player = new Player(01, name, chosenJob, 10, 5, 100, 1500);
     }
 
     private int[] GetJobStats(string job) // 주석처리 가능성 있음
@@ -80,14 +80,8 @@ public class GameManager
             Console.WriteLine($"직업: {player.Job}");
 
             Console.WriteLine("\n[스탯 정보]");
-            for (int i = 0; i < statNames.Length; i++)
-            {
-                Console.WriteLine($"{statNames[i]}: {player.Stats[i]}");
-            }
-
-            Console.WriteLine($"\n현재 체력: {player.HP} / {player.MaxHP}");
-            Console.WriteLine($"보유 골드: {player.Gold}");
-
+            player.DisplayPlayerInfo();
+            
             Console.WriteLine("\n[B] 직업 변경  |  [Enter] 게임 시작");
             Console.Write("선택: ");
             string input = Console.ReadLine().ToUpper();
@@ -113,12 +107,11 @@ public class GameManager
     private void LoadMainScene()
     {
         bool running = true;
-
+        Shop shop = new Shop(player);
         while (running)
         {
             Console.Clear();
-            Console.WriteLine($"{player.Name} [{player.Job}]");
-            Console.WriteLine($"체력: {player.HP}/{player.MaxHP}    골드: {player.Gold}");
+            player.DisplayPlayerInfo();
 
             Console.WriteLine("\n1. 마을 방문");
             Console.WriteLine("2. 던전 탐험");
@@ -130,13 +123,13 @@ public class GameManager
             switch (choice)
             {
                 case "1":
-                    VisitTown();
+                    VisitTown(shop);
                     break;
                 case "2":
                     battle.StartUI(player);
                     break;
                 case "3":
-                    player.ShowInventory();
+                    player.DisplayInventory(true); // 임시
                     break;
                 case "4":
                     running = false;
@@ -150,7 +143,7 @@ public class GameManager
         }
     }
 
-    private void VisitTown()
+    private void VisitTown(Shop shop)
     {
         bool inTown = true;
 
@@ -167,13 +160,13 @@ public class GameManager
             switch (input)
             {
                 case "1":
-                    shop.Open(player);
+                    shop.OpenShop();
                     break;
                 case "2":
                     if (player.Gold >= 20)
                     {
-                        player.Gold -= 20;
-                        player.HP = player.MaxHP;
+                        player.UseGold(20);
+                        player.Hp = player.MaxHp;
                         Console.WriteLine("체력이 회복되었습니다!");
                     }
                     else

@@ -12,11 +12,7 @@ public class Shop
         this.player = player;
     }
 
-    public Shop()
-    {
-        throw new NotImplementedException();
-    }
-
+    
     public void OpenShop()
     {
         Console.Clear();
