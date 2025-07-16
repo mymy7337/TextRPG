@@ -28,7 +28,7 @@ namespace TextRPG
 
         public void DisplayMonsterInfo() //몬스터 상태 정보 표시
         {
-            Console.WriteLine($"Lv.{Level} {Name} HP {Hp}");
+            Console.WriteLine($"Lv.{Level:D2} {Name} HP {Hp}");
         }
 
         public void DisplayBattleInfo() // 전투 시작 전 몬스터 정보
@@ -39,7 +39,7 @@ namespace TextRPG
 
         public void DisplayHpInfo() // 전투 시 몬스터 Hp 변화 정보 표시
         {
-            Console.WriteLine($"Lv. {Level} {Name}");
+            Console.WriteLine($"Lv. {Level:D2} {Name}");
             string nowHp = Hp <= 0 ? "Dead" : Hp.ToString(); // hp가 0 이하면 Dead 표시
             Console.WriteLine($"Hp {Hp} -> {nowHp}");
         }
