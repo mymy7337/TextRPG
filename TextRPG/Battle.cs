@@ -12,7 +12,6 @@ namespace TextRPG
     internal class Battle
     {
         Random random = new Random();
-        Player player = new Player(1 ,"Chad", "전사", 10, 5, 100, 1500);
 
         bool isWrong;
         int choice;
@@ -248,14 +247,7 @@ namespace TextRPG
             {
                 int monId = random.Next(0, 3);
                 Monster baseMon = MonsterDB.monsterData[monId];
-                Monster newMon = new Monster()
-                {
-                    Name = baseMon.Name,
-                    Level = baseMon.Level,
-                    Hp = baseMon.Hp,
-                    Atk = baseMon.Atk,
-                };
-
+                Monster newMon = baseMon.Clone();
                  monsterSpanwed.Add(newMon);
             }
         }
@@ -269,5 +261,7 @@ namespace TextRPG
             }
             return true;
         }
+
+        
     }
 }
