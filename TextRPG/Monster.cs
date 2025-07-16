@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG
 {
-    internal class Monster
+    public class Monster
     {
         //몬스터 필드 설정
         public int Level { get; set; }
@@ -26,6 +26,17 @@ namespace TextRPG
         //    Hp = maxHp;
         //    MaxHp = maxHp;
         //}
+
+        public Monster Clone()
+        {
+            return new Monster()
+            {
+                Name = this.Name,
+                Level = this.Level,
+                Hp = this.Hp,
+                Atk = this.Atk,
+            };
+        }
 
         public void DisplayMonsterInfo() //몬스터 상태 정보 표시
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG
 {
-    internal class Player
+    public class Player
     {
         //player 기본상태
         public int Level { get; set; }
@@ -190,6 +190,25 @@ namespace TextRPG
         public bool HasItem(Item item) // 아이템 소지 여부 판단
         {
             return Inventory.Contains(item);
+        }
+        public void AddItem(Item item) // 인벤토리에 아이템 추가
+        {
+            Inventory.Add(item);
+        }
+
+        public bool UseGold(int amount) // 골드 사용
+        {
+            if (Gold >= amount)
+            {
+                Gold -= amount;
+                return true;
+            }
+            return false;
+        }
+
+        public void AddGold(int amount) // 골드 획득
+        {
+            Gold += amount;
         }
     }
 }
