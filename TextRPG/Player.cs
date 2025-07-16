@@ -56,8 +56,8 @@ namespace TextRPG
             Console.WriteLine();
             Console.WriteLine($"Lv.{Level:D2}");
             Console.WriteLine($"{Name} ({Job})");
-            Console.WriteLine($"공격력 : {Atk}");
-            Console.WriteLine($"방어력 : {Def}");
+            Console.WriteLine(ExtraAtk == 0 ? $"공격력 : {Atk}" : $"공격력 : {Atk + ExtraAtk} (+{ExtraAtk})");
+            Console.WriteLine(ExtraDef == 0 ? $"방어력 : {Def}" : $"방어력 : {Def + ExtraDef} (+{ExtraDef})");
             Console.WriteLine($"체 력 : {Hp}");
             Console.WriteLine($"Gold : {Gold}");
         }
