@@ -65,6 +65,7 @@ namespace TextRPG
             double errorRate = rand.NextDouble() * 0.2 + 0.9; // 공격력 오차 0.9~1.1
             int finalAtk = (int)Math.Ceiling(Atk * errorRate);
             Console.WriteLine($"{target.Name} 을(를) 맞췄습니다. [데미지 : {finalAtk}");
+            target.TakeDamage(finalAtk);
         }
     }
 }
