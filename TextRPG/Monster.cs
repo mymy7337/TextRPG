@@ -18,14 +18,14 @@ namespace TextRPG
 
         Random rand = new Random(); // 난수 생성(공격력 및 여러 난수)
 
-        public Monster(int level, string name, int atk, int maxHp) 
-        { 
-            Level = level;
-            Name = name;
-            Atk = atk;
-            Hp = maxHp;
-            MaxHp = maxHp;
-        }
+        //public Monster(int level, string name, int atk, int maxHp) 
+        //{ 
+        //    Level = level;
+        //    Name = name;
+        //    Atk = atk;
+        //    Hp = maxHp;
+        //    MaxHp = maxHp;
+        //}
 
         public void DisplayMonsterInfo() //몬스터 상태 정보 표시
         {

@@ -6,20 +6,12 @@ public class Equipment : Item
 {
     public int ItemAttack { get; set; }
     public int ItemDefense { get; set; }
-    public ItemType IType { get; set; }
-
-    public enum ItemType
-    {
-        Drop,
-        Shop,
-    }
-
-    public Equipment(string itemName, string itemScript, int itemAttack, int itemDefense, int price, ItemType iType)
-        : base(itemName, itemScript, price)
+    
+    public Equipment(string itemName, string itemScript, int itemAttack, int itemDefense, int gold, ItemType iType)
+        : base(itemName, itemScript, gold, iType)
     {
         ItemAttack = itemAttack;
         ItemDefense = itemDefense;
-        IType = iType;
     }
 
     public static List<Equipment> Items = new List<Equipment>
