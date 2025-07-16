@@ -78,6 +78,8 @@ public class Shop
     void BuyPotion(Potion potion)
     {
         Console.WriteLine($"{potion.ItemName}을(를) {potion.Gold}골드에 구매하였다.");
+        player.UseGold(potion.Gold);
+        player.AddItem(potion);
     }
     
     private void ShowRandomEquipments(int count)
@@ -119,7 +121,8 @@ public class Shop
     void BuyEquipment(Equipment equipment)
     {
         Console.WriteLine($"{equipment.ItemName}을(를) {equipment.Gold}골드에 구매하였다.");
-        player.Inventory.add(equipment); //인벤토리가 private 상태이므로 public 해달라고하기, 혹은 Player.cs에 추가하는 함수 따로 만들기
+        player.UseGold(equipment.Gold);
+        player.AddItem(equipment);
     }
 }
 
