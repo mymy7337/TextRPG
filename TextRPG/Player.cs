@@ -95,7 +95,7 @@ namespace TextRPG
             Console.WriteLine($"{Name} 의 공격!");
             double errorRate = rand.NextDouble() * 0.2 + 0.9; // 공격력 오차 0.9~1.1
             int finalAtk = (int)Math.Ceiling(Atk * errorRate);
-            Console.WriteLine($"Lv.{target.Level} {target.Name} 을(를) 맞췄습니다. [데미지 : {finalAtk}");
+            Console.WriteLine($"Lv.{target.Level:D2} {target.Name} 을(를) 맞췄습니다. [데미지 : {finalAtk}");
             target.TakeDamage(finalAtk);
         }
 
