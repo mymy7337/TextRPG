@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG
 {
-    internal class Monster
+    public class Monster
     {
         //몬스터 필드 설정
         public int Level { get; set; }
