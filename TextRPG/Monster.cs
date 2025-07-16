@@ -18,7 +18,7 @@ namespace TextRPG
 
         Random rand = new Random(); // 난수 생성(공격력 및 여러 난수)
 
-        private int previousHp;
+        private int previousHp; // 이전체력
 
         //public Monster(int level, string name, int atk, int maxHp) 
         //{ 
@@ -85,7 +85,6 @@ namespace TextRPG
             if (isDodge)
             {
                 Console.WriteLine($"Lv.{target.Level:D2} {target.Name} 을(를) 공격했지만 아무일도 일어나지 않았다.");
-                target.DisplayHpInfo();
                 return;
             }
             Console.WriteLine($"{target.Name} 을(를) 맞췄습니다. [데미지 : {finalAtk}]");

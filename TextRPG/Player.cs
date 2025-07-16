@@ -42,7 +42,7 @@ namespace TextRPG
 
         Random rand = new Random(); // 난수 생성(공격력 및 여러 난수) 
 
-        private int previousHp;
+        private int previousHp; // 이전 체력 
 
         //인벤토리 공간
         List<Item>Inventory = new List<Item>(); 
