@@ -33,7 +33,7 @@ namespace TextRPG
             {
                 Name = this.Name,
                 Level = this.Level,
-                Hp = this.Hp,
+                Hp = this.MaxHp,
                 Atk = this.Atk,
                 MaxHp = this.MaxHp
             };
