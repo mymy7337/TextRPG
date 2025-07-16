@@ -42,6 +42,8 @@ namespace TextRPG
 
         Random rand = new Random(); // 난수 생성(공격력 및 여러 난수) 
 
+        private int previousHp;
+
         //인벤토리 공간
         List<Item>Inventory = new List<Item>(); 
         List<Item>EquipList = new List<Item>(); 
@@ -90,7 +92,7 @@ namespace TextRPG
         {
             Console.WriteLine($"Lv. {Level:D2} {Name}");
             string nowHp = Hp <= 0 ? "Dead" : Hp.ToString(); // hp가 0 이하면 Dead 표시
-            Console.WriteLine($"Hp {Hp} -> {nowHp}");
+            Console.WriteLine($"Hp {previousHp} -> {nowHp}");
         }
 
         public void Attack(Monster target) // 플레이어의 공격 행동
@@ -139,8 +141,8 @@ namespace TextRPG
         public void TakeDamage(int amount) //데미지를 받으면 hp 감소
         {
             int finalDamage = amount - FinalDef; //플레이어의 방어력 만큼 데미지 감소
-
-            if(finalDamage  <= 0)
+            previousHp = Hp;
+            if (finalDamage  <= 0)
             {
                 return;
             }
