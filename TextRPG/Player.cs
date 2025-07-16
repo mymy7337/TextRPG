@@ -22,6 +22,21 @@ namespace TextRPG
         public int ExtraAtk { get; private set; } // 추가공격력
         public int ExtraDef { get; private set; } // 추가방어력
 
+        public int FinalAtk
+        {
+            get
+            {
+                return Atk + ExtraAtk;
+            }
+        }
+        public int FinalDef
+        {
+            get
+            {
+                return Def + ExtraDef;
+            }
+        }
+
         Random rand = new Random(); // 난수 생성(공격력 및 여러 난수) 
 
         //인벤토리 공간
@@ -56,8 +71,8 @@ namespace TextRPG
             Console.WriteLine();
             Console.WriteLine($"Lv.{Level:D2}");
             Console.WriteLine($"{Name} ({Job})");
-            Console.WriteLine(ExtraAtk == 0 ? $"공격력 : {Atk}" : $"공격력 : {Atk + ExtraAtk} (+{ExtraAtk})");
-            Console.WriteLine(ExtraDef == 0 ? $"방어력 : {Def}" : $"방어력 : {Def + ExtraDef} (+{ExtraDef})");
+            Console.WriteLine($"공격력 : {FinalAtk}" + (ExtraAtk == 0 ? "" : $" (+{ExtraAtk})"));
+            Console.WriteLine($"방어력 : {FinalDef}" + (ExtraDef == 0 ? "" : $" (+{ExtraDef})"));
             Console.WriteLine($"체 력 : {Hp}");
             Console.WriteLine($"Gold : {Gold}");
         }
