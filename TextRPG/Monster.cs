@@ -18,8 +18,6 @@ namespace TextRPG
 
         Random rand = new Random(); // 난수 생성(공격력 및 여러 난수)
 
-        private int previousHp; // 이전체력
-
         //public Monster(int level, string name, int atk, int maxHp) 
         //{ 
         //    Level = level;
@@ -52,7 +50,7 @@ namespace TextRPG
             Console.WriteLine($"Hp {Hp}/{MaxHp}");
         }
 
-        public void DisplayHpInfo() // 전투 시 몬스터 Hp 변화 정보 표시
+        public void DisplayHpInfo(int previousHp) // 전투 시 몬스터 Hp 변화 정보 표시
         {
             Console.WriteLine($"Lv. {Level:D2} {Name}");
             string nowHp = Hp <= 0 ? "Dead" : Hp.ToString(); // hp가 0 이하면 Dead 표시
@@ -61,7 +59,6 @@ namespace TextRPG
 
         public void TakeDamage(int amount) //데미지를 받으면 hp 감소
         {
-            previousHp = Hp;
             if (amount <= 0)
             {
                 return;
