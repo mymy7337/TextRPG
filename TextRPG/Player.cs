@@ -21,6 +21,9 @@ namespace TextRPG
 
         public int ExtraAtk { get; private set; } // 추가공격력
         public int ExtraDef { get; private set; } // 추가방어력
+        public int CritChance { get; private set; } = 15; // 치명타 확률
+        public float CritMultiplier { get; private set; } = 1.6f; //치명타 피해
+        public float DodgeChance { get; private set; } = 1.0f; // 회피 확률
 
         public int FinalAtk
         {
