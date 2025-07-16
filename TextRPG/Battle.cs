@@ -52,15 +52,19 @@ namespace TextRPG
                 Console.WriteLine("[내정보]");
                 player.DisplayBattleInfo();
                 Console.WriteLine();
-                Console.WriteLine("1. 공격");
+                Console.WriteLine("1. 공격\n0. 돌아가기");
                 Console.WriteLine();
                 message = (isWrong == true) ? "잘못된 입력입니다." : "원하시는 행동을 입력해주세요.";
                 Console.WriteLine(message);
                 Console.Write(">>");
-                isWrong = ChoiceCheck(1, 1);
+                isWrong = ChoiceCheck(0, 1);
 
                 switch (choice)
                 {
+                    case 0:
+                        GameManager gm = new GameManager();
+                        gm.LoadMainScene(player);
+                        break;
                     case 1:
                         AttackUI(player);
                         break;
@@ -208,7 +212,7 @@ namespace TextRPG
                     {
                         case 0:
                             GameManager gm = new GameManager();
-                            gm.LoadMainScene();
+                            gm.LoadMainScene(player);
                             break;
                         case 1:
                             StartUI(player);
