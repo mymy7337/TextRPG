@@ -12,7 +12,7 @@ public class Shop
         this.player = player;
     }
 
-    
+
     public void OpenShop()
     {
         Console.Clear();
