@@ -15,4 +15,9 @@ public abstract class Item
         ItemScript = itemScript;
         Price = price;
     }
+
+    internal object ItemInfoText() // 임시로 생성 나중에 삭제
+    {
+        throw new NotImplementedException();
+    }
 }
