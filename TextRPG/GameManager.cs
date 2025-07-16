@@ -104,7 +104,7 @@ public class GameManager
         }
     }
 
-    private void LoadMainScene()
+    public void LoadMainScene()
     {
         bool running = true;
         Shop shop = new Shop(player);
