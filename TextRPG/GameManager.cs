@@ -160,12 +160,12 @@ public class GameManager
             switch (input)
             {
                 case "1":
-                    Shop.OpenShop();
+                    shop.OpenShop();
                     break;
                 case "2":
                     if (player.Gold >= 20)
                     {
-                        player.Gold -= 20;
+                        player.UseGold(20);
                         player.Hp = player.MaxHp;
                         Console.WriteLine("체력이 회복되었습니다!");
                     }
