@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG
 {
-    internal class Player
+    public class Player
     {
         //player 기본상태
         public int Level { get; set; }
