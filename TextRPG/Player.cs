@@ -131,6 +131,11 @@ namespace TextRPG
             target.TakeDamage(finalAtk);
         }
 
+        //public void UseSkill() // 스킬 사용 메서드
+        //{
+
+        //}
+
         public void Heal(int amount) // 매개변수의 수치 만큼 회복 // Mp추가시 매개 변수 하나더 추가
         {
             if (amount <= 0)
