@@ -180,7 +180,9 @@ namespace TextRPG
         BattleState EnemyPhase(Player player, Monster monster)
         {
             if (monster.Hp <= 0)
-            { 
+            {
+                if (random.Next(1, 101) < 100)
+                    getItem.Add(monster.Item);
                 deadCount++;
                 if(deadCount == monsterSpanwed.Count)
                     return result(player);
@@ -199,7 +201,6 @@ namespace TextRPG
             Console.ReadKey();
             if (player.Hp <= 0)
                 return result(player);
-
             if (deadCount == monsterSpanwed.Count)
                 return result(player);
             else
@@ -222,6 +223,16 @@ namespace TextRPG
                     Console.WriteLine($"던전에서 몬스터를 {monsterSpanwed.Count}마리를 잡았습니다.");
                     Console.WriteLine();
                     Console.WriteLine($"HP {nowHp} -> {player.Hp}");
+                    Console.WriteLine();
+                    if(getItem.Count > 0)
+                    {
+                        foreach (var item in getItem)
+                        {
+                            Console.WriteLine($"{item.ItemName} 획득");
+                            player.AddItem(item);
+                        }
+                    }
+                    getItem.Clear();
                     Console.WriteLine();
                     Console.WriteLine("1. 던전 탐사\n0. 마을");
                     Console.WriteLine();
@@ -259,6 +270,7 @@ namespace TextRPG
             }
         }
         List<Monster> monsterSpanwed = new List<Monster>();
+        List<Item> getItem = new List<Item>();
 
         void SpawnMonster()
         {
