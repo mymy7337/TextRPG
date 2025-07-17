@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Net.Security;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -78,8 +79,14 @@ namespace TextRPG
             switch (choice)
             {
                 case 0:
-                    monsterSpanwed.Clear();
-                    return BattleState.Exit;
+                    if(random.Next(0, 100) < (100 - monsterSpanwed.Count * 10))
+                    {
+                        monsterSpanwed.Clear();
+                        return BattleState.Exit;
+                    }
+                    player.Hp -= monsterSpanwed.Count;
+                    return BattleState.Main;
+                    
                 case 1:
                     return BattleState.Encounter;
                 default:
