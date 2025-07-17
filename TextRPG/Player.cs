@@ -169,16 +169,24 @@ namespace TextRPG
                 Console.WriteLine($"- {displayIdx}{displayEquipped} {targetItem.ItemInfoText()}"); // - 아이템 번호 [E] 아이템 정보
             }
         }
-
-        public void EquipItem(Item item) // 아이템 장착 기능. 여기에 추가 공격력/방어력 설정해야함
+        //아이템 장착
+        public void EquipItem(Item item) // 아이템 타입을 숫자로 받아오는걸 상정했음. 아이템에 붙은 추가 스텟만큼 추가 공격력 방어력이 증가하는 형태
         {
             if (IsEquipped(item))
             {
                 EquipList.Remove(item);
+                //if (item.Type == 0)
+                //    ExtraAtk += item.Value;
+                //else
+                //    ExtraDef += item.Value;
             }
             else
             {
                 EquipList.Add(item);
+                //if (item.Type == 0)
+                //    ExtraAtk += item.Value;
+                //else
+                //    ExtraDef += item.Value;
             }
         }
 
