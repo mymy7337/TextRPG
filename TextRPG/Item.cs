@@ -8,7 +8,7 @@ public abstract class Item
     public string ItemName { get; set; }
     public string ItemScript { get; set; }
     public int Gold { get; set; }
-    public ItemType IType { get; set; }
+    public GetType IType { get; set; }
 
     private int[] _itemEffect;
     public int[] ItemEffect => _itemEffect;
@@ -16,7 +16,7 @@ public abstract class Item
     private EffectType[] _effectTypes;
     public EffectType[] EffectTypes => _effectTypes;
 
-    protected Item(string itemName, string itemScript, int gold, ItemType iType, int[] itemEffect, EffectType[] effectTypes)
+    protected Item(string itemName, string itemScript, int gold, GetType iType, int[] itemEffect, EffectType[] effectTypes)
     {
         ItemName = itemName;
         ItemScript = itemScript;
@@ -26,7 +26,7 @@ public abstract class Item
         _effectTypes = effectTypes;
     }
 
-    public enum ItemType
+    public enum GetType
     {
         Drop,
         Shop,
