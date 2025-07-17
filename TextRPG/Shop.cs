@@ -38,7 +38,7 @@ public class Shop
 
     private void ShowRandomPotions(int count)
     {
-        var shopPotions = Potion.Items.Where(p => p.IType == Potion.ItemType.Shop).ToList();
+        var shopPotions = Potion.Items.Where(p => p.IType == Potion.GetType.Shop).ToList();
 
         if (shopPotions.Count == 0) //리스트에 0개가 될 수 없으니 더미인데 일단 냅두기
         {
@@ -80,7 +80,7 @@ public class Shop
     
     private void ShowRandomEquipments(int count)
     {
-        var shopEquipments = Equipment.Items.Where(e => e.IType == Equipment.ItemType.Shop).ToList();
+        var shopEquipments = Equipment.Items.Where(e => e.IType == Equipment.GetType.Shop).ToList();
 
         if (shopEquipments.Count == 0) //더미
         {
