@@ -126,10 +126,15 @@ public class GameManager
             Console.Clear();
             player.DisplayPlayerInfo();
 
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n1. 마을 방문");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("2. 던전 탐험");
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("3. 인벤토리 확인");
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("4. 게임 종료");
+            Console.ResetColor();
             Console.Write("\n선택: ");
             string choice = Console.ReadLine();
 
@@ -142,7 +147,8 @@ public class GameManager
                     battle.BattleStart(player);
                     break;
                 case "3":
-                    player.DisplayInventory(true); // 임시
+                    player.DisplayInventory(true);
+                    running = false;
                     break;
                 case "4":
                     running = false;
