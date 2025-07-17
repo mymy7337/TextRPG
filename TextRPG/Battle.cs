@@ -239,11 +239,11 @@ namespace TextRPG
                     message = (isWrong == true) ? "잘못된 입력입니다." : "원하시는 행동을 입력해주세요.";
                     Console.WriteLine(message);
                     Console.Write(">>");
-                    monsterSpanwed.Clear();
+                    
                     isWrong = ChoiceCheck(0, 1);
                     if (isWrong)
                         continue;
-
+                    monsterSpanwed.Clear();
                     switch (choice)
                     {
                         case 0:
