@@ -159,7 +159,8 @@ namespace TextRPG
         void PlayerPhase(Player player, Monster monster)
         {
             Console.Clear();
-            player.Attack(monster);
+            int prevHp = monster.Hp; //  추가
+            monster.DisplayHpInfo(prevHp); // 매개변수 추가
             monster.DisplayHpInfo();
             Console.WriteLine();
             Console.WriteLine("다음");
@@ -172,7 +173,8 @@ namespace TextRPG
         {
             Console.Clear();
             monster.Attack(player);
-            player.DisplayHpInfo();
+            int prevHp = player.Hp; //  추가
+            player.DisplayHpInfo(prevHp); // 매개변수 추가
             Console.WriteLine();
             Console.WriteLine("다음");
             Console.Write(">>");
