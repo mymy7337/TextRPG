@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Numerics;
     
 namespace TextRPG;
@@ -14,7 +14,7 @@ public class GameManager
     }
 
     private Player player;
-    private Shop shop;
+    
     private Battle battle = new Battle();
 
     private string[] jobNames = { "검사", "마법사", "궁수", "도적", "해적" };
@@ -61,7 +61,6 @@ public class GameManager
         string chosenJob = jobNames[selectedJobIndex];
         int[] stats = GetJobStats(chosenJob);
         player = new Player(01, name, chosenJob, 10, 5, 100, 1500);
-        shop = new Shop(player);
     }
 
     private int[] GetJobStats(string job) // 주석처리 가능성 있음
@@ -127,10 +126,15 @@ public class GameManager
             Console.Clear();
             player.DisplayPlayerInfo();
 
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n1. 마을 방문");
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("2. 던전 탐험");
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("3. 인벤토리 확인");
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("4. 게임 종료");
+            Console.ResetColor();
             Console.Write("\n선택: ");
             string choice = Console.ReadLine();
 
@@ -143,7 +147,8 @@ public class GameManager
                     battle.BattleStart(player);
                     break;
                 case "3":
-                    player.DisplayInventory(true); // 임시
+                    player.DisplayInventory(true);
+                    running = false;
                     break;
                 case "4":
                     running = false;
