@@ -76,7 +76,7 @@ namespace TextRPG
         {
             Console.WriteLine($"{Name} 의 공격!");
             double errorRate = rand.NextDouble() * 0.2 + 0.9; // 공격력 오차 0.9~1.1
-            int finalAtk = (int)Math.Ceiling(Atk * errorRate);
+            int finalAtk = (int)Math.Ceiling(Atk * errorRate) - target.Def;
             bool isDodge = rand.Next(0, 100) < DodgeChance; // 10% 회피율
 
             if (isDodge)
