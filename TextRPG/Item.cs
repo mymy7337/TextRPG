@@ -24,11 +24,6 @@ namespace TextRPG
         ItemMp
     }
 
-    public string ItemInfoText()
-    {
-        return $"{ItemName} | {ItemScript} | {Gold}G";
-    }
-
     public virtual string ItemDetailsText()
     { 
         var sb = new System.Text.StringBuilder();
@@ -65,13 +60,6 @@ namespace TextRPG
         {
             Drop,
             Shop,
-        }
-        public enum EffectType
-        {
-            ItemAtk,
-            ItemDef,
-            ItemHp,
-            ItemMp
         }
         public string ItemInfoText()
         {
