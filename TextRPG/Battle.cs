@@ -17,11 +17,9 @@ namespace TextRPG
         int choice;
         string message;
         int deadCount;
-        int currentHp;
 
         public void StartUI(Player player)
         {
-            currentHp = player.Hp;
             if(monsterSpanwed.Count == 0)
             {
                 SpawnMonster();
@@ -62,8 +60,7 @@ namespace TextRPG
                 switch (choice)
                 {
                     case 0:
-                        GameManager gm = new GameManager();
-                        gm.LoadMainScene(player);
+                        GameManager.instance.LoadMainScene();
                         break;
                     case 1:
                         AttackUI(player);
@@ -97,9 +94,7 @@ namespace TextRPG
                 }
                 Console.WriteLine();
                 Console.WriteLine("[내정보]");
-                Console.WriteLine($"Lv.{player.Level:D2} {player.Name} ({player.Job})");
-                Console.WriteLine($"HP {player.Hp}/100");
-                //플레이어 정보
+                player.DisplayBattleInfo();
                 Console.WriteLine();
                 Console.WriteLine("0. 취소");
                 Console.WriteLine();
@@ -158,10 +153,10 @@ namespace TextRPG
 
         void PlayerPhase(Player player, Monster monster)
         {
+            int prevHp = monster.Hp;
             Console.Clear();
-            int prevHp = monster.Hp; //  추가
-            monster.DisplayHpInfo(prevHp); // 매개변수 추가
-            monster.DisplayHpInfo();
+            player.Attack(monster);
+            monster.DisplayHpInfo(prevHp);
             Console.WriteLine();
             Console.WriteLine("다음");
             Console.Write(">>");
@@ -171,10 +166,10 @@ namespace TextRPG
 
         void EnemyPhase(Player player, Monster monster)
         {
+            int prevHp = player.Hp;
             Console.Clear();
             monster.Attack(player);
-            int prevHp = player.Hp; //  추가
-            player.DisplayHpInfo(prevHp); // 매개변수 추가
+            player.DisplayHpInfo(prevHp);
             Console.WriteLine();
             Console.WriteLine("다음");
             Console.Write(">>");
@@ -188,6 +183,7 @@ namespace TextRPG
         void result(Player player)
         {
             Console.Clear();
+            int prevHp = player.Hp;
             Console.WriteLine("Battle!! - Result");
             Console.WriteLine();
             if(player.Hp > 0)
@@ -199,8 +195,7 @@ namespace TextRPG
                     Console.WriteLine();
                     Console.WriteLine($"던전에서 몬스터를 {monsterSpanwed.Count}마리를 잡았습니다.");
                     Console.WriteLine();
-                    Console.WriteLine($"Lv{player.Level:D2} {player.Name}");
-                    Console.WriteLine($"HP {currentHp}-> {player.Hp}");
+                    player.DisplayHpInfo(prevHp);
                     Console.WriteLine();
                     Console.WriteLine("1. 던전 탐사\n0. 마을");
                     Console.WriteLine();
@@ -213,8 +208,7 @@ namespace TextRPG
                     switch (choice)
                     {
                         case 0:
-                            GameManager gm = new GameManager();
-                            gm.LoadMainScene(player);
+                            GameManager.instance.LoadMainScene();
                             break;
                         case 1:
                             StartUI(player);
