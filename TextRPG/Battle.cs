@@ -172,6 +172,16 @@ namespace TextRPG
 
         BattleState EnemyPhase(Player player, Monster monster)
         {
+            if (monster.Hp <= 0)
+            { 
+                deadCount++;
+                if(deadCount == monsterSpanwed.Count)
+                    return result(player);
+                return BattleState.Encounter;
+            }
+
+                
+
             int prevHp = player.Hp;
             Console.Clear();
             monster.Attack(player);
@@ -182,9 +192,6 @@ namespace TextRPG
             Console.ReadKey();
             if (player.Hp <= 0)
                 return result(player);
-
-            if (monster.Hp <= 0)
-                deadCount++;
 
             if (deadCount == monsterSpanwed.Count)
                 return result(player);
