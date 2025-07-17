@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -82,15 +83,15 @@ namespace TextRPG
 
         public void DisplayBattleInfo() // 전투 시작 전 플레이어 정보
         {
-            Console.WriteLine($"Lv. {Level:D2} {Name}");
+            Console.WriteLine($"Lv. {Level:D2} {Name} ({Job})");
             Console.WriteLine($"Hp {Hp}/{MaxHp}");
         }
 
-        public void DisplayHpInfo() // 전투 시 Hp 변화 정보 표시
+        public void DisplayHpInfo(int previousHp) // 전투 시 Hp 변화 정보 표시
         {
-            Console.WriteLine($"Lv. {Level:D2} {Name}");
+            Console.WriteLine($"Lv. {Level:D2} {Name} ({Job})" );
             string nowHp = Hp <= 0 ? "Dead" : Hp.ToString(); // hp가 0 이하면 Dead 표시
-            Console.WriteLine($"Hp {Hp} -> {nowHp}");
+            Console.WriteLine($"Hp {previousHp} -> {nowHp}");
         }
 
         public void Attack(Monster target) // 플레이어의 공격 행동
@@ -139,8 +140,7 @@ namespace TextRPG
         public void TakeDamage(int amount) //데미지를 받으면 hp 감소
         {
             int finalDamage = amount - FinalDef; //플레이어의 방어력 만큼 데미지 감소
-
-            if(finalDamage  <= 0)
+            if (finalDamage  <= 0)
             {
                 return;
             }

@@ -33,8 +33,9 @@ namespace TextRPG
             {
                 Name = this.Name,
                 Level = this.Level,
-                Hp = this.Hp,
+                Hp = this.MaxHp,
                 Atk = this.Atk,
+                MaxHp = this.MaxHp
             };
         }
 
@@ -49,11 +50,11 @@ namespace TextRPG
             Console.WriteLine($"Hp {Hp}/{MaxHp}");
         }
 
-        public void DisplayHpInfo() // 전투 시 몬스터 Hp 변화 정보 표시
+        public void DisplayHpInfo(int previousHp) // 전투 시 몬스터 Hp 변화 정보 표시
         {
             Console.WriteLine($"Lv. {Level:D2} {Name}");
             string nowHp = Hp <= 0 ? "Dead" : Hp.ToString(); // hp가 0 이하면 Dead 표시
-            Console.WriteLine($"Hp {Hp} -> {nowHp}");
+            Console.WriteLine($"Hp {previousHp} -> {nowHp}");
         }
 
         public void TakeDamage(int amount) //데미지를 받으면 hp 감소
@@ -83,7 +84,7 @@ namespace TextRPG
                 Console.WriteLine($"Lv.{target.Level:D2} {target.Name} 을(를) 공격했지만 아무일도 일어나지 않았다.");
                 return;
             }
-            Console.WriteLine($"{target.Name} 을(를) 맞췄습니다. [데미지 : {finalAtk}");
+            Console.WriteLine($"{target.Name} 을(를) 맞췄습니다. [데미지 : {finalAtk}]");
             target.TakeDamage(finalAtk);
         }
     }
