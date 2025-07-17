@@ -4,62 +4,64 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace = TextRPG;
-public abstract class Item
+namespace TextRPG
 {
-    public string ItemName { get; set; }
-    public string ItemScript { get; set; }
-    public int Gold { get; set; }
-    public ItemType IType { get; set; }
-
-    private int[] _itemEffect;
-    public int[] ItemEffect => _itemEffect;
-
-    private EffectType[] _effectTypes;
-    public EffectType[] EffectTypes => _effectTypes;
-
-    protected Item(string itemName, string itemScript, int gold, ItemType iType, int[] itemEffect, EffectType[] effectTypes)
+    public abstract class Item
     {
-        ItemName = itemName;
-        ItemScript = itemScript;
-        Gold = gold;
-        IType = iType;
-        _itemEffect = itemEffect;
-        _effectTypes = effectTypes;
-    }
+        public string ItemName { get; set; }
+        public string ItemScript { get; set; }
+        public int Gold { get; set; }
+        public ItemType IType { get; set; }
 
-    public enum ItemType
-    {
-        Drop,
-        Shop,
-    }
+        private int[] _itemEffect;
+        public int[] ItemEffect => _itemEffect;
 
-    public enum EffectType
-    {
-        ItemAtk,
-        ItemDef,
-        ItemHp,
-        ItemMp
-    }
-    public string ItemInfoText()
-    {
-        var sb = new System.Text.StringBuilder();
+        private EffectType[] _effectTypes;
+        public EffectType[] EffectTypes => _effectTypes;
 
-        sb.Append($"이름: {ItemName}");
-        sb.Append($"/설명: {ItemScript}");
-        sb.Append($"/가격: {Gold} Gold");
-        sb.Append($"/획득방법: {IType}");
-
-        if (ItemEffect != null && EffectTypes != null)
+        protected Item(string itemName, string itemScript, int gold, ItemType iType, int[] itemEffect, EffectType[] effectTypes)
         {
-            sb.Append("/효과:");
-            for (int i = 0; i < Math.Min(ItemEffect.Length, EffectTypes.Length); i++)
-            {
-                sb.AppendLine($" - {EffectTypes[i]}: +{ItemEffect[i]}");
-            }
+            ItemName = itemName;
+            ItemScript = itemScript;
+            Gold = gold;
+            IType = iType;
+            _itemEffect = itemEffect;
+            _effectTypes = effectTypes;
         }
 
-        return sb.ToString();
-    }
+        public enum ItemType
+        {
+            Drop,
+            Shop,
+        }
 
+        public enum EffectType
+        {
+            ItemAtk,
+            ItemDef,
+            ItemHp,
+            ItemMp
+        }
+        public string ItemInfoText()
+        {
+            var sb = new System.Text.StringBuilder();
+
+            sb.Append($"이름: {ItemName}");
+            sb.Append($"/설명: {ItemScript}");
+            sb.Append($"/가격: {Gold} Gold");
+            sb.Append($"/획득방법: {IType}");
+
+            if (ItemEffect != null && EffectTypes != null)
+            {
+                sb.Append("/효과:");
+                for (int i = 0; i < Math.Min(ItemEffect.Length, EffectTypes.Length); i++)
+                {
+                    sb.AppendLine($" - {EffectTypes[i]}: +{ItemEffect[i]}");
+                }
+            }
+
+            return sb.ToString();
+        }
+
+    }
 }
