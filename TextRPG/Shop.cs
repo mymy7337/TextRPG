@@ -54,9 +54,9 @@ public class Shop
 
         for (int i = 0; i < randomPotions.Count; i++)
         {
-            var potion = randomPotions[i];
-            Console.WriteLine($"{i + 1}. {potion.ItemName} - {potion.Gold}골드 | HP+{potion.ItemHP}, MP+{potion.ItemMP}");
-            Console.WriteLine($"   설명: {potion.ItemScript}");
+            var potion = randomPotions[i]; 
+            Console.WriteLine($"[{i + 1}]");
+            Console.WriteLine(potion.ItemDetailsText());
         }
 
         Console.Write("구매할 아이템 번호: ");
@@ -98,8 +98,8 @@ public class Shop
         for (int i = 0; i < randomEquipments.Count; i++)
         {
             var equip = randomEquipments[i];
-            Console.WriteLine($"{i + 1}. {equip.ItemName} - {equip.Gold}골드");
-            Console.WriteLine($"   설명: {equip.ItemScript}");
+            Console.WriteLine($"[{i + 1}]");
+            Console.WriteLine(equip.ItemDetailsText());
         }
 
         Console.Write("구매할 아이템 번호: ");
