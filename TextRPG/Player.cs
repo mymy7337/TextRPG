@@ -70,9 +70,6 @@ namespace TextRPG
 
         public void DisplayPlayerInfo() // 플레이어 상태 정보 표시
         {
-            Console.WriteLine("상태보기");
-            Console.WriteLine("플레이어의 정보가 표시됩니다.");
-            Console.WriteLine();
             Console.WriteLine($"Lv.{Level:D2}");
             Console.WriteLine($"{Name} ({Job})");
             Console.WriteLine($"공격력 : {FinalAtk}" + (ExtraAtk == 0 ? "" : $" (+{ExtraAtk})"));
