@@ -15,8 +15,10 @@ public class Potion : Item
 
     public static List<Potion> Items = new List<Potion>
     {
-        new Potion("체력포션(소)", "체력을 아주 조금 회복해준다.", 2, ItemType.Shop, new int[]{5}, new EffectType[] { EffectType.ItemHp }),
-        new Potion("마력포션(소)", "마력을 아주 조금 회복해준다.", 2, ItemType.Shop, new int[]{5}, new EffectType[] { EffectType.ItemMp }),
-        new Potion("요정의 비약", "체력과 마력을 모두 크게 회복해준다. 이런 귀한 걸 얻다니 운이 좋은걸?", 20, ItemType.Drop, new int[]{30,30}, new EffectType[] { EffectType.ItemHp, EffectType.ItemMp})
+        new Potion("체력포션(소)", "체력을 아주 조금 회복해준다.", 20, ItemType.Shop, new int[]{10}, new EffectType[] { EffectType.ItemHp }),
+        new Potion("마력포션(소)", "마력을 아주 조금 회복해준다.", 20, ItemType.Shop, new int[]{10}, new EffectType[] { EffectType.ItemMp }),
+        new Potion("체력포션(중)", "체력을 조금 회복해준다.", 50, ItemType.Shop, new int[]{25}, new EffectType[] { EffectType.ItemHp }),
+        new Potion("마력포션(중)", "마력을 조금 회복해준다.", 50, ItemType.Shop, new int[]{25}, new EffectType[] { EffectType.ItemHp }),
+        new Potion("요정의 비약", "체력과 마력을 모두 크게 회복해준다. 이런 귀한 걸 얻다니 운이 좋은걸?", 500, ItemType.Drop, new int[]{300,300}, new EffectType[] { EffectType.ItemHp, EffectType.ItemMp})
     };
 }
