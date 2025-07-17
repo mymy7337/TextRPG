@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Net.Security;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -78,8 +79,14 @@ namespace TextRPG
             switch (choice)
             {
                 case 0:
-                    monsterSpanwed.Clear();
-                    return BattleState.Exit;
+                    if(random.Next(0, 100) < (100 - monsterSpanwed.Count * 10))
+                    {
+                        monsterSpanwed.Clear();
+                        return BattleState.Exit;
+                    }
+                    player.Hp -= monsterSpanwed.Count;
+                    return BattleState.Main;
+                    
                 case 1:
                     return BattleState.Encounter;
                 default:
@@ -173,7 +180,9 @@ namespace TextRPG
         BattleState EnemyPhase(Player player, Monster monster)
         {
             if (monster.Hp <= 0)
-            { 
+            {
+                if (random.Next(1, 101) < 100)
+                    getItem.Add(monster.Item);
                 deadCount++;
                 if(deadCount == monsterSpanwed.Count)
                     return result(player);
@@ -192,7 +201,6 @@ namespace TextRPG
             Console.ReadKey();
             if (player.Hp <= 0)
                 return result(player);
-
             if (deadCount == monsterSpanwed.Count)
                 return result(player);
             else
@@ -216,16 +224,26 @@ namespace TextRPG
                     Console.WriteLine();
                     Console.WriteLine($"HP {nowHp} -> {player.Hp}");
                     Console.WriteLine();
+                    if(getItem.Count > 0)
+                    {
+                        foreach (var item in getItem)
+                        {
+                            Console.WriteLine($"{item.ItemName} 획득");
+                            player.AddItem(item);
+                        }
+                    }
+                    getItem.Clear();
+                    Console.WriteLine();
                     Console.WriteLine("1. 던전 탐사\n0. 마을");
                     Console.WriteLine();
                     message = (isWrong == true) ? "잘못된 입력입니다." : "원하시는 행동을 입력해주세요.";
                     Console.WriteLine(message);
                     Console.Write(">>");
-                    monsterSpanwed.Clear();
+                    
                     isWrong = ChoiceCheck(0, 1);
                     if (isWrong)
                         continue;
-
+                    monsterSpanwed.Clear();
                     switch (choice)
                     {
                         case 0:
@@ -252,6 +270,7 @@ namespace TextRPG
             }
         }
         List<Monster> monsterSpanwed = new List<Monster>();
+        List<Item> getItem = new List<Item>();
 
         void SpawnMonster()
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace TextRPG
         public int Hp { get; set; }
         public int MaxHp { get; set; }
         public int DodgeChance { get; private set; } = 10; // 회피 확률
+        public Item Item { get; set; }
 
         Random rand = new Random(); // 난수 생성(공격력 및 여러 난수)
 
@@ -35,7 +37,8 @@ namespace TextRPG
                 Level = this.Level,
                 Hp = this.MaxHp,
                 Atk = this.Atk,
-                MaxHp = this.MaxHp
+                MaxHp = this.MaxHp,
+                Item = this.Item
             };
         }
 
