@@ -39,7 +39,7 @@ public abstract class Item
         ItemHp,
         ItemMp
     }
-    internal string ItemInfoText()
+    public string ItemInfoText()
     {
         var sb = new System.Text.StringBuilder();
 
