@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -69,9 +70,6 @@ namespace TextRPG
 
         public void DisplayPlayerInfo() // 플레이어 상태 정보 표시
         {
-            Console.WriteLine("상태보기");
-            Console.WriteLine("플레이어의 정보가 표시됩니다.");
-            Console.WriteLine();
             Console.WriteLine($"Lv.{Level:D2}");
             Console.WriteLine($"{Name} ({Job})");
             Console.WriteLine($"공격력 : {FinalAtk}" + (ExtraAtk == 0 ? "" : $" (+{ExtraAtk})"));
@@ -82,15 +80,15 @@ namespace TextRPG
 
         public void DisplayBattleInfo() // 전투 시작 전 플레이어 정보
         {
-            Console.WriteLine($"Lv. {Level:D2} {Name}");
+            Console.WriteLine($"Lv. {Level:D2} {Name} ({Job})");
             Console.WriteLine($"Hp {Hp}/{MaxHp}");
         }
 
-        public void DisplayHpInfo() // 전투 시 Hp 변화 정보 표시
+        public void DisplayHpInfo(int previousHp) // 전투 시 Hp 변화 정보 표시
         {
-            Console.WriteLine($"Lv. {Level:D2} {Name}");
+            Console.WriteLine($"Lv. {Level:D2} {Name} ({Job})" );
             string nowHp = Hp <= 0 ? "Dead" : Hp.ToString(); // hp가 0 이하면 Dead 표시
-            Console.WriteLine($"Hp {Hp} -> {nowHp}");
+            Console.WriteLine($"Hp {previousHp} -> {nowHp}");
         }
 
         public void Attack(Monster target) // 플레이어의 공격 행동
@@ -138,9 +136,8 @@ namespace TextRPG
         
         public void TakeDamage(int amount) //데미지를 받으면 hp 감소
         {
-            int finalDamage = amount - FinalDef; //플레이어의 방어력 만큼 데미지 감소
-
-            if(finalDamage  <= 0)
+            int finalDamage = amount; //플레이어의 방어력 만큼 데미지 감소
+            if (finalDamage  <= 0)
             {
                 return;
             }
@@ -169,16 +166,24 @@ namespace TextRPG
                 Console.WriteLine($"- {displayIdx}{displayEquipped} {targetItem.ItemInfoText()}"); // - 아이템 번호 [E] 아이템 정보
             }
         }
-
-        public void EquipItem(Item item) // 아이템 장착 기능 
+        //아이템 장착
+        public void EquipItem(Item item) // 아이템 타입을 숫자로 받아오는걸 상정했음. 아이템에 붙은 추가 스텟만큼 추가 공격력 방어력이 증가하는 형태
         {
             if (IsEquipped(item))
             {
                 EquipList.Remove(item);
+                //if (item.Type == 0)
+                //    ExtraAtk += item.Value;
+                //else
+                //    ExtraDef += item.Value;
             }
             else
             {
                 EquipList.Add(item);
+                //if (item.Type == 0)
+                //    ExtraAtk += item.Value;
+                //else
+                //    ExtraDef += item.Value;
             }
         }
 

@@ -1,10 +1,18 @@
-﻿using System;
+using System;
 using System.Numerics;
     
 namespace TextRPG;
 
 public class GameManager
     {
+    public static GameManager instance;
+
+    public GameManager()
+    {
+        if (instance == null)
+            instance = this;
+    }
+
     private Player player;
     private Shop shop;
     private Battle battle = new Battle();
@@ -77,9 +85,6 @@ public class GameManager
         {
             Console.Clear();
             Console.WriteLine("====== 최종 정보 ======\n");
-            Console.WriteLine($"이름: {player.Name}");
-            Console.WriteLine($"직업: {player.Job}");
-
             Console.WriteLine("\n[스탯 정보]");
             player.DisplayPlayerInfo();
             
@@ -90,7 +95,8 @@ public class GameManager
             if (input == "B")
             {
                 CreatePlayer();
-                continue;
+                ShowFinalInfo();
+                return;
             }
             else if (input == "")
             {
@@ -105,10 +111,17 @@ public class GameManager
         }
     }
 
-    private void LoadMainScene()
+    public void LoadMainScene()
     {
-        bool running = true;
+        if (player == null)
+        {
+            Console.WriteLine("player가 null입니다. GameManager.CreatePlayer()가 제대로 호출되지 않았을 수 있음");
+            Console.ReadKey(); // 일시 정지해서 로그 확인
+            return;
+        }
 
+        bool running = true;
+        Shop shop = new Shop(player);
         while (running)
         {
             Console.Clear();
@@ -124,10 +137,10 @@ public class GameManager
             switch (choice)
             {
                 case "1":
-                    VisitTown();
+                    VisitTown(shop);
                     break;
                 case "2":
-                    battle.StartUI(player);
+                    battle.BattleStart(player);
                     break;
                 case "3":
                     player.DisplayInventory(true); // 임시
@@ -144,7 +157,7 @@ public class GameManager
         }
     }
 
-    private void VisitTown()
+    private void VisitTown(Shop shop)
     {
         bool inTown = true;
 
