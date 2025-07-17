@@ -45,7 +45,7 @@ public abstract class Item
         return $"{ItemName} | {ItemScript} | {Gold}G";
     }
 
-    public string ItemDetailsText()
+    public virtual string ItemDetailsText()
     { 
         var sb = new System.Text.StringBuilder();
 
