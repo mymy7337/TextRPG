@@ -91,6 +91,13 @@ namespace TextRPG
             Console.WriteLine($"Hp {previousHp} -> {nowHp}");
         }
 
+        public void DisplayBattleEndInfo(int initialHp)
+        {
+            Console.WriteLine($"Lv. {Level:D2} {Name} ({Job})");
+            string nowHp = Hp <= 0 ? "Dead" : Hp.ToString(); // hp가 0 이하면 Dead 표시
+            Console.WriteLine($"Hp {MaxHp} -> {nowHp}");
+        }
+
         public void Attack(Monster target) // 플레이어의 공격 행동
         {
             Console.WriteLine($"{Name} 의 공격!");
