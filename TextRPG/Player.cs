@@ -170,7 +170,7 @@ namespace TextRPG
             }
         }
 
-        public void EquipItem(Item item) // 아이템 장착 기능 
+        public void EquipItem(Item item) // 아이템 장착 기능. 여기에 추가 공격력/방어력 설정해야함
         {
             if (IsEquipped(item))
             {
