@@ -10,25 +10,59 @@ public abstract class Item
     public int Gold { get; set; }
     public ItemType IType { get; set; }
 
-    protected Item(string itemName, string itemScript, int gold, ItemType iType)
+    private int[] _itemEffect;
+    public int[] ItemEffect => _itemEffect;
+
+    private EffectType[] _effectTypes;
+    public EffectType[] EffectTypes => _effectTypes;
+
+    protected Item(string itemName, string itemScript, int gold, ItemType iType, int[] itemEffect, EffectType[] effectTypes)
     {
         ItemName = itemName;
         ItemScript = itemScript;
         Gold = gold;
         IType = iType;
+        _itemEffect = itemEffect;
+        _effectTypes = effectTypes;
     }
+
     public enum ItemType
     {
         Drop,
         Shop,
     }
-    public enum ItemClass
+
+    public enum EffectType
     {
-        //무기종류
+        ItemAtk,
+        ItemDef,
+        ItemHp,
+        ItemMp
     }
 
-    internal object ItemInfoText() // 임시로 생성 나중에 삭제
+    public string ItemInfoText()
     {
-        throw new NotImplementedException();
+        return $"{ItemName} | {ItemScript} | {Gold}G";
     }
+
+    public string ItemDetailsText()
+    { 
+        var sb = new System.Text.StringBuilder();
+
+        sb.AppendLine($"이름: {ItemName}");
+        sb.AppendLine($"설명: {ItemScript}");
+        sb.AppendLine($"가격: {Gold} Gold");
+        sb.AppendLine($"획득방법: {IType}");
+
+        if (ItemEffect != null && EffectTypes != null)
+        {
+            sb.AppendLine("효과:");
+            for (int i = 0; i < Math.Min(ItemEffect.Length, EffectTypes.Length); i++)
+            {
+                sb.AppendLine($" - {EffectTypes[i]}: +{ItemEffect[i]}");
+            }
+        }
+        return sb.ToString();
+    }
+
 }
