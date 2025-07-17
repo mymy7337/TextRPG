@@ -8,17 +8,31 @@ using System.Threading.Tasks;
 
 namespace TextRPG
 {
+    //public enum JobType // 직업 Enum
+    //{
+    //    Warrior,
+    //    Wizard,
+    //    Archer,
+    //    Thief,
+    //    Pirate
+    //}
     public class Player
     {
         //player 기본상태
         public int Level { get; set; }
         public string Name { get; set; }
         public string Job { get; set; }
+        //public JobType Job { get; set; }
         public int Atk { get; set; }
         public int Def { get; set; }
+        //public int Dex { get; set; } // 민첩
         public int Hp { get; set; }
-        public int MaxHp { get; set; } // 최대체력: 오버힐 방지에 필요
+        public int Mp { get; set; }
+        public int MaxHp { get; set; } // 최대체력: 오버힐 방지에
+        public int MaxMp { get; set; } // 최대마력: 오버힐 방지
         public int Gold { get; private set; }
+
+        public int Exp { get; private set; } // 경험치
 
         public int ExtraAtk { get; private set; } // 추가공격력
         public int ExtraDef { get; private set; } // 추가방어력
@@ -117,7 +131,12 @@ namespace TextRPG
             target.TakeDamage(finalAtk);
         }
 
-        public void Heal(int amount) // 매개변수의 수치 만큼 회복
+        //public void UseSkill() // 스킬 사용 메서드
+        //{
+
+        //}
+
+        public void Heal(int amount) // 매개변수의 수치 만큼 회복 // Mp추가시 매개 변수 하나더 추가
         {
             if (amount <= 0)
             {
@@ -126,14 +145,19 @@ namespace TextRPG
             else
             {
                 Hp += amount;
+                //Mp += amount;
             }
             if (Hp > MaxHp) // hp가 최대hp을 넘지 않는다.
             {
                 Hp = MaxHp;
             }
+            //if (Mp > MaxMp)
+            //{
+            //    Mp = MaxMp;
+            //}
         }
-        
-        
+
+
         public void TakeDamage(int amount) //데미지를 받으면 hp 감소
         {
             int finalDamage = amount; //플레이어의 방어력 만큼 데미지 감소
@@ -214,6 +238,37 @@ namespace TextRPG
         public void AddGold(int amount) // 골드 획득
         {
             Gold += amount;
+        }
+
+        public void GetExp(int amount) // 경험치 획득
+        {
+            Exp += amount;
+            while (Exp >= GetRequiredExp(Level))
+            {
+                Exp -= GetRequiredExp(Level);
+                LevelUp();
+            }
+        }
+
+        public void LevelUp() // 레벨 업
+        {
+            Level++;
+            MaxHp += 10;
+            //MaxMp += 5;
+            Hp = MaxHp;
+            //Mp = MaxMp;
+        }
+
+        private int GetRequiredExp(int level) // 레벨업 필요 경험치량
+        {
+            switch (level)
+            {
+                case 1: return 10;
+                case 2: return 35;
+                case 3: return 65;
+                case 4: return 100;
+                default: return (int)(100 + Math.Pow(level - 4, 2) * 20); // 등차수열 적용
+            }
         }
     }
 }
