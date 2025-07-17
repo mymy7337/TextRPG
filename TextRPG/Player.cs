@@ -82,13 +82,13 @@ namespace TextRPG
 
         public void DisplayBattleInfo() // 전투 시작 전 플레이어 정보
         {
-            Console.WriteLine($"Lv. {Level:D2} {Name}");
+            Console.WriteLine($"Lv. {Level:D2} {Name} ({Job})");
             Console.WriteLine($"Hp {Hp}/{MaxHp}");
         }
 
         public void DisplayHpInfo(int previousHp) // 전투 시 Hp 변화 정보 표시
         {
-            Console.WriteLine($"Lv. {Level:D2} {Name}");
+            Console.WriteLine($"Lv. {Level:D2} {Name} ({Job})" );
             string nowHp = Hp <= 0 ? "Dead" : Hp.ToString(); // hp가 0 이하면 Dead 표시
             Console.WriteLine($"Hp {previousHp} -> {nowHp}");
         }
