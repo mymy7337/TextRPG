@@ -254,12 +254,12 @@ namespace TextRPG
         {
             Level++;
             MaxHp += 10;
-            MaxMp += 5;
+            //MaxMp += 5;
             Hp = MaxHp;
-            Mp = MaxMp;
+            //Mp = MaxMp;
         }
 
-        private int GetRequiredExp(int level)
+        private int GetRequiredExp(int level) // 레벨업 필요 경험치량
         {
             switch (level)
             {
