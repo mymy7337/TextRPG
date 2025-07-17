@@ -17,6 +17,7 @@ namespace TextRPG
         {
             Main,
             Encounter,
+            Result,
             Exit
         }
 
@@ -39,6 +40,9 @@ namespace TextRPG
                         break;
                     case BattleState.Encounter:
                         state = EncounterUI(player);
+                        break;
+                    case BattleState.Result:
+                        state = result(player);
                         break;
                 }
             }
@@ -79,14 +83,14 @@ namespace TextRPG
             switch (choice)
             {
                 case 0:
-                    if(random.Next(0, 100) < (100 - monsterSpanwed.Count * 10))
+                    if (random.Next(0, 100) < (100 - monsterSpanwed.Count * 10))
                     {
                         monsterSpanwed.Clear();
                         return BattleState.Exit;
                     }
                     player.Hp -= monsterSpanwed.Count;
                     return BattleState.Main;
-                    
+
                 case 1:
                     return BattleState.Encounter;
                 default:
@@ -184,12 +188,12 @@ namespace TextRPG
                 if (random.Next(1, 101) < 100)
                     getItem.Add(monster.Item);
                 deadCount++;
-                if(deadCount == monsterSpanwed.Count)
+                if (deadCount == monsterSpanwed.Count)
                     return result(player);
                 return BattleState.Encounter;
             }
 
-                
+
 
             int prevHp = player.Hp;
             Console.Clear();
@@ -215,42 +219,43 @@ namespace TextRPG
             Console.WriteLine();
             if (player.Hp > 0)
             {
-                while (true)
+                Console.Clear();
+                Console.WriteLine("Victory");
+                Console.WriteLine();
+                Console.WriteLine($"던전에서 몬스터를 {monsterSpanwed.Count}마리를 잡았습니다.");
+                Console.WriteLine();
+                Console.WriteLine($"HP {nowHp} -> {player.Hp}");
+                Console.WriteLine();
+                if (getItem.Count > 0)
                 {
-                    Console.Clear();
-                    Console.WriteLine("Victory");
-                    Console.WriteLine();
-                    Console.WriteLine($"던전에서 몬스터를 {monsterSpanwed.Count}마리를 잡았습니다.");
-                    Console.WriteLine();
-                    Console.WriteLine($"HP {nowHp} -> {player.Hp}");
-                    Console.WriteLine();
-                    if(getItem.Count > 0)
+                    foreach (var item in getItem)
                     {
-                        foreach (var item in getItem)
-                        {
-                            Console.WriteLine($"{item.ItemName} 획득");
-                            player.AddItem(item);
-                        }
+                        Console.WriteLine($"{item.ItemName} 획득");
+                        player.AddItem(item);
                     }
-                    getItem.Clear();
-                    Console.WriteLine();
-                    Console.WriteLine("1. 던전 탐사\n0. 마을");
-                    Console.WriteLine();
-                    message = (isWrong == true) ? "잘못된 입력입니다." : "원하시는 행동을 입력해주세요.";
-                    Console.WriteLine(message);
-                    Console.Write(">>");
-                    
-                    isWrong = ChoiceCheck(0, 1);
-                    if (isWrong)
-                        continue;
-                    monsterSpanwed.Clear();
-                    switch (choice)
-                    {
-                        case 0:
-                            return BattleState.Exit;
-                        case 1:
-                            return BattleState.Main;
-                    }
+                }
+                Console.WriteLine();
+                Console.WriteLine("1. 던전 탐사\n0. 마을");
+                Console.WriteLine();
+                message = (isWrong == true) ? "잘못된 입력입니다." : "원하시는 행동을 입력해주세요.";
+                Console.WriteLine(message);
+                Console.Write(">>");
+
+                isWrong = ChoiceCheck(0, 1);
+                if (isWrong)
+                    return BattleState.Result;
+                switch (choice)
+                {
+                    case 0:
+                        getItem.Clear();
+                        monsterSpanwed.Clear();
+                        return BattleState.Exit;
+                    case 1:
+                        getItem.Clear();
+                        monsterSpanwed.Clear();
+                        return BattleState.Main;
+                    default:
+                        return BattleState.Result;
                 }
             }
             else
