@@ -139,7 +139,7 @@ public class GameManager
                     VisitTown(shop);
                     break;
                 case "2":
-                    battle.StartUI(player);
+                    battle.BattleStart(player);
                     break;
                 case "3":
                     player.DisplayInventory(true); // 임시
