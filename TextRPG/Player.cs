@@ -17,7 +17,9 @@ namespace TextRPG
         public int Atk { get; set; }
         public int Def { get; set; }
         public int Hp { get; set; }
-        public int MaxHp { get; set; } // 최대체력: 오버힐 방지에 필요
+        public int Mp { get; set; }
+        public int MaxHp { get; set; } // 최대체력: 오버힐 방지에
+        public int MaxMp { get; set; } // 최대마력: 오버힐 방지
         public int Gold { get; private set; }
 
         public int ExtraAtk { get; private set; } // 추가공격력
@@ -117,7 +119,7 @@ namespace TextRPG
             target.TakeDamage(finalAtk);
         }
 
-        public void Heal(int amount) // 매개변수의 수치 만큼 회복
+        public void Heal(int amount) // 매개변수의 수치 만큼 회복 // mp추가시 매개 변수 하나더 추가
         {
             if (amount <= 0)
             {
@@ -132,8 +134,8 @@ namespace TextRPG
                 Hp = MaxHp;
             }
         }
-        
-        
+
+
         public void TakeDamage(int amount) //데미지를 받으면 hp 감소
         {
             int finalDamage = amount; //플레이어의 방어력 만큼 데미지 감소
