@@ -16,6 +16,7 @@ namespace TextRPG
         public string Job { get; set; }
         public int Atk { get; set; }
         public int Def { get; set; }
+        //public int Dex { get; set; } // 민첩
         public int Hp { get; set; }
         public int Mp { get; set; }
         public int MaxHp { get; set; } // 최대체력: 오버힐 방지에
@@ -119,7 +120,7 @@ namespace TextRPG
             target.TakeDamage(finalAtk);
         }
 
-        public void Heal(int amount) // 매개변수의 수치 만큼 회복 // mp추가시 매개 변수 하나더 추가
+        public void Heal(int amount) // 매개변수의 수치 만큼 회복 // Mp추가시 매개 변수 하나더 추가
         {
             if (amount <= 0)
             {
@@ -128,11 +129,16 @@ namespace TextRPG
             else
             {
                 Hp += amount;
+                //Mp += amount;
             }
             if (Hp > MaxHp) // hp가 최대hp을 넘지 않는다.
             {
                 Hp = MaxHp;
             }
+            //if (Mp > MaxMp)
+            //{
+            //    Mp = MaxMp;
+            //}
         }
 
 
