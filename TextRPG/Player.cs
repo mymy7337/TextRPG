@@ -32,6 +32,8 @@ namespace TextRPG
         public int MaxMp { get; set; } // 최대마력: 오버힐 방지
         public int Gold { get; private set; }
 
+        public int Exp { get; private set; } // 경험치
+
         public int ExtraAtk { get; private set; } // 추가공격력
         public int ExtraDef { get; private set; } // 추가방어력
         public int CritChance { get; private set; } = 15; // 치명타 확률
@@ -231,6 +233,37 @@ namespace TextRPG
         public void AddGold(int amount) // 골드 획득
         {
             Gold += amount;
+        }
+
+        public void GetExp(int amount) // 경험치 획득
+        {
+            Exp += amount;
+            while (Exp >= GetRequiredExp(Level))
+            {
+                Exp -= GetRequiredExp(Level);
+                LevelUp();
+            }
+        }
+
+        public void LevelUp() // 레벨 업
+        {
+            Level++;
+            MaxHp += 10;
+            MaxMp += 5;
+            Hp = MaxHp;
+            Mp = MaxMp;
+        }
+
+        private int GetRequiredExp(int level)
+        {
+            switch (level)
+            {
+                case 1: return 10;
+                case 2: return 35;
+                case 3: return 65;
+                case 4: return 100;
+                default: return (int)(100 + Math.Pow(level - 4, 2) * 20); // 등차수열 적용
+            }
         }
     }
 }
