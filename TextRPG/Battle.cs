@@ -15,6 +15,7 @@ namespace TextRPG
 {
     internal class Battle
     {
+        MonsterUI monUI = new MonsterUI();
         Random random = new Random();
         enum BattleState
         {
@@ -32,6 +33,7 @@ namespace TextRPG
 
         public void BattleStart(Player player, SkillSet skillSet)
         {
+            
             BattleState state = BattleState.Main;
 
             while (state != BattleState.Exit)
@@ -140,7 +142,7 @@ namespace TextRPG
             // 스킬 인덱스는 1부터 시작이므로 -1
             skillset.UseSkill(selected - 1, player, monster);
 
-            MonsterUI monUI = new MonsterUI();
+            
             monUI.DisplayHpInfo(monster, previousHp);
             Console.WriteLine("\n:다음으로 진행하려면 아무 키나 누르세요...");
 
@@ -308,7 +310,7 @@ namespace TextRPG
                 Monster monster = monsterSpanwed[i];
                 string prefix = state == BattleState.Encounter ? $"[{i + 1}] " : "   ";
                 Console.Write(prefix);
-                monster.DisplayMonsterInfo();
+                monUI.DisplayMonsterInfo(monster);
             }
 
             Console.WriteLine("\n════════════════════════════════════════════════════════════");
