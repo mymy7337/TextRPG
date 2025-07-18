@@ -73,11 +73,7 @@ public class GameManager
         string chosenJob = jobNames[selectedJobIndex];
         int[] stats = GetJobStats(chosenJob);
 
-        player = new Player(1, name, chosenJob, stats[0], stats[1], stats[3] * 10, 1500)
-        {
-            Mp = 100,
-            MaxMp = 100
-        };
+        player = new Player(1, name, chosenJob, stats[0], stats[1],stats[2], stats[3] * 10, stats[4] * 10, 1500){};
 
         skillSet = chosenJob switch
         {
@@ -95,12 +91,12 @@ public class GameManager
     {
         return job switch
         {
-            "검사" => new[] { 7, 6, 2, 7 },
-            "마법사" => new[] { 9, 2, 3, 5 },
-            "궁수" => new[] { 8, 3, 6, 4 },
-            "도적" => new[] { 10, 2, 8, 4 },
-            "해적" => new[] { 6, 5, 4, 5 },
-            _ => new[] { 5, 5, 5, 5 },
+            "전사" => new[] { 7, 6, 2, 7 ,3 },
+            "마법사" => new[] { 9, 2, 3, 5 ,7 },
+            "궁수" => new[] { 8, 3, 6, 4 ,4 },
+            "도적" => new[] { 10, 2, 8, 4 ,6 },
+            "해적" => new[] { 6, 5, 4, 5 , 5},
+            _ => new[] { 5, 5, 5, 5 , 5 },
         };
     }
 

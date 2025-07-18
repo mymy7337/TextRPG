@@ -9,24 +9,16 @@ using TextRPG.ItemFolder;
 
 namespace TextRPG
 {
-    //public enum JobType // 직업 Enum
-    //{
-    //    Warrior,
-    //    Wizard,
-    //    Archer,
-    //    Thief,
-    //    Pirate
-    //}
     public class Player
     {
         //player 기본상태
         public int Level { get; set; }
         public string Name { get; set; }
         public string Job { get; set; }
-        //public JobType Job { get; set; }
         public int Atk { get; set; }
         public int Def { get; set; }
-        //public int Dex { get; set; } // 민첩
+
+        public int Dex { get; set; }
         public int Hp { get; set; }
         public int Mp { get; set; }
         public int MaxHp { get; set; } // 최대체력: 오버힐 방지에
@@ -37,57 +29,75 @@ namespace TextRPG
 
         public int ExtraAtk { get;  set; } // 추가공격력
         public int ExtraDef { get;  set; } // 추가방어력
+        public int ExtraDex { get;  set; } // 추가민첩력
         public int CritChance { get; private set; } = 15; // 치명타 확률
         public float CritMultiplier { get; private set; } = 1.6f; //치명타 피해
         public int DodgeChance { get; private set; } = 10; // 회피 확률
 
 
 
-        public int FinalAtk
-        {
-            get
-            {
-                return Atk + ExtraAtk;
-            }
-        }
-        public int FinalDef
-        {
-            get
-            {
-                return Def + ExtraDef;
-            }
-        }
+        public int FinalAtk => Atk + ExtraAtk;
+
+        public int FinalDef => Def + ExtraDef;
+
 
         Random rand = new Random(); // 난수 생성(공격력 및 여러 난수) 
 
-        //인벤토리 공간
-        //List<Item>Inventory = new List<Item>(); 
-        //List<Item>EquipList = new List<Item>(); 
         public List<Item> Inventory { get; private set; } = new List<Item>();
         public Item EquippedWeapon { get; set; }
         public Item EquippedArmor { get; set; }
 
-        /*
-        public int InventoryCount // 인벤토리 아이템 갯수
-            {
-            get
-                {
-                    return Inventory.Count;
-                }
-            }
-
-        */
-        // 
-        public Player(int level, string name, string job, int atk, int def, int maxHp, int gold) // 플레이어 초기값
+        public Player(int level, string name, string job, int atk, int def,int dex, int maxHp, int maxMp, int gold) // 플레이어 초기값
         {
             Level = level;
             Name = name;
             Job = job;
             Atk = atk;
             Def = def;
-            Hp = maxHp; // 체력 초기값은 최대체력
-            MaxHp = maxHp; 
+            Dex = dex;
+            Hp = maxHp;
+            MaxHp = maxHp;
+            Mp = maxMp;
+            MaxMp = maxMp;
             Gold = gold;
+
+            SetJobTraits(job);
+        }
+
+        private void SetJobTraits(string job)
+        {
+            switch (job)
+                {
+                case "전사":
+                    CritChance = 10;
+                    CritMultiplier = 1.5f;
+                    DodgeChance = 10;
+                    break;
+
+                case "마법사":
+                    CritChance = 15;
+                    CritMultiplier = 1.8f;
+                    DodgeChance = 10;
+                    break;
+
+                case "궁수":
+                    CritChance = 18;
+                    CritMultiplier = 2.0f;
+                    DodgeChance = 10;
+                    break;
+
+                case "도적":
+                    CritChance = 30;
+                    CritMultiplier = 1.6f;
+                    DodgeChance = 10;
+                    break;
+
+                case "해적":
+                    CritChance = 10;
+                    CritMultiplier = 1.7f;
+                    DodgeChance = 10;
+                    break;
+            }
         }
 
         public void Attack(Monster target) // 플레이어의 공격 행동
@@ -134,7 +144,7 @@ namespace TextRPG
 
         public void TakeDamage(int amount) //데미지를 받으면 hp 감소
         {
-            int finalDamage = amount; //플레이어의 방어력 만큼 데미지 감소
+            int finalDamage = amount;
             if (finalDamage  <= 0)
             {
                 return;
@@ -148,63 +158,6 @@ namespace TextRPG
                 Hp = 0;
             }
         }
-
-        /*
-        public void DisplayInventory(bool showIdx)
-        {
-            if (Inventory.Count == 0)
-            {
-                Console.WriteLine("🎒 소지한 아이템이 없습니다.");
-                return;
-            }
-
-            Console.WriteLine("📦 인벤토리 목록");
-            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━");
-            for (int i = 0; i < Inventory.Count; i++)
-            {
-                Item targetItem = Inventory[i];
-                string displayIdx = showIdx ? $"{i + 1}. " : "";
-                string displayEquipped = IsEquipped(targetItem) ? "[E] " : "";
-                Console.WriteLine($"- {displayIdx}{displayEquipped}{targetItem.ItemInfoText()}");
-            }
-            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━");
-        }
-
-        //아이템 장착
-        public void EquipItem(Item item) // 아이템 타입을 숫자로 받아오는걸 상정했음. 아이템에 붙은 추가 스텟만큼 추가 공격력 방어력이 증가하는 형태
-        {
-            if (IsEquipped(item))
-            {
-                EquipList.Remove(item);
-                //if (item.Type == 0)
-                //    ExtraAtk -= item.Value;
-                //else
-                //    ExtraDef -= item.Value;
-            }
-            else
-            {
-                EquipList.Add(item);
-                //if (item.Type == 0)
-                //    ExtraAtk += item.Value;
-                //else
-                //    ExtraDef += item.Value;
-            }
-        }
-
-        public bool IsEquipped(Item item) // 아이템 장착 여부 판단
-        {
-            return EquipList.Contains(item);
-        }
-
-        public bool HasItem(Item item) // 아이템 소지 여부 판단
-        {
-            return Inventory.Contains(item);
-        }
-        public void AddItem(Item item) // 인벤토리에 아이템 추가
-        {
-            Inventory.Add(item);
-        }
-        */
 
         public bool UseGold(int amount) // 골드 사용
         {

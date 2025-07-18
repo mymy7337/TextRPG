@@ -39,7 +39,7 @@ namespace TextRPG
                 Hp = this.MaxHp,
                 Atk = this.Atk,
                 MaxHp = this.MaxHp,
-                //Item = this.Item
+                Item = this.Item
             };
         }
 
