@@ -79,12 +79,12 @@ namespace TextRPG
             Console.WriteLine();
 
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("ㅁ 민첩력     : ");
-            Console.Write($"{player.Def + player.ExtraDef}");
-            if (player.ExtraDef > 0)
+            Console.Write("⚡ 민첩력     : ");
+            Console.Write($"{player.Dex + player.ExtraDex}");
+            if (player.ExtraDex > 0)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.Write($" (+{player.ExtraDef})");
+                Console.Write($" (+{player.ExtraDex})");
                 Console.ResetColor();
             }
             Console.WriteLine();
