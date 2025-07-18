@@ -30,8 +30,11 @@ namespace TextRPG
         int deadCount;
         int nowHp;
 
+        bool isBattleMpPlus = false;
+
         public void BattleStart(Player player, SkillSet skillSet)
         {
+            isBattleMpPlus = false;
             BattleState state = BattleState.Main;
 
             while (state != BattleState.Exit)
@@ -168,9 +171,6 @@ namespace TextRPG
                 return BattleState.Encounter;
             }
 
-
-
-
             int prevHp = player.Hp;
             Console.Clear();
             monster.Attack(player);
@@ -180,8 +180,6 @@ namespace TextRPG
             Console.Write(">>");
             Console.ReadKey();
             if (player.Hp <= 0)
-                return result(player);
-            if (deadCount == monsterSpanwed.Count)
                 return result(player);
             else
                 return BattleState.Encounter;
@@ -205,13 +203,20 @@ namespace TextRPG
                 Console.WriteLine($"🧟‍♂️ 잡은 몬스터 수: {monsterSpanwed.Count} 마리");
                 Console.WriteLine($"❤️ HP: {nowHp} → {player.Hp}");
 
-                // ✅ MP 회복
-                int oldMp = player.Mp;
-                player.Mp += 10;
-                if (player.Mp > player.MaxMp)
-                    player.Mp = player.MaxMp;
+                if (!isBattleMpPlus)
+                {
+                    int oldMp = player.Mp;
+                    player.Mp += 10;
+                    if (player.Mp > player.MaxMp)
+                        player.Mp = player.MaxMp;
 
-                Console.WriteLine($"💧 MP: {oldMp} → {player.Mp}");
+                    if (player.Mp > oldMp)
+                    {
+                        Console.WriteLine($"💧 MP: {oldMp} → {player.Mp}");
+                    }
+
+                    isBattleMpPlus = true;
+                }
 
                 // 아이템 획득 출력
                 if (getItem.Count > 0)
@@ -257,8 +262,8 @@ namespace TextRPG
                 Console.WriteLine($"HP: 0");
                 Console.WriteLine("\n☠️ 게임 오버. 게임을 종료합니다...");
                 Console.Write(">> ");
-                Console.ReadKey();
-                Environment.Exit(0);
+                //Console.ReadKey();
+                //Environment.Exit(0);
                 return BattleState.Exit;
             }
         }
