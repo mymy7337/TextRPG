@@ -82,6 +82,7 @@ namespace TextRPG
             Gold = gold;
         } 
 
+        //PlayerUI로 이동
         //public void DisplayPlayerInfo() // 플레이어 상태 정보 표시 v
         //{
         //    Console.WriteLine($"Lv.{Level:D2}");
