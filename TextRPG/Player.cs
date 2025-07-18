@@ -33,20 +33,10 @@ namespace TextRPG
 
 
 
-        public int FinalAtk
-        {
-            get
-            {
-                return Atk + ExtraAtk;
-            }
-        }
-        public int FinalDef
-        {
-            get
-            {
-                return Def + ExtraDef;
-            }
-        }
+        public int FinalAtk => Atk + ExtraAtk;
+
+        public int FinalDef => Def + ExtraDef;
+
 
         Random rand = new Random(); // 난수 생성(공격력 및 여러 난수) 
 
