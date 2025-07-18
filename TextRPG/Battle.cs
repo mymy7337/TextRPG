@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Net.Security;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -36,10 +37,10 @@ namespace TextRPG
                 switch (state)
                 {
                     case BattleState.Main:
-                        state = MainUI(player);
+                        state = MainUI(player, state);
                         break;
                     case BattleState.Encounter:
-                        state = EncounterUI(player);
+                        state = EncounterUI(player, state);
                         break;
                     case BattleState.Result:
                         state = result(player);
@@ -48,47 +49,30 @@ namespace TextRPG
             }
         }
 
-        BattleState MainUI(Player player)
+        BattleState MainUI(Player player, BattleState state)
         {
             if (monsterSpanwed.Count == 0)
             {
                 SpawnMonster();
+                deadCount = 0;
             }
             nowHp = player.Hp;
-            deadCount = 0;
-            Monster monster;
-            Console.Clear();
-            Console.WriteLine("Battle!!");
-            Console.WriteLine();
-
-            for (int i = 0; i < monsterSpanwed.Count; i++)
-            {
-                monster = monsterSpanwed[i];
-                monster.DisplayMonsterInfo();
-            }
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("[내정보]");
-            player.DisplayBattleInfo();
-            Console.WriteLine();
-            Console.WriteLine("1. 공격\n0. 돌아가기");
-            Console.WriteLine();
-            message = (isWrong == true) ? "잘못된 입력입니다." : "원하시는 행동을 입력해주세요.";
-            Console.WriteLine(message);
-            Console.Write(">>");
-            isWrong = ChoiceCheck(0, 1);
+            
+            List<string> option = new List<string>() { "1. 공격", "0. 돌아가기" };
+            DisplayUI(player, state, option);
+            isWrong = ChoiceCheck(0, option.Count-1);
             if (isWrong)
                 return BattleState.Main;
 
             switch (choice)
             {
                 case 0:
-                    if (random.Next(0, 100) < (100 - monsterSpanwed.Count * 10))
+                    if (random.Next(0, 100) < (100 - (monsterSpanwed.Count-deadCount) * 10))
                     {
                         monsterSpanwed.Clear();
                         return BattleState.Exit;
                     }
-                    player.Hp -= monsterSpanwed.Count;
+                    player.Hp -= (monsterSpanwed.Count - deadCount) * 2;
                     return BattleState.Main;
 
                 case 1:
@@ -99,72 +83,30 @@ namespace TextRPG
 
         }
 
-        BattleState EncounterUI(Player player)
+        BattleState EncounterUI(Player player, BattleState state)
         {
-
-            Console.Clear();
-            Console.WriteLine("Battle!!");
-            Console.WriteLine();
-            for (int i = 0; i < monsterSpanwed.Count; i++)
-            {
-                Monster monster = monsterSpanwed[i];
-                Console.Write($"{i + 1} ");
-                monster.DisplayMonsterInfo();
-            }
-            Console.WriteLine();
-            Console.WriteLine("[내정보]");
-            player.DisplayBattleInfo();
-            Console.WriteLine();
-            Console.WriteLine("0. 취소");
-            Console.WriteLine();
-            message = (isWrong == true) ? "잘못된 입력입니다." : "대상을 선택해주세요.";
-            Console.WriteLine(message);
-            Console.Write(">>");
+            List<string> option = new List<string>() { "0. 돌아가기" };
+            DisplayUI(player, state, option);
             isWrong = ChoiceCheck(0, monsterSpanwed.Count);
 
             if (isWrong)
                 return BattleState.Encounter;
 
-            switch (choice)
-            {
-                case 0:
-                    return BattleState.Main;
-                case 1:
-                    if (monsterSpanwed[0].Hp <= 0)
-                    {
-                        isWrong = true;
-                        return BattleState.Encounter;
-                    }
-                    else
-                        return PlayerPhase(player, monsterSpanwed[0]);
-                case 2:
-                    if (monsterSpanwed[1].Hp <= 0)
-                    {
-                        isWrong = true;
-                        return BattleState.Encounter;
-                    }
-                    else
-                        return PlayerPhase(player, monsterSpanwed[1]);
-                case 3:
-                    if (monsterSpanwed[2].Hp <= 0)
-                    {
-                        isWrong = true;
-                        return BattleState.Encounter;
-                    }
-                    else
-                        return PlayerPhase(player, monsterSpanwed[2]);
-                case 4:
-                    if (monsterSpanwed[3].Hp <= 0)
-                    {
-                        isWrong = true;
-                        return BattleState.Encounter;
-                    }
-                    else
-                        return PlayerPhase(player, monsterSpanwed[3]);
-                default:
-                    return BattleState.Encounter;
-            }
+            if (choice == 0)
+                return BattleState.Main;
 
+            int monsterIdx = choice - 1;
+            if(monsterIdx >= 0 && monsterIdx < monsterSpanwed.Count)
+            {
+                Monster monster = monsterSpanwed[monsterIdx];
+                if(monster.Hp <= 0)
+                {
+                    isWrong = true;
+                    return BattleState.Encounter;
+                }
+                return PlayerPhase(player, monster);
+            }
+            return BattleState.Encounter;
         }
 
         BattleState PlayerPhase(Player player, Monster monster)
@@ -299,6 +241,35 @@ namespace TextRPG
             return true;
         }
 
+        void DisplayUI(Player player, BattleState state, List<string> option)
+        {
+            Monster monster;
+            Console.Clear();
+            Console.WriteLine("Battle!!");
+            Console.WriteLine();
 
+            for (int i = 0; i < monsterSpanwed.Count; i++)
+            {
+                monster = monsterSpanwed[i];
+                Console.Write(state == BattleState.Encounter ? $"{i + 1} " : "");
+                monster.DisplayMonsterInfo();
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("[내정보]");
+            player.DisplayBattleInfo();
+            Console.WriteLine();
+            foreach(string optionLine in option)
+                Console.WriteLine(optionLine);
+            Console.WriteLine();
+            string defaultMessage = state switch
+            {
+                BattleState.Encounter => "대상을 선택해주세요.",
+                _ => "원하시는 행동을 입력해주세요."
+            };
+            message = isWrong ? "잘못된 입력입니다." : defaultMessage;
+            Console.WriteLine(message);
+            Console.Write(">>");
+        }
     }
 }
