@@ -19,7 +19,7 @@ namespace TextRPG
             ShopMenu = 1,
             BuyItem = 2,
             SellItem = 3,
-            Exit = 4
+            Exit = 4,
         }
 
         public void ShowShopMenu(Player player)
@@ -68,7 +68,10 @@ namespace TextRPG
                         break;
                     default:
                         //GameSystem.FaileInput();
-                        GameManager.instance.LoadMainScene(); // 시작 화면으로 돌아가기
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\n❌ 잘못된 입력입니다.");
+                        Console.ResetColor();
+                        ShowShopMenu(player);
                         //ShowShopMenu();
                         break;
                 }
@@ -76,12 +79,12 @@ namespace TextRPG
             }
             Console.WriteLine("\n아무 키나 누르면 상점 메뉴로 돌아갑니다...");
             Console.ReadKey();
-            //ShowShopMenu(player);
+            ShowShopMenu(player);
         }
 
         public void ShowShopItems(Player player)
         {
-            //Console.Clear();
+            Console.Clear();
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("╔════════════════════════════════════════════════════════════════════════════════════════════════════╗");
             Console.WriteLine("║                                        🛍️ 상점 아이템 목록                                         ║");

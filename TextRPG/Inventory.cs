@@ -164,6 +164,7 @@ namespace TextRPG
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("\n❌ 잘못된 입력입니다.");
+                    Console.ResetColor();
                 }
 
                 Console.ResetColor();
