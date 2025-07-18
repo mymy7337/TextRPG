@@ -82,37 +82,6 @@ namespace TextRPG
             Gold = gold;
         }
 
-        //PlayerUI로 이동
-        public void DisplayPlayerInfo()
-        {
-            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━");
-            Console.WriteLine($"🧙‍♂️ {Name} - {Job} | Lv.{Level:D2}");
-            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━");
-            Console.WriteLine($"🗡️ 공격력 : {FinalAtk}" + (ExtraAtk == 0 ? "" : $" (+{ExtraAtk})"));
-            Console.WriteLine($"🛡️ 방어력 : {FinalDef}" + (ExtraDef == 0 ? "" : $" (+{ExtraDef})"));
-            Console.WriteLine($"❤️ 체  력 : {Hp} / {MaxHp}");
-            Console.WriteLine($"🔮 마  력 : {Mp} / {MaxMp}");
-            Console.WriteLine($"💰 골  드 : {Gold}");
-            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━");
-        }
-
-
-        public void DisplayBattleInfo()
-        {
-            Console.WriteLine($"🎖️ Lv. {Level:D2} {Name} ({Job})");
-            Console.WriteLine($"❤️ HP : {Hp} / {MaxHp}");
-            Console.WriteLine($"🔮 MP : {Mp} / {MaxMp}");
-        }
-
-
-        public void DisplayHpInfo(int previousHp)
-        {
-            Console.WriteLine($"🎯 대상: Lv.{Level:D2} {Name} ({Job})");
-
-            string nowHp = Hp <= 0 ? "💀 Dead" : Hp.ToString();
-            Console.WriteLine($"❤️ HP : {previousHp} → {nowHp}");
-        }
-
         public void Attack(Monster target) // 플레이어의 공격 행동
         {
             Console.WriteLine($"{Name} 의 공격!");
@@ -139,30 +108,19 @@ namespace TextRPG
             target.TakeDamage(finalAtk);
         }
 
-        //public void UseSkill() // 스킬 사용 메서드
-        //{
-
-        //}
-
-        public void Heal(int amount) // 매개변수의 수치 만큼 회복 // Mp추가시 매개 변수 하나더 추가
+        public void Heal(int hpAmount = 0, int mpAmount = 0) // hp/mp 회복
         {
-            if (amount <= 0)
+            if (hpAmount > 0)
             {
-                return;
+                Hp += hpAmount;
+                if (Hp > MaxHp) Hp = MaxHp;
             }
-            else
+
+            if (mpAmount > 0)
             {
-                Hp += amount;
-                //Mp += amount;
+                Mp += mpAmount;
+                if (Mp > MaxMp) Mp = MaxMp;
             }
-            if (Hp > MaxHp) // hp가 최대hp을 넘지 않는다.
-            {
-                Hp = MaxHp;
-            }
-            //if (Mp > MaxMp)
-            //{
-            //    Mp = MaxMp;
-            //}
         }
 
 

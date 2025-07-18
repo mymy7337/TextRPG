@@ -111,7 +111,7 @@ public class GameManager
             Console.WriteLine("🎯 최종 정보 확인");
             Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━\n");
             Console.WriteLine("📊 [스탯 정보]");
-            player.DisplayPlayerInfo();
+            PlayerUI.DisplayPlayerInfo(player);
 
             Console.WriteLine("\n🔄 [B] 직업 변경  |  [Enter] 게임 시작");
             Console.Write("선택: ");
@@ -155,7 +155,7 @@ public class GameManager
             Console.WriteLine("🏰 Text RPG에 오신 걸 환영합니다!");
             Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
 
-            player.DisplayPlayerInfo();
+            PlayerUI.DisplayPlayerInfo(player);
 
             Console.WriteLine("\n━━━━━━━━━━━━━━━━━━━━━━━");
             Console.ForegroundColor = ConsoleColor.Green;
@@ -227,7 +227,7 @@ public class GameManager
                     if (player.Gold >= 20)
                     {
                         player.UseGold(20);
-                        player.Hp = player.MaxHp;
+                        player.Heal(player.MaxHp, player.MaxMp);
                         Console.WriteLine("💖 체력이 회복되었습니다!");
                     }
                     else

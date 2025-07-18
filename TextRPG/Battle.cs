@@ -174,7 +174,7 @@ namespace TextRPG
             int prevHp = player.Hp;
             Console.Clear();
             monster.Attack(player);
-            player.DisplayHpInfo(prevHp);
+            PlayerUI.DisplayHpInfo(player,prevHp);
             Console.WriteLine();
             Console.WriteLine("다음");
             Console.Write(">>");
@@ -308,7 +308,7 @@ namespace TextRPG
 
             // 📌 플레이어 정보
             Console.WriteLine("🧙‍♂️ 내 정보");
-            player.DisplayBattleInfo();
+            PlayerUI.DisplayBattleInfo(player);
 
             Console.WriteLine("════════════════════════════════════════════════════════════\n");
 

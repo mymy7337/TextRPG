@@ -12,28 +12,30 @@ namespace TextRPG
     {
         public static void DisplayPlayerInfo(Player player) // 플레이어 상태 정보 표시
         {
-            Console.WriteLine($"Lv.{player.Level:D2}");
-            Console.WriteLine($"{player.Name} ({player.Job})");
-            Console.WriteLine($"공격력 : {player.FinalAtk}" + (player.ExtraAtk == 0 ? "" : $" (+{player.ExtraAtk})"));
-            Console.WriteLine($"방어력 : {player.FinalDef}" + (player.ExtraDef == 0 ? "" : $" (+{player.ExtraDef})"));
-            Console.WriteLine($"Hp : {player.Hp}");
-            Console.WriteLine($"Mp : {player.Mp}");
-            Console.WriteLine($"Gold : {player.Gold}");
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            Console.WriteLine($"🧙‍♂️ {player.Name} - {player.Job} | Lv.{player.Level:D2}");
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            Console.WriteLine($"🗡️ 공격력 : {player.FinalAtk}" + (player.ExtraAtk == 0 ? "" : $" (+{player.ExtraAtk})"));
+            Console.WriteLine($"🛡️ 방어력 : {player.FinalDef}" + (player.ExtraDef == 0 ? "" : $" (+{player.ExtraDef})"));
+            Console.WriteLine($"❤️ 체  력 : {player.Hp} / {player.MaxHp}");
+            Console.WriteLine($"🔮 마  력 : {player.Mp} / {player.MaxMp}");
+            Console.WriteLine($"💰 골  드 : {player.Gold}");
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━");
         }
 
         public static void DisplayBattleInfo(Player player) // 전투 시 플레이어 정보
         {
-            Console.WriteLine($"Lv. {player.Level:D2} {player.Name} ({player.Job})");
-            Console.WriteLine($"Hp {player.Hp}/{player.MaxHp}");
-            Console.WriteLine($"Mp {player.Mp}/{player.MaxMp}");
+            Console.WriteLine($"🎖️ Lv. {player.Level:D2} {player.Name} ({player.Job})");
+            Console.WriteLine($"❤️ HP : {player.Hp} / {player.MaxHp}");
+            Console.WriteLine($"🔮 MP : {player.Mp} / {player.MaxMp}");
         }
 
-        public static void DisplayHpMpInfo(Player player, int previousHp, int previousMp) // 전투 시 Hp/Mp 변화 정보 표시
+        public static void DisplayHpInfo(Player player, int previousHp) // 전투 시 Hp
         {
-            Console.WriteLine($"Lv. {player.Level:D2} {player.Name} ({player.Job})");
-            string nowHp = player.Hp <= 0 ? "Dead" : player.Hp.ToString(); // hp가 0 이하면 Dead 표시
-            Console.WriteLine($"Hp {previousHp} -> {nowHp}");
-            Console.WriteLine($"Hp {previousMp} -> {player.Mp}");
+            Console.WriteLine($"🎯 대상: Lv.{player.Level:D2} {player.Name} ({player.Job})");
+
+            string nowHp = player.Hp <= 0 ? "💀 Dead" : player.Hp.ToString();
+            Console.WriteLine($"❤️ HP : {previousHp} → {nowHp}");
         }
     }
 }
