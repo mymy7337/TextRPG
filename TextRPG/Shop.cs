@@ -90,7 +90,7 @@ namespace TextRPG
             Console.WriteLine("║                                        🛍️ 상점 아이템 목록                                         ║");
             Console.WriteLine("╚════════════════════════════════════════════════════════════════════════════════════════════════════╝");
             Console.ResetColor();
-            Console.WriteLine($"{AdjustWidth("이름", 18)} {AdjustWidth("종류", 8)} {AdjustWidth("스탯", 8)} {AdjustWidth("설명", 60)} {AdjustWidth("가격", 10)}");
+            Console.WriteLine($"{AdjustWidth("이름", 18)} {AdjustWidth("종류", 8)} {AdjustWidth("스탯", 8)} {AdjustWidth("설명", 70)} {AdjustWidth("가격", 10)}");
             Console.WriteLine(new string('-', 120));
 
             foreach (var item in Item.Items)
@@ -103,7 +103,7 @@ namespace TextRPG
 
                 if (item.Price != 0) Console.ForegroundColor = ConsoleColor.Green; else Console.ForegroundColor = ConsoleColor.DarkGray;
 
-                Console.WriteLine($"{AdjustWidth(item.Name, 18)} {AdjustWidth(type, 8)} {AdjustWidth(stat, 8)} {AdjustWidth(item.Info, 60)} {AdjustWidth(priceStr, 10)}");
+                Console.WriteLine($"{AdjustWidth(item.Name, 18)} {AdjustWidth(type, 8)} {AdjustWidth(stat, 8)} {AdjustWidth(item.Info, 70)} {AdjustWidth(priceStr, 10)}");
             }
             Console.ResetColor();
 
@@ -124,7 +124,7 @@ namespace TextRPG
             Console.WriteLine("║                                        🛍️ 상점 아이템 구매                                         ║");
             Console.WriteLine("╚════════════════════════════════════════════════════════════════════════════════════════════════════╝");
             Console.ResetColor();
-            Console.WriteLine($"{AdjustWidth("번호", 4)} {AdjustWidth("이름", 18)} {AdjustWidth("종류", 8)} {AdjustWidth("스탯", 8)} {AdjustWidth("설명", 60)} {AdjustWidth("가격", 10)}");
+            Console.WriteLine($"{AdjustWidth("번호", 4)} {AdjustWidth("이름", 18)} {AdjustWidth("종류", 8)} {AdjustWidth("스탯", 8)} {AdjustWidth("설명", 70)} {AdjustWidth("가격", 10)}");
             Console.WriteLine(new string('-', 120));
 
             for (int i = 0; i < Item.Items.Count; i++)
@@ -137,7 +137,7 @@ namespace TextRPG
 
                 Console.ForegroundColor = item.Price != 0 ? ConsoleColor.Green : ConsoleColor.DarkGray; // 가격이 0이 아니면 초록색, 0이면 회색 삼항 연산자
 
-                Console.WriteLine($"{AdjustWidth(indexStr, 4)} {AdjustWidth(item.Name, 18)} {AdjustWidth(type, 8)} {AdjustWidth(stat, 8)} {AdjustWidth(item.Info, 60)} {AdjustWidth(priceStr, 10)}");
+                Console.WriteLine($"{AdjustWidth(indexStr, 4)} {AdjustWidth(item.Name, 18)} {AdjustWidth(type, 8)} {AdjustWidth(stat, 8)} {AdjustWidth(item.Info, 70)} {AdjustWidth(priceStr, 10)}");
             }
             Console.ResetColor(); // 원래 색상으로 되돌림
             Console.WriteLine(new string('-', 120));
@@ -228,7 +228,7 @@ namespace TextRPG
             Console.WriteLine("║                                           🛍️ 아이템 판매                                           ║");
             Console.WriteLine("╚════════════════════════════════════════════════════════════════════════════════════════════════════╝");
             Console.ResetColor();
-            Console.WriteLine($"{AdjustWidth("번호", 4)} {AdjustWidth("이름", 18)} {AdjustWidth("종류", 8)} {AdjustWidth("스탯", 8)} {AdjustWidth("설명", 60)} {AdjustWidth("가격", 12)}");
+            Console.WriteLine($"{AdjustWidth("번호", 4)} {AdjustWidth("이름", 18)} {AdjustWidth("종류", 8)} {AdjustWidth("스탯", 8)} {AdjustWidth("설명", 70)} {AdjustWidth("가격", 12)}");
             Console.WriteLine(new string('-', 120));
 
             for (int i = 0; i < inventoryItems.Count; i++)
@@ -239,7 +239,7 @@ namespace TextRPG
                 string stat = $"+{item.StatValue}";
                 string priceStr = $"{(int)(item.OriginalPrice * 0.85)} G (판매가)";
 
-                Console.WriteLine($"{AdjustWidth(indexStr, 4)} {AdjustWidth(item.Name, 18)} {AdjustWidth(type, 8)} {AdjustWidth(stat, 8)} {AdjustWidth(item.Info, 60)} {AdjustWidth(priceStr, 12)}");
+                Console.WriteLine($"{AdjustWidth(indexStr, 4)} {AdjustWidth(item.Name, 18)} {AdjustWidth(type, 8)} {AdjustWidth(stat, 8)} {AdjustWidth(item.Info, 70)} {AdjustWidth(priceStr, 12)}");
             }
 
             Console.WriteLine(new string('-', 120));
