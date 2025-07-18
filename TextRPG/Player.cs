@@ -22,10 +22,8 @@ namespace TextRPG
         public int Level { get; set; }
         public string Name { get; set; }
         public string Job { get; set; }
-        //public JobType Job { get; set; }
         public int Atk { get; set; }
         public int Def { get; set; }
-        //public int Dex { get; set; } // 민첩
         public int Hp { get; set; }
         public int Mp { get; set; }
         public int MaxHp { get; set; } // 최대체력: 오버힐 방지에
