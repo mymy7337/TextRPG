@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 namespace TextRPG;
 
+/*
 public class Potion : Item
 {
     public int ItemHP { get; set; }
@@ -20,3 +21,5 @@ public class Potion : Item
         new Potion("요정의 비약", "체력과 마력을 모두 크게 회복해준다. 이런 귀한 걸 얻다니 운이 좋은걸?", 20, GetType.Drop, new int[]{30,30}, new EffectType[] { EffectType.ItemHp, EffectType.ItemMp})
     };
 }
+
+*/

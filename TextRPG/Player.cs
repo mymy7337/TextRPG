@@ -5,6 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using TextRPG.ItemFolder;
 
 namespace TextRPG
 {
@@ -28,15 +29,17 @@ namespace TextRPG
         public int Mp { get; set; }
         public int MaxHp { get; set; } // 최대체력: 오버힐 방지에
         public int MaxMp { get; set; } // 최대마력: 오버힐 방지
-        public int Gold { get; private set; }
+        public int Gold { get; set; }
 
         public int Exp { get; private set; } // 경험치
 
-        public int ExtraAtk { get; private set; } // 추가공격력
-        public int ExtraDef { get; private set; } // 추가방어력
+        public int ExtraAtk { get;  set; } // 추가공격력
+        public int ExtraDef { get;  set; } // 추가방어력
         public int CritChance { get; private set; } = 15; // 치명타 확률
         public float CritMultiplier { get; private set; } = 1.6f; //치명타 피해
         public int DodgeChance { get; private set; } = 10; // 회피 확률
+
+
 
         public int FinalAtk
         {
@@ -56,9 +59,13 @@ namespace TextRPG
         Random rand = new Random(); // 난수 생성(공격력 및 여러 난수) 
 
         //인벤토리 공간
-        List<Item>Inventory = new List<Item>(); 
-        List<Item>EquipList = new List<Item>(); 
+        //List<Item>Inventory = new List<Item>(); 
+        //List<Item>EquipList = new List<Item>(); 
+        public List<Item> Inventory { get; private set; } = new List<Item>();
+        public Item EquippedWeapon { get; set; }
+        public Item EquippedArmor { get; set; }
 
+        /*
         public int InventoryCount // 인벤토리 아이템 갯수
             {
             get
@@ -67,6 +74,7 @@ namespace TextRPG
                 }
             }
 
+        */
         // 
         public Player(int level, string name, string job, int atk, int def, int maxHp, int gold) // 플레이어 초기값
         {
@@ -139,6 +147,7 @@ namespace TextRPG
             }
         }
 
+        /*
         public void DisplayInventory(bool showIdx)
         {
             if (Inventory.Count == 0)
@@ -193,6 +202,7 @@ namespace TextRPG
         {
             Inventory.Add(item);
         }
+        */
 
         public bool UseGold(int amount) // 골드 사용
         {
@@ -202,6 +212,14 @@ namespace TextRPG
                 return true;
             }
             return false;
+        }
+        public void AddItem(Item item)
+        {
+            if (!Inventory.Contains(item))
+            {
+                Inventory.Add(item);
+                item.Price = 0; // 아이템을 "보유 상태"로 변경
+            }
         }
 
         public void AddGold(int amount) // 골드 획득

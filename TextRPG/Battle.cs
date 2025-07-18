@@ -10,11 +10,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using TextRPG.Quest_Folder;
 using TextRPG.Skill_Folder;
+using TextRPG.ItemFolder;
 
 namespace TextRPG
 {
     internal class Battle
     {
+        MonsterUI monUI = new MonsterUI();
         Random random = new Random();
         enum BattleState
         {
@@ -32,6 +34,7 @@ namespace TextRPG
 
         public void BattleStart(Player player, SkillSet skillSet)
         {
+            
             BattleState state = BattleState.Main;
 
             while (state != BattleState.Exit)
@@ -140,7 +143,7 @@ namespace TextRPG
             // 스킬 인덱스는 1부터 시작이므로 -1
             skillset.UseSkill(selected - 1, player, monster);
 
-            MonsterUI monUI = new MonsterUI();
+            
             monUI.DisplayHpInfo(monster, previousHp);
             Console.WriteLine("\n:다음으로 진행하려면 아무 키나 누르세요...");
 
@@ -156,12 +159,19 @@ namespace TextRPG
         {
             if (monster.Hp <= 0)
             {
-                // ✅ 퀘스트 진행도 반영 + 보상 지급
                 QuestManager.CheckKill(monster.Name, player);
 
-                // 기존 아이템 드랍은 일단 생략
-                deadCount++;
+                // 🎁 아이템 드랍 (50% 확률)
+                if (random.Next(0, 100) < 50)
+                {
+                    if (Item.Items.Count > 0)
+                    {
+                        Item dropItem = Item.Items[random.Next(Item.Items.Count)];
+                        getItem.Add(dropItem);
+                    }
+                }
 
+                deadCount++;
                 if (deadCount == monsterSpanwed.Count)
                     return result(player);
 
@@ -170,7 +180,7 @@ namespace TextRPG
 
 
 
-
+            
             int prevHp = player.Hp;
             Console.Clear();
             monster.Attack(player);
@@ -182,7 +192,10 @@ namespace TextRPG
             if (player.Hp <= 0)
                 return result(player);
             if (deadCount == monsterSpanwed.Count)
+            {
                 return result(player);
+            }
+                
             else
                 return BattleState.Encounter;
         }
@@ -191,7 +204,7 @@ namespace TextRPG
         {
             Console.Clear();
             int prevHp = player.Hp;
-
+            int oldMp = player.Mp;
             Console.WriteLine("━━━━━━━━━━━━━━ 🏆 전투 결과 🏆 ━━━━━━━━━━━━━━");
             Console.WriteLine();
 
@@ -204,12 +217,16 @@ namespace TextRPG
 
                 Console.WriteLine($"🧟‍♂️ 잡은 몬스터 수: {monsterSpanwed.Count} 마리");
                 Console.WriteLine($"❤️ HP: {nowHp} → {player.Hp}");
-
+                
                 // ✅ MP 회복
-                int oldMp = player.Mp;
-                player.Mp += 10;
-                if (player.Mp > player.MaxMp)
-                    player.Mp = player.MaxMp;
+                if (!isWrong)
+                {
+                    player.Mp += 10;
+                    if (player.Mp > player.MaxMp)
+                        player.Mp = player.MaxMp;
+                }
+                else
+                    oldMp = player.Mp - 10;
 
                 Console.WriteLine($"💧 MP: {oldMp} → {player.Mp}");
 
@@ -219,10 +236,12 @@ namespace TextRPG
                     Console.WriteLine("\n📦 획득한 아이템:");
                     foreach (var item in getItem)
                     {
-                        Console.WriteLine($"- {item.ItemName}");
-                        player.AddItem(item);
+                        Console.WriteLine($"- {item.Name}");
+                        player.AddItem(item);  // 인벤토리에 추가 + 구매 상태 처리
                     }
+                    getItem.Clear(); // 다음 전투에 영향 없도록 초기화
                 }
+
 
                 Console.WriteLine("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
                 Console.WriteLine("어디로 이동하시겠습니까?");
@@ -237,7 +256,7 @@ namespace TextRPG
                 if (isWrong)
                     return BattleState.Result;
 
-                getItem.Clear();
+                //getItem.Clear();
                 monsterSpanwed.Clear();
 
                 return choice switch
@@ -271,7 +290,7 @@ namespace TextRPG
             int monNum = random.Next(1, 5);
             for (int i = 0; i < monNum; i++)
             {
-                int monId = random.Next(0, 3);
+                int monId = random.Next(0, MonsterDB.monsterData.Count);
                 Monster baseMon = MonsterDB.monsterData[monId];
                 Monster newMon = baseMon.Clone();
                 monsterSpanwed.Add(newMon);
@@ -301,7 +320,7 @@ namespace TextRPG
                 Monster monster = monsterSpanwed[i];
                 string prefix = state == BattleState.Encounter ? $"[{i + 1}] " : "   ";
                 Console.Write(prefix);
-                monster.DisplayMonsterInfo();
+                monUI.DisplayMonsterInfo(monster);
             }
 
             Console.WriteLine("\n════════════════════════════════════════════════════════════");
