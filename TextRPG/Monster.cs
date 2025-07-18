@@ -15,8 +15,8 @@ namespace TextRPG
         public int Atk { get; set; }
         public int Hp { get; set; }
         public int MaxHp { get; set; }
-        public int DodgeChance { get; private set; } = 10; // 회피 확률
-        public Item Item { get; set; }
+        public int DodgeChance { get; private set; } = 10; // 회피 확률 현재 10%
+        public Item Item { get; set; } // 몬스터 드랍 아이템
 
         Random rand = new Random(); // 난수 생성(공격력 및 여러 난수)
 
@@ -42,24 +42,24 @@ namespace TextRPG
             };
         }
 
-        public void DisplayMonsterInfo() //몬스터 상태 정보 표시
-        {
-            string nowHp = Hp <= 0 ? "Dead" : Hp.ToString();
-            Console.WriteLine($"Lv.{Level:D2} {Name} HP {nowHp}");
-        }
+        //public void DisplayMonsterInfo() //몬스터 상태 정보 표시 MonsterUI 로 이동
+        //{
+        //    string nowHp = Hp <= 0 ? "Dead" : Hp.ToString();
+        //    Console.WriteLine($"Lv.{Level:D2} {Name} HP {nowHp}");
+        //}
 
-        public void DisplayBattleInfo() // 전투 시작 전 몬스터 정보
-        {
-            Console.WriteLine($"Lv. {Level:D2} {Name}");
-            Console.WriteLine($"Hp {Hp}/{MaxHp}");
-        }
+        //public void DisplayBattleInfo() // 전투 시작 전 몬스터 정보
+        //{
+        //    Console.WriteLine($"Lv. {Level:D2} {Name}");
+        //    Console.WriteLine($"Hp {Hp}/{MaxHp}");
+        //}
 
-        public void DisplayHpInfo(int previousHp) // 전투 시 몬스터 Hp 변화 정보 표시
-        {
-            Console.WriteLine($"Lv. {Level:D2} {Name}");
-            string nowHp = Hp <= 0 ? "Dead" : Hp.ToString(); // hp가 0 이하면 Dead 표시
-            Console.WriteLine($"Hp {previousHp} -> {nowHp}");
-        }
+        //public void DisplayHpInfo(int previousHp) // 전투 시 몬스터 Hp 변화 정보 표시
+        //{
+        //    Console.WriteLine($"Lv. {Level:D2} {Name}");
+        //    string nowHp = Hp <= 0 ? "Dead" : Hp.ToString(); // hp가 0 이하면 Dead 표시
+        //    Console.WriteLine($"Hp {previousHp} -> {nowHp}");
+        //}
 
         public void TakeDamage(int amount) //데미지를 받으면 hp 감소
         {
