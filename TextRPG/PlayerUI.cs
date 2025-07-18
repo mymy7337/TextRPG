@@ -35,5 +35,49 @@ namespace TextRPG
             Console.WriteLine($"Hp {previousHp} -> {nowHp}");
             Console.WriteLine($"Hp {previousMp} -> {player.Mp}");
         }
+
+        public static void PlayerInfo_Color(Player player)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("╔════════════════════════════════════════════╗");
+            Console.WriteLine("║             📋 캐릭터 상태 보기            ║");
+            Console.WriteLine("╚════════════════════════════════════════════╝");
+            Console.ResetColor();
+            Console.WriteLine("캐릭터의 정보가 표시됩니다.\n");
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"👤 이름       : {player.Name}");
+            Console.WriteLine($"💼 직업       : {player.Job}");
+            Console.WriteLine($"📈 레벨       : Lv. {player.Level}"); //(Exp: {player.Exp}/{player.ExpToNextLevel})
+            Console.WriteLine($"❤️ 체력       : {player.Hp}");
+
+            int bonusAtk = player.ExtraAtk - player.Atk;
+            int bonusDef = player.ExtraDef - player.Def;
+
+            Console.Write("⚔️ 공격력     : ");
+            Console.Write($"{player.Atk + player.ExtraAtk}");
+            if (player.ExtraAtk > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write($" (+{player.ExtraAtk})");
+                Console.ResetColor();
+            }
+            Console.WriteLine();
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("🛡️ 방어력     : ");
+            Console.Write($"{player.Def + player.ExtraDef}");
+            if (player.ExtraDef > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write($" (+{player.ExtraDef})");
+                Console.ResetColor();
+            }
+            Console.WriteLine();
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"💰 소지 Gold  : {player.Gold} G");
+            Console.ResetColor();
+        }
     }
 }
