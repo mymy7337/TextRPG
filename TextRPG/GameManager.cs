@@ -234,7 +234,7 @@ public class GameManager
                     {
                         player.UseGold(20);
                         player.Heal(player.MaxHp, player.MaxMp);
-                        Console.WriteLine("💖체력,마력이 회복되었습니다!");
+                        Console.WriteLine("💖체력,🌀마력이 회복되었습니다!");
                     }
                     else
                     {
