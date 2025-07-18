@@ -290,7 +290,7 @@ namespace TextRPG
             int monNum = random.Next(1, 5);
             for (int i = 0; i < monNum; i++)
             {
-                int monId = random.Next(0, 3);
+                int monId = random.Next(0, MonsterDB.monsterData.Count);
                 Monster baseMon = MonsterDB.monsterData[monId];
                 Monster newMon = baseMon.Clone();
                 monsterSpanwed.Add(newMon);

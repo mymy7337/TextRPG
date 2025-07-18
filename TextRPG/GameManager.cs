@@ -31,6 +31,7 @@ public class GameManager
         Console.OutputEncoding = Encoding.UTF8;
         Console.Title = "TextRPG";
         shop.InitializeItems();
+        MonsterDB.InitMonsters();
         QuestManager.InitializeQuestsFromMonsterDB();
         CreatePlayer();
         ShowFinalInfo(); // 스탯 확인 후 메인 씬으로 이동
