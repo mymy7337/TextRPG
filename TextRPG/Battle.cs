@@ -117,44 +117,57 @@ namespace TextRPG
         BattleState PlayerPhase(Player player, Monster monster, SkillSet skillset)
         {
             Console.Clear();
-            Console.WriteLine($"[전투] {monster.Name}에게 행동을 선택하세요.");
+            Console.WriteLine("━━━━━━━━━━━━━━ PLAYER PHASE ━━━━━━━━━━━━━━");
+            Console.WriteLine($"🎯 {monster.Name} 을(를) 상대로 어떤 행동을 할까요?");
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
 
-            // 직업에 따라 스킬 세트 가져오기
-            SkillSet skillSet = SkillFactory.GetSkillSet(player.Job);
-
-            // 스킬 선택
-            int selected = SkillUI.SelectSkill(skillSet);
+            // 스킬 선택 UI 출력
+            int selected = SkillUI.SelectSkill(skillset);
             Console.WriteLine();
 
             if (selected == -1)
             {
-                Console.WriteLine("행동을 취소했습니다.");
-                Console.WriteLine("아무 키나 누르면 돌아갑니다.");
+                Console.WriteLine("\n🚫 행동을 취소했습니다.");
+                Console.WriteLine("🔙 아무 키나 누르면 돌아갑니다...");
                 Console.ReadKey();
                 return BattleState.Encounter;
             }
-            
-            /*
-            else if (selected == 0)
+
+            Console.WriteLine("━━━━━━━━━━━━━━ ACTION RESULT ━━━━━━━━━━━━━━");
+
+            // 기본 공격 처리
+            if (selected == 0)
             {
-                // ✅ 기본 공격 처리
                 int damage = player.FinalAtk;
                 bool isCrit = random.Next(0, 100) < player.CritChance;
+
+                if (isCrit)
+                {
+                    damage = (int)(damage * player.CritMultiplier);
+                    Console.WriteLine($"💥 치명타! {monster.Name}에게 {damage}의 피해!");
+                }
+                else
+                {
+                    Console.WriteLine($"🗡️ 기본 공격! {monster.Name}에게 {damage}의 피해!");
+                }
+
+                monster.TakeDamage(damage);
             }
-            */
             else
             {
-                skillSet.UseSkill(selected - 1, player, monster);
+                // 스킬 인덱스는 1부터 시작이므로 -1
+                skillset.UseSkill(selected - 1, player, monster);
             }
-            
 
-            Console.WriteLine();
+            Console.WriteLine("\n🧠 몬스터 체력 변화 확인...");
             monster.DisplayHpInfo(monster.Hp);
-            Console.WriteLine("\n다음으로 진행하려면 아무 키나 누르세요.");
+
+            Console.WriteLine("\n👉 다음으로 진행하려면 아무 키나 누르세요...");
             Console.ReadKey();
 
             return EnemyPhase(player, monster);
         }
+
 
 
 
@@ -197,74 +210,78 @@ namespace TextRPG
         {
             Console.Clear();
             int prevHp = player.Hp;
-            Console.WriteLine("Battle!! - Result");
+
+            Console.WriteLine("━━━━━━━━━━━━━━ 🏆 전투 결과 🏆 ━━━━━━━━━━━━━━");
             Console.WriteLine();
+
             if (player.Hp > 0)
             {
-                Console.Clear();
-                Console.WriteLine("Victory");
-                Console.WriteLine();
-                Console.WriteLine($"던전에서 몬스터를 {monsterSpanwed.Count}마리를 잡았습니다.");
-                Console.WriteLine();
-                Console.WriteLine($"HP {nowHp} -> {player.Hp}");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("🎉 Victory! 전투에서 승리했습니다!");
+                Console.ResetColor();
                 Console.WriteLine();
 
-                // ✅ MP 회복 추가
+                Console.WriteLine($"🧟‍♂️ 잡은 몬스터 수: {monsterSpanwed.Count} 마리");
+                Console.WriteLine($"❤️ HP: {nowHp} → {player.Hp}");
+
+                // ✅ MP 회복
                 int oldMp = player.Mp;
                 player.Mp += 10;
                 if (player.Mp > player.MaxMp)
                     player.Mp = player.MaxMp;
 
-                Console.WriteLine($"MP {oldMp} -> {player.Mp}");
+                Console.WriteLine($"💧 MP: {oldMp} → {player.Mp}");
 
+                // 아이템 획득 출력
                 if (getItem.Count > 0)
                 {
+                    Console.WriteLine("\n📦 획득한 아이템:");
                     foreach (var item in getItem)
                     {
-                        Console.WriteLine($"{item.ItemName} 획득");
+                        Console.WriteLine($"- {item.ItemName}");
                         player.AddItem(item);
                     }
                 }
-                Console.WriteLine();
-                Console.WriteLine("1. 던전 탐사\n0. 마을");
-                Console.WriteLine();
-                message = (isWrong == true) ? "잘못된 입력입니다." : "원하시는 행동을 입력해주세요.";
+
+                Console.WriteLine("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+                Console.WriteLine("어디로 이동하시겠습니까?");
+                Console.WriteLine("[1] 🔁 던전 탐사 계속하기");
+                Console.WriteLine("[0] 🏠 마을로 돌아가기");
+                Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+                message = isWrong ? "❌ 잘못된 입력입니다." : "👉 번호를 입력해주세요:";
                 Console.WriteLine(message);
-                Console.Write(">>");
+                Console.Write(">> ");
 
                 isWrong = ChoiceCheck(0, 1);
                 if (isWrong)
                     return BattleState.Result;
-                switch (choice)
+
+                getItem.Clear();
+                monsterSpanwed.Clear();
+
+                return choice switch
                 {
-                    case 0:
-                        getItem.Clear();
-                        monsterSpanwed.Clear();
-                        return BattleState.Exit;
-                    case 1:
-                        getItem.Clear();
-                        monsterSpanwed.Clear();
-                        return BattleState.Main;
-                    default:
-                        return BattleState.Result;
-                }
+                    0 => BattleState.Exit,
+                    1 => BattleState.Main,
+                    _ => BattleState.Result
+                };
             }
             else
             {
-                Console.WriteLine("You Lose");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("💀 You Lose... 전투에 패배했습니다.");
+                Console.ResetColor();
                 Console.WriteLine();
                 Console.WriteLine($"Lv{player.Level:D2} {player.Name}");
-                Console.WriteLine($"HP  -> 0");
-                Console.WriteLine();
-                Console.WriteLine("게임 오버");
-                Console.WriteLine("게임을 종료합니다.");
-                Console.WriteLine(">>");
-                monsterSpanwed.Clear();
+                Console.WriteLine($"HP: 0");
+                Console.WriteLine("\n☠️ 게임 오버. 게임을 종료합니다...");
+                Console.Write(">> ");
                 Console.ReadKey();
                 Environment.Exit(0);
                 return BattleState.Exit;
             }
         }
+
         List<Monster> monsterSpanwed = new List<Monster>();
         List<Item> getItem = new List<Item>();
 
@@ -292,33 +309,48 @@ namespace TextRPG
 
         void DisplayUI(Player player, BattleState state, List<string> option)
         {
-            Monster monster;
             Console.Clear();
-            Console.WriteLine("Battle!!");
+            Console.WriteLine("═══════════════════════ ⚔️ Battle ⚔️ ═══════════════════════");
             Console.WriteLine();
 
+            // 📌 몬스터 목록 표시
+            Console.WriteLine("🧟‍♂️ 몬스터 목록");
             for (int i = 0; i < monsterSpanwed.Count; i++)
             {
-                monster = monsterSpanwed[i];
-                Console.Write(state == BattleState.Encounter ? $"{i + 1} " : "");
+                Monster monster = monsterSpanwed[i];
+                string prefix = state == BattleState.Encounter ? $"[{i + 1}] " : "   ";
+                Console.Write(prefix);
                 monster.DisplayMonsterInfo();
             }
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("[내정보]");
+
+            Console.WriteLine("\n════════════════════════════════════════════════════════════");
+
+            // 📌 플레이어 정보
+            Console.WriteLine("🧙‍♂️ 내 정보");
             player.DisplayBattleInfo();
-            Console.WriteLine();
-            foreach(string optionLine in option)
+
+            Console.WriteLine("════════════════════════════════════════════════════════════\n");
+
+            // 📌 행동 선택 옵션
+            Console.WriteLine("🛡️ 선택지");
+            foreach (string optionLine in option)
+            {
                 Console.WriteLine(optionLine);
+            }
+
             Console.WriteLine();
+
+            // 📌 안내 메시지
             string defaultMessage = state switch
             {
                 BattleState.Encounter => "대상을 선택해주세요.",
                 _ => "원하시는 행동을 입력해주세요."
             };
-            message = isWrong ? "잘못된 입력입니다." : defaultMessage;
+            message = isWrong ? "❌ 잘못된 입력입니다." : $"👉 {defaultMessage}";
+
             Console.WriteLine(message);
-            Console.Write(">>");
+            Console.Write(">> ");
         }
+
     }
 }

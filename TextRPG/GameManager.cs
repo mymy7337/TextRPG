@@ -37,21 +37,23 @@ public class GameManager
     private void CreatePlayer()
     {
         Console.Clear();
-        Console.WriteLine("플레이어를 생성합니다.\n");
-        Console.Write("이름을 입력하세요: ");
+        Console.WriteLine("🧙‍♂️ 플레이어를 생성합니다.\n");
+        Console.Write("🔤 이름을 입력하세요: ");
         string name = Console.ReadLine();
 
         int selectedJobIndex = -1;
         while (selectedJobIndex < 0 || selectedJobIndex >= jobNames.Length)
         {
             Console.Clear();
-            Console.WriteLine("직업을 선택하세요:");
+            Console.WriteLine("💼 직업을 선택하세요:");
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━");
             for (int i = 0; i < jobNames.Length; i++)
             {
                 Console.WriteLine($"{i + 1}. {jobNames[i]}");
             }
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━");
 
-            Console.Write("\n번호 입력 (1~5): ");
+            Console.Write("\n📥 번호 입력 (1~5): ");
             string input = Console.ReadLine();
 
             if (int.TryParse(input, out int parsedInput) && parsedInput >= 1 && parsedInput <= jobNames.Length)
@@ -60,26 +62,23 @@ public class GameManager
             }
             else
             {
-                Console.WriteLine("유효한 번호를 입력해주세요.");
+                Console.WriteLine("⚠️ 유효한 번호를 입력해주세요.");
                 Console.ReadKey();
             }
         }
 
         string chosenJob = jobNames[selectedJobIndex];
         int[] stats = GetJobStats(chosenJob);
-        player = new Player(01, name, chosenJob, 10, 5, 100, 1500);
 
-        // ✅ 플레이어 생성
         player = new Player(1, name, chosenJob, stats[0], stats[1], stats[3] * 10, 1500)
         {
             Mp = 100,
             MaxMp = 100
         };
 
-        // ✅ 직업별 스킬 클래스 연결
         skillSet = chosenJob switch
         {
-            "검사" => new WarriorSkill(),
+            "전사" => new WarriorSkill(),
             "마법사" => new MageSkill(),
             "궁수" => new ArcherSkill(),
             "도적" => new ThiefSkill(),
@@ -87,6 +86,7 @@ public class GameManager
             _ => null
         };
     }
+
 
     private int[] GetJobStats(string job) // 주석처리 가능성 있음
     {
@@ -108,11 +108,12 @@ public class GameManager
         while (stay)
         {
             Console.Clear();
-            Console.WriteLine("====== 최종 정보 ======\n");
-            Console.WriteLine("\n[스탯 정보]");
+            Console.WriteLine("🎯 최종 정보 확인");
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━\n");
+            Console.WriteLine("📊 [스탯 정보]");
             player.DisplayPlayerInfo();
 
-            Console.WriteLine("\n[B] 직업 변경  |  [Enter] 게임 시작");
+            Console.WriteLine("\n🔄 [B] 직업 변경  |  [Enter] 게임 시작");
             Console.Write("선택: ");
             string input = Console.ReadLine().ToUpper();
 
@@ -129,40 +130,46 @@ public class GameManager
             }
             else
             {
-                Console.WriteLine("잘못된 입력입니다.");
+                Console.WriteLine("⚠️ 잘못된 입력입니다.");
                 Console.ReadKey();
             }
         }
     }
 
+
     public void LoadMainScene()
     {
         if (player == null)
         {
-            Console.WriteLine("player가 null입니다. GameManager.CreatePlayer()가 제대로 호출되지 않았을 수 있음");
-            Console.ReadKey(); // 일시 정지해서 로그 확인
+            Console.WriteLine("⚠️ player가 null입니다. GameManager.CreatePlayer()가 제대로 호출되지 않았을 수 있음");
+            Console.ReadKey();
             return;
         }
 
         bool running = true;
         Shop shop = new Shop(player);
+
         while (running)
         {
             Console.Clear();
+            Console.WriteLine("🏰 Text RPG에 오신 걸 환영합니다!");
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+
             player.DisplayPlayerInfo();
 
+            Console.WriteLine("\n━━━━━━━━━━━━━━━━━━━━━━━");
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("\n1. 마을 방문");
+            Console.WriteLine("1. 🏘️ 마을 방문");
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("2. 던전 탐험");
+            Console.WriteLine("2. ⚔️ 던전 탐험");
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("3. 인벤토리 확인");
+            Console.WriteLine("3. 🎒 인벤토리 확인");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("4. 게임 종료");
+            Console.WriteLine("4. ❌ 게임 종료");
             Console.ResetColor();
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━");
             Console.Write("\n선택: ");
             string choice = Console.ReadLine();
-
 
             switch (choice)
             {
@@ -174,23 +181,24 @@ public class GameManager
                     break;
                 case "3":
                     Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("인벤토리 목록");
-                    Console.ResetColor();
+                    Console.WriteLine("🎒 인벤토리 목록");
+                    Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━");
                     player.DisplayInventory(true);
-                    Console.ReadLine();
+                    Console.WriteLine("\n아무 키나 누르면 돌아갑니다.");
+                    Console.ReadKey();
                     break;
                 case "4":
                     running = false;
-                    Console.WriteLine("게임을 종료합니다.");
+                    Console.WriteLine("👋 게임을 종료합니다.");
                     break;
                 default:
-                    Console.WriteLine("잘못된 입력입니다.");
+                    Console.WriteLine("⚠️ 잘못된 입력입니다.");
                     Console.ReadKey();
                     break;
             }
         }
     }
+
 
     private void VisitTown(Shop shop)
     {
@@ -199,11 +207,13 @@ public class GameManager
         while (inTown)
         {
             Console.Clear();
-            Console.WriteLine("🏘️ 마을에 오신 것을 환영합니다");
-            Console.WriteLine("1. 상점");
-            Console.WriteLine("2. 여관에서 휴식 (20골드)");
-            Console.WriteLine("3. 퀘스트 보기"); // ✅ 추가
-            Console.WriteLine("4. 돌아가기");
+            Console.WriteLine("🏘️ 마을에 오신 것을 환영합니다!");
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━");
+            Console.WriteLine("1. 🛒 상점");
+            Console.WriteLine("2. 🛏️ 여관에서 휴식 (20골드)");
+            Console.WriteLine("3. 📜 퀘스트 보기");
+            Console.WriteLine("4. 🔙 돌아가기");
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━");
             Console.Write("선택: ");
             string input = Console.ReadLine();
 
@@ -218,17 +228,18 @@ public class GameManager
                     {
                         player.UseGold(20);
                         player.Hp = player.MaxHp;
-                        Console.WriteLine("체력이 회복되었습니다!");
+                        Console.WriteLine("💖 체력이 회복되었습니다!");
                     }
                     else
                     {
                         Console.WriteLine("💸 골드가 부족합니다!");
                     }
+                    Console.WriteLine("\n계속하려면 아무 키나 누르세요.");
                     Console.ReadKey();
                     break;
 
                 case "3":
-                    QuestUI.ShowQuestList(); // ✅ 퀘스트 UI 연결
+                    QuestUI.ShowQuestList();
                     break;
 
                 case "4":
@@ -236,10 +247,11 @@ public class GameManager
                     break;
 
                 default:
-                    Console.WriteLine("잘못된 입력입니다.");
+                    Console.WriteLine("⚠️ 잘못된 입력입니다.");
                     Console.ReadKey();
                     break;
             }
         }
     }
+
 }

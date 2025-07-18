@@ -9,19 +9,22 @@ namespace TextRPG.Skill_Folder
     {
         public static void ShowSkillList(SkillSet skillSet)
         {
-            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━");
-            Console.WriteLine("⚔️ 행동 선택");
-            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━");
-            Console.WriteLine("[1] 기본 공격");
+            Console.Clear();
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            Console.WriteLine("⚔️  [전투 행동 선택]");
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            Console.WriteLine(" [1] 🗡️ 기본 공격");
 
             for (int i = 0; i < skillSet.SkillNames.Count; i++)
             {
-                Console.WriteLine($"[{i + 2}] {skillSet.SkillNames[i]}");
+                Console.WriteLine($" [{i + 2}] ✨ {skillSet.SkillNames[i]}");
             }
 
-            Console.WriteLine("[X] 취소");
-            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━");
+            Console.WriteLine();
+            Console.WriteLine(" [X] ❌ 취소하기");
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         }
+
         public static int SelectSkill(SkillSet skillSet)
         {
             ShowSkillList(skillSet);

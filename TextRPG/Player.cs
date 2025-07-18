@@ -80,31 +80,39 @@ namespace TextRPG
             Hp = maxHp; // 체력 초기값은 최대체력
             MaxHp = maxHp; 
             Gold = gold;
-        } 
+        }
 
         //PlayerUI로 이동
-        public void DisplayPlayerInfo() // 플레이어 상태 정보 표시 v
+        public void DisplayPlayerInfo()
         {
-            Console.WriteLine($"Lv.{Level:D2}");
-            Console.WriteLine($"{Name} ({Job})");
-            Console.WriteLine($"공격력 : {FinalAtk}" + (ExtraAtk == 0 ? "" : $" (+{ExtraAtk})"));
-            Console.WriteLine($"방어력 : {FinalDef}" + (ExtraDef == 0 ? "" : $" (+{ExtraDef})"));
-            Console.WriteLine($"체 력 : {Hp}");
-            Console.WriteLine($"Gold : {Gold}");
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            Console.WriteLine($"🧙‍♂️ {Name} - {Job} | Lv.{Level:D2}");
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            Console.WriteLine($"🗡️ 공격력 : {FinalAtk}" + (ExtraAtk == 0 ? "" : $" (+{ExtraAtk})"));
+            Console.WriteLine($"🛡️ 방어력 : {FinalDef}" + (ExtraDef == 0 ? "" : $" (+{ExtraDef})"));
+            Console.WriteLine($"❤️ 체  력 : {Hp} / {MaxHp}");
+            Console.WriteLine($"🔮 마  력 : {Mp} / {MaxMp}");
+            Console.WriteLine($"💰 골  드 : {Gold}");
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━");
         }
 
-        public void DisplayBattleInfo() // 전투 시작 전 플레이어 정보
+
+        public void DisplayBattleInfo()
         {
-            Console.WriteLine($"Lv. {Level:D2} {Name} ({Job})");
-            Console.WriteLine($"Hp {Hp}/{MaxHp}");
+            Console.WriteLine($"🎖️ Lv. {Level:D2} {Name} ({Job})");
+            Console.WriteLine($"❤️ HP : {Hp} / {MaxHp}");
+            Console.WriteLine($"🔮 MP : {Mp} / {MaxMp}");
         }
 
-        public void DisplayHpInfo(int previousHp) // 전투 시 Hp 변화 정보 표시
+
+        public void DisplayHpInfo(int previousHp)
         {
-            Console.WriteLine($"Lv. {Level:D2} {Name} ({Job})");
-            string nowHp = Hp <= 0 ? "Dead" : Hp.ToString(); // hp가 0 이하면 Dead 표시
-            Console.WriteLine($"Hp {previousHp} -> {nowHp}");
+            Console.WriteLine($"🎯 대상: Lv.{Level:D2} {Name} ({Job})");
+
+            string nowHp = Hp <= 0 ? "💀 Dead" : Hp.ToString();
+            Console.WriteLine($"❤️ HP : {previousHp} → {nowHp}");
         }
+
         public void Attack(Monster target) // 플레이어의 공격 행동
         {
             Console.WriteLine($"{Name} 의 공격!");
@@ -175,21 +183,26 @@ namespace TextRPG
             }
         }
 
-        public void DisplayInventory(bool showIdx) // 인벤토리 리스트(장착여부 및 번호표시 유무 설정)
+        public void DisplayInventory(bool showIdx)
         {
-            if(Inventory.Count == 0)
+            if (Inventory.Count == 0)
             {
-                //Console.WriteLine("소지한 아이템이 없습니다.");
+                Console.WriteLine("🎒 소지한 아이템이 없습니다.");
                 return;
             }
+
+            Console.WriteLine("📦 인벤토리 목록");
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━");
             for (int i = 0; i < Inventory.Count; i++)
             {
-                Item targetItem = Inventory[i]; 
-                string displayIdx = showIdx ? $"{i + 1} " : "";
-                string displayEquipped = IsEquipped(targetItem) ? "[E]" : "";
-                Console.WriteLine($"- {displayIdx}{displayEquipped} {targetItem.ItemInfoText()}"); // - 아이템 번호 [E] 아이템 정보
+                Item targetItem = Inventory[i];
+                string displayIdx = showIdx ? $"{i + 1}. " : "";
+                string displayEquipped = IsEquipped(targetItem) ? "[E] " : "";
+                Console.WriteLine($"- {displayIdx}{displayEquipped}{targetItem.ItemInfoText()}");
             }
+            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━");
         }
+
         //아이템 장착
         public void EquipItem(Item item) // 아이템 타입을 숫자로 받아오는걸 상정했음. 아이템에 붙은 추가 스텟만큼 추가 공격력 방어력이 증가하는 형태
         {
