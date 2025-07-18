@@ -9,14 +9,6 @@ using TextRPG.ItemFolder;
 
 namespace TextRPG
 {
-    //public enum JobType // 직업 Enum
-    //{
-    //    Warrior,
-    //    Wizard,
-    //    Archer,
-    //    Thief,
-    //    Pirate
-    //}
     public class Player
     {
         //player 기본상태
@@ -58,9 +50,6 @@ namespace TextRPG
 
         Random rand = new Random(); // 난수 생성(공격력 및 여러 난수) 
 
-        //인벤토리 공간
-        //List<Item>Inventory = new List<Item>(); 
-        //List<Item>EquipList = new List<Item>(); 
         public List<Item> Inventory { get; private set; } = new List<Item>();
         public Item EquippedWeapon { get; set; }
         public Item EquippedArmor { get; set; }
@@ -146,63 +135,6 @@ namespace TextRPG
                 Hp = 0;
             }
         }
-
-        /*
-        public void DisplayInventory(bool showIdx)
-        {
-            if (Inventory.Count == 0)
-            {
-                Console.WriteLine("🎒 소지한 아이템이 없습니다.");
-                return;
-            }
-
-            Console.WriteLine("📦 인벤토리 목록");
-            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━");
-            for (int i = 0; i < Inventory.Count; i++)
-            {
-                Item targetItem = Inventory[i];
-                string displayIdx = showIdx ? $"{i + 1}. " : "";
-                string displayEquipped = IsEquipped(targetItem) ? "[E] " : "";
-                Console.WriteLine($"- {displayIdx}{displayEquipped}{targetItem.ItemInfoText()}");
-            }
-            Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━");
-        }
-
-        //아이템 장착
-        public void EquipItem(Item item) // 아이템 타입을 숫자로 받아오는걸 상정했음. 아이템에 붙은 추가 스텟만큼 추가 공격력 방어력이 증가하는 형태
-        {
-            if (IsEquipped(item))
-            {
-                EquipList.Remove(item);
-                //if (item.Type == 0)
-                //    ExtraAtk -= item.Value;
-                //else
-                //    ExtraDef -= item.Value;
-            }
-            else
-            {
-                EquipList.Add(item);
-                //if (item.Type == 0)
-                //    ExtraAtk += item.Value;
-                //else
-                //    ExtraDef += item.Value;
-            }
-        }
-
-        public bool IsEquipped(Item item) // 아이템 장착 여부 판단
-        {
-            return EquipList.Contains(item);
-        }
-
-        public bool HasItem(Item item) // 아이템 소지 여부 판단
-        {
-            return Inventory.Contains(item);
-        }
-        public void AddItem(Item item) // 인벤토리에 아이템 추가
-        {
-            Inventory.Add(item);
-        }
-        */
 
         public bool UseGold(int amount) // 골드 사용
         {
