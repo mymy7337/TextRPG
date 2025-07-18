@@ -116,6 +116,7 @@ namespace TextRPG
 
         BattleState PlayerPhase(Player player, Monster monster, SkillSet skillset)
         {
+            int previousHp = monster.Hp;
             Console.Clear();
             Console.WriteLine("━━━━━━━━━━━━━━ PLAYER PHASE ━━━━━━━━━━━━━━");
             Console.WriteLine($"🎯 {monster.Name} 을(를) 상대로 어떤 행동을 할까요?");
@@ -160,8 +161,8 @@ namespace TextRPG
             }
 
             Console.WriteLine("\n🧠 몬스터 체력 변화 확인...");
-            monster.DisplayHpInfo(monster.Hp);
-
+            MonsterUI monUI = new MonsterUI();
+            monUI.DisplayHpInfo(monster, previousHp);
             Console.WriteLine("\n👉 다음으로 진행하려면 아무 키나 누르세요...");
             Console.ReadKey();
 
