@@ -312,12 +312,20 @@ namespace TextRPG
 
         public void InitializeItems()
         {
-            Item.Items.Add(new Item("수련자 갑옷", "수련에 도움을 주는 갑옷입니다.", 1000, ItemType.Armor, 5));
-            Item.Items.Add(new Item("무쇠갑옷", "무쇠로 만들어져 튼튼한 갑옷입니다.", 2000, ItemType.Armor, 9));
-            Item.Items.Add(new Item("스파르타의 갑옷", "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", 3500, ItemType.Armor, 15));
-            Item.Items.Add(new Item("낡은 검", "쉽게 볼 수 있는 낡은 검 입니다.", 600, ItemType.Weapon, 2));
-            Item.Items.Add(new Item("청동 도끼", "어디선가 사용됐던거 같은 도끼입니다.", 1500, ItemType.Weapon, 5));
-            Item.Items.Add(new Item("스파르타의 창", "스파르타의 전사들이 사용했다는 전설의 창입니다.", 5000, ItemType.Weapon, 7));
+            Item.Items.Add(new Item("견습용 단검", "초보 모험가도 들기 쉬운 단검이다.", 200, ItemType.Weapon, 3));
+            Item.Items.Add(new Item("고블린의 가죽갑옷", "적당히 몸에 맞게 수선해 입을 수 있을 것 같다. 몸통을 보호한다.", 500, ItemType.Armor, 6));
+            Item.Items.Add(new Item("린넨 천갑옷", "천을 겹치면 날카로운 일격도 막을 수 있다. 활동성이 좋다.", 500, ItemType.Armor, 5));
+            Item.Items.Add(new Item("강철 단검", "병정들이여, 일어서라. 견습용보다 튼튼하고 날카로운 단검이다.", 500, ItemType.Weapon, 6));
+            Item.Items.Add(new Item("가죽 투구", "머리를 약간 보호해주는 가죽 재질의 투구.", 400, ItemType.Armor, 8));
+            Item.Items.Add(new Item("가죽 신발", "다리를 약간 보호해주는 가죽 재질의 신발.", 400, ItemType.Armor, 8));
+            Item.Items.Add(new Item("브루탈 메이스", "거칠고 야만적인 메이스. 두개골을 부술 수 있을 것 같다.", 700, ItemType.Weapon, 10));
+            Item.Items.Add(new Item("투 핸디드 소드", "무게중심이 잘 잡힌 장인의 검이다. 공격력이 높다.", 1300, ItemType.Weapon, 15));
+            Item.Items.Add(new Item("체인 메일", "고급 가죽을 덧댄 갑옷으로, 가볍고 튼튼하다.", 800, ItemType.Armor, 15));
+            Item.Items.Add(new Item("용골 할버드", "용살자를 위하여 제작된 할버드. 실제 용골이 들어간 것은 아니다.", 3200, ItemType.Weapon, 25)); // 공격+방어 구분 없을 경우 Mixed 처리
+            Item.Items.Add(new Item("무거운 판금갑옷", "높은 방어력을 제공하지만, 무겁다... 민첩하게 움직이긴 어려워진다.", 4000, ItemType.Armor, 40));
+
         }
+
+
     }
 }

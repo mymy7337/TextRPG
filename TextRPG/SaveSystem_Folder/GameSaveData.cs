@@ -28,7 +28,7 @@ namespace TextRPG.SaveSystem_Folder
         }
 
 
-        /*
+        /* Test
         static void Main()
         {
             SaveManager saveManager = new SaveManager();

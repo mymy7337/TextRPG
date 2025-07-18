@@ -12,7 +12,7 @@ namespace TextRPG.SaveSystem_Folder
     {
         public GameSaveData CurrentSaveData;
 
-        private static readonly string SaveDirectory = Path.Combine(AppContext.BaseDirectory, @"..\..\..\Challenge_JaeEun\JSON_Data");
+        private static readonly string SaveDirectory = Path.Combine(AppContext.BaseDirectory, @"..\..\..\JSON_Data");
         private static readonly string SavePath = Path.Combine(SaveDirectory, "save.json");
 
         public SaveManager()
@@ -38,7 +38,6 @@ namespace TextRPG.SaveSystem_Folder
 
             Console.WriteLine($"[저장 완료] {SavePath} 에 저장되었습니다.");
         }
-
 
         public void LoadFromJson()
         {
