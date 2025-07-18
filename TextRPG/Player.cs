@@ -197,9 +197,9 @@ namespace TextRPG
             {
                 EquipList.Remove(item);
                 //if (item.Type == 0)
-                //    ExtraAtk += item.Value;
+                //    ExtraAtk -= item.Value;
                 //else
-                //    ExtraDef += item.Value;
+                //    ExtraDef -= item.Value;
             }
             else
             {
