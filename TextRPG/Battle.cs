@@ -137,12 +137,13 @@ namespace TextRPG
             Console.WriteLine("━━━━━━━━━━━━━━ ACTION RESULT ━━━━━━━━━━━━━━");
 
 
-                // 스킬 인덱스는 1부터 시작이므로 -1
-                skillset.UseSkill(selected - 1, player, monster);
+            // 스킬 인덱스는 1부터 시작이므로 -1
+            skillset.UseSkill(selected - 1, player, monster);
 
             MonsterUI monUI = new MonsterUI();
             monUI.DisplayHpInfo(monster, previousHp);
             Console.WriteLine("\n:다음으로 진행하려면 아무 키나 누르세요...");
+
             Console.ReadKey();
 
             return EnemyPhase(player, monster);
