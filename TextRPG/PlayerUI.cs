@@ -52,7 +52,7 @@ namespace TextRPG
             Console.WriteLine($"💼 직업       : {player.Job}");
             Console.WriteLine($"📈 레벨       : Lv. {player.Level}"); //(Exp: {player.Exp}/{player.ExpToNextLevel})
             Console.WriteLine($"❤️ 체력       : {player.Hp}");
-            Console.WriteLine($"❤️ 마력       : {player.Mp}");
+            Console.WriteLine($"🌀 마력       : {player.Mp}");
 
             int bonusAtk = player.ExtraAtk - player.Atk;
             int bonusDef = player.ExtraDef - player.Def;
