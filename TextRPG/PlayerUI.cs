@@ -52,6 +52,7 @@ namespace TextRPG
             Console.WriteLine($"💼 직업       : {player.Job}");
             Console.WriteLine($"📈 레벨       : Lv. {player.Level}"); //(Exp: {player.Exp}/{player.ExpToNextLevel})
             Console.WriteLine($"❤️ 체력       : {player.Hp}");
+            Console.WriteLine($"❤️ 마력       : {player.Mp}");
 
             int bonusAtk = player.ExtraAtk - player.Atk;
             int bonusDef = player.ExtraDef - player.Def;
@@ -68,6 +69,17 @@ namespace TextRPG
 
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.Write("🛡️ 방어력     : ");
+            Console.Write($"{player.Def + player.ExtraDef}");
+            if (player.ExtraDef > 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write($" (+{player.ExtraDef})");
+                Console.ResetColor();
+            }
+            Console.WriteLine();
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("ㅁ 민첩력     : ");
             Console.Write($"{player.Def + player.ExtraDef}");
             if (player.ExtraDef > 0)
             {

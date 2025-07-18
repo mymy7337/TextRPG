@@ -17,6 +17,8 @@ namespace TextRPG
         public string Job { get; set; }
         public int Atk { get; set; }
         public int Def { get; set; }
+
+        public int Dex { get; set; }
         public int Hp { get; set; }
         public int Mp { get; set; }
         public int MaxHp { get; set; } // 최대체력: 오버힐 방지에
@@ -27,6 +29,7 @@ namespace TextRPG
 
         public int ExtraAtk { get;  set; } // 추가공격력
         public int ExtraDef { get;  set; } // 추가방어력
+        public int ExtraDex { get;  set; } // 추가민첩력
         public int CritChance { get; private set; } = 15; // 치명타 확률
         public float CritMultiplier { get; private set; } = 1.6f; //치명타 피해
         public int DodgeChance { get; private set; } = 10; // 회피 확률
@@ -44,26 +47,18 @@ namespace TextRPG
         public Item EquippedWeapon { get; set; }
         public Item EquippedArmor { get; set; }
 
-        /*
-        public int InventoryCount // 인벤토리 아이템 갯수
-            {
-            get
-                {
-                    return Inventory.Count;
-                }
-            }
-
-        */
-        // 
-        public Player(int level, string name, string job, int atk, int def, int maxHp, int gold) // 플레이어 초기값
+        public Player(int level, string name, string job, int atk, int def,int dex, int maxHp, int maxMp, int gold) // 플레이어 초기값
         {
             Level = level;
             Name = name;
             Job = job;
             Atk = atk;
             Def = def;
+            Dex = dex;
             Hp = maxHp; // 체력 초기값은 최대체력
-            MaxHp = maxHp; 
+            MaxHp = maxHp;
+            Mp = maxMp;
+            MaxMp = maxMp;
             Gold = gold;
         }
 
@@ -111,7 +106,7 @@ namespace TextRPG
 
         public void TakeDamage(int amount) //데미지를 받으면 hp 감소
         {
-            int finalDamage = amount; //플레이어의 방어력 만큼 데미지 감소
+            int finalDamage = amount;
             if (finalDamage  <= 0)
             {
                 return;
