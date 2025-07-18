@@ -119,38 +119,48 @@ namespace TextRPG
 
         BattleState PlayerPhase(Player player, Monster monster, SkillSet skillset)
         {
-            int previousHp = monster.Hp;
             Console.Clear();
             Console.WriteLine("━━━━━━━━━━━━━━ PLAYER PHASE ━━━━━━━━━━━━━━");
             Console.WriteLine($"🎯 {monster.Name} 을(를) 상대로 어떤 행동을 할까요?");
             Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
 
-            // 스킬 선택 UI 출력
             int selected = SkillUI.SelectSkill(skillset);
             Console.WriteLine();
 
             if (selected == -1)
             {
                 Console.WriteLine("\n🚫 행동을 취소했습니다.");
-                Console.WriteLine("🔙 아무 키나 누르면 돌아갑니다...") ;
+                Console.WriteLine("🔙 아무 키나 누르면 돌아갑니다...");
                 Console.ReadKey();
                 return BattleState.Encounter;
             }
 
             Console.WriteLine("━━━━━━━━━━━━━━ ACTION RESULT ━━━━━━━━━━━━━━");
 
+            // ✅ 전체 몬스터의 이전 HP 저장
+            var prevHpDict = monsterSpanwed.ToDictionary(m => m, m => m.Hp);
 
-            // 스킬 인덱스는 1부터 시작이므로 -1
-            skillset.UseSkill(selected - 1, player, monster);
+            // ✅ 스킬 실행 (여러 마리를 공격할 수도 있음)
+            skillset.UseSkill(selected - 1, player, monsterSpanwed, monster);
 
-            
-            monUI.DisplayHpInfo(monster, previousHp);
-            Console.WriteLine("\n:다음으로 진행하려면 아무 키나 누르세요...");
+            Console.WriteLine("━━━━━━━━━━━━━━ ACTION RESULT ━━━━━━━━━━━━━━\n\n");
 
+            // ✅ HP 변화 출력 (피해를 입은 몬스터만)
+            var damagedMonsters = monsterSpanwed.Where(m => m.Hp < prevHpDict[m]).ToList();
+            if (damagedMonsters.Count > 0)
+            {
+                foreach (var m in damagedMonsters)
+                {
+                    monUI.DisplayHpInfo(m, prevHpDict[m]); // ✅ 하나씩 변화 출력
+                }
+            }
+
+            Console.WriteLine(":다음으로 진행하려면 아무 키나 누르세요...");
             Console.ReadKey();
 
             return EnemyPhase(player, monster);
         }
+
 
 
 

@@ -9,6 +9,7 @@ namespace TextRPG.Skill_Folder
     public interface SkillSet
     {
         List<string> SkillNames { get; }
-        void UseSkill(int index, Player player, Monster monster);
+        public void UseSkill(int index, Player player, List<Monster> monsters, Monster mainTarget);
+
     }
 }
