@@ -42,14 +42,13 @@ namespace TextRPG.Skill_Folder
 
                 if (int.TryParse(input, out int choice))
                 {
-                    int skillIndex = choice - 1;
-                    if (skillIndex >= 0 && skillIndex < skillSet.SkillNames.Count)
-                        return skillIndex + 1; // 스킬 인덱스는 1부터 시작
+                    return choice;
                 }
 
                 Console.WriteLine("올바른 번호를 입력해주세요.");
             }
         }
+
 
     }
 }
