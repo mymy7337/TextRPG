@@ -171,6 +171,7 @@ namespace TextRPG
                 return BattleState.Encounter;
             }
 
+
             int prevHp = player.Hp;
             Console.Clear();
             monster.Attack(player);
@@ -181,6 +182,13 @@ namespace TextRPG
             Console.ReadKey();
             if (player.Hp <= 0)
                 return result(player);
+
+            if (deadCount == monsterSpanwed.Count)
+            {
+                return result(player);
+            }
+                
+
             else
                 return BattleState.Encounter;
         }
@@ -189,7 +197,7 @@ namespace TextRPG
         {
             Console.Clear();
             int prevHp = player.Hp;
-
+            int oldMp = player.Mp;
             Console.WriteLine("━━━━━━━━━━━━━━ 🏆 전투 결과 🏆 ━━━━━━━━━━━━━━");
             Console.WriteLine();
 
@@ -203,12 +211,17 @@ namespace TextRPG
                 Console.WriteLine($"🧟‍♂️ 잡은 몬스터 수: {monsterSpanwed.Count} 마리");
                 Console.WriteLine($"❤️ HP: {nowHp} → {player.Hp}");
 
-                if (!isBattleMpPlus)
+
+                
+                // ✅ MP 회복
+                if (!isWrong)
                 {
-                    int oldMp = player.Mp;
                     player.Mp += 10;
                     if (player.Mp > player.MaxMp)
                         player.Mp = player.MaxMp;
+                }
+                else
+                    oldMp = player.Mp - 10;
 
                     if (player.Mp > oldMp)
                     {
