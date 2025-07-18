@@ -187,9 +187,6 @@ namespace TextRPG
 
                 return BattleState.Encounter;
             }
-
-
-
             
             int prevHp = player.Hp;
             Console.Clear();

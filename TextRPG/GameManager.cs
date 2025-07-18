@@ -43,6 +43,10 @@ public class GameManager
         Console.WriteLine("🧙‍♂️ 플레이어를 생성합니다.\n");
         Console.Write("🔤 이름을 입력하세요: ");
         string name = Console.ReadLine();
+        if(name == null || name == "")
+        {
+            name = "이름을 적었어야지..";
+        }
 
         int selectedJobIndex = -1;
         while (selectedJobIndex < 0 || selectedJobIndex >= jobNames.Length)
@@ -230,7 +234,7 @@ public class GameManager
                     {
                         player.UseGold(20);
                         player.Heal(player.MaxHp, player.MaxMp);
-                        Console.WriteLine("💖 체력이 회복되었습니다!");
+                        Console.WriteLine("💖체력,마력이 회복되었습니다!");
                     }
                     else
                     {
