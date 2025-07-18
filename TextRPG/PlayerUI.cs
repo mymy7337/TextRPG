@@ -29,7 +29,7 @@ namespace TextRPG
             Console.WriteLine($"Mp {player.Mp}/{player.MaxMp}");
         }
 
-        public static void DisplayHpMpInfo(Player player, int previousHp, int previousMp) // 전투 시 Hp/ 변화 정보 표시
+        public static void DisplayHpMpInfo(Player player, int previousHp, int previousMp) // 전투 시 Hp/Mp 변화 정보 표시
         {
             Console.WriteLine($"Lv. {player.Level:D2} {player.Name} ({player.Job})");
             string nowHp = player.Hp <= 0 ? "Dead" : player.Hp.ToString(); // hp가 0 이하면 Dead 표시
