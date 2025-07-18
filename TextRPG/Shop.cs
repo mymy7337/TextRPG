@@ -48,20 +48,24 @@ namespace TextRPG
                 {
                     case ShopMenu.ShopMenu:
                         Console.Clear();
+                        Console.WriteLine("상점 주인: 던전 코앞이라는 이 피 튀기는 상권에 가게를 차린다는 건 말이야, 품질과 신용은 보증한단 뜻이지.");
                         ShowShopItems(player);
                         //ShowShopMenu();
                         break;
                     case ShopMenu.BuyItem:
                         //Console.Clear();
+                        Console.WriteLine("상점 주인: 그러고 가게? 돈이 있으면 미리미리 써. 목숨값보단 쌀 거라구.");
                         BuyItem(player);
                         //ShowShopMenu();
                         break;
                     case ShopMenu.SellItem:
                         Console.Clear();
+                        Console.WriteLine("상점 주인: 던전에서 가져온 노획물인가. 좋아, 중고치곤 잘 쳐줄 테니 올려 보슈.");
                         SellItem(player);
                         //ShowShopMenu();
                         break;
                     case ShopMenu.Exit:
+                        Console.WriteLine("상점 주인: 잘 가슈, 모험가 양반. 무운을 빌어.");
                         //Console.Clear();
                         GameManager.instance.LoadMainScene(); // 시작 화면으로 돌아가기
                         //Program.StartGame();
