@@ -32,9 +32,7 @@ namespace TextRPG
         public int ExtraDex { get;  set; } // 추가민첩력
         public int CritChance { get; private set; } = 15; // 치명타 확률
         public float CritMultiplier { get; private set; } = 1.6f; //치명타 피해
-        public int DodgeChance { get; private set; } = 10; // 회피 확률
-
-
+        public int DodgeChance => (Dex + ExtraDex); // 회피확률 자동 계산 프로퍼티
 
         public int FinalAtk => Atk + ExtraAtk;
 
@@ -71,31 +69,26 @@ namespace TextRPG
                 case "전사":
                     CritChance = 10;
                     CritMultiplier = 1.5f;
-                    DodgeChance = 10;
                     break;
 
                 case "마법사":
                     CritChance = 15;
                     CritMultiplier = 1.8f;
-                    DodgeChance = 10;
                     break;
 
                 case "궁수":
                     CritChance = 18;
                     CritMultiplier = 2.0f;
-                    DodgeChance = 10;
                     break;
 
                 case "도적":
                     CritChance = 30;
                     CritMultiplier = 1.6f;
-                    DodgeChance = 10;
                     break;
 
                 case "해적":
                     CritChance = 10;
                     CritMultiplier = 1.7f;
-                    DodgeChance = 10;
                     break;
             }
         }
