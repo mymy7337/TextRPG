@@ -4,7 +4,8 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("HI~!!");
+            new GameManager();
+            GameManager.instance.Start();
         }
     }
 }

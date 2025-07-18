@@ -1,30 +1,24 @@
-namespace TextRPG;
+using System.Collections.Generic;
 
-public class Equipment
+namespace TextRPG
 {
-    public string EquipName { get; set; }
-    public string EquipScript { get; set; }
-    public int EquipAttack { get; set; }
-    public int EquipDefense { get; set; }
-    public ItemType EquipType { get; set; }
+    public class Equipment : Item
+    {
+        public int ItemAttack { get; set; }
+        public int ItemDefense { get; set; }
 
-    public enum ItemType
-    {
-        Drop,
-        Shop,
-    }
+        public Equipment(string itemName, string itemScript, int gold, GetType iType, int[] itemEffect, EffectType[] eTypes)
+            : base(itemName, itemScript, gold, iType, itemEffect, eTypes)
+        {
 
-    public Equipment(string equipName, string equipScript, int equipAttack, int equipDefense, ItemType equiptype)
+        }
+
+        public static List<Equipment> Items = new List<Equipment>
     {
-        EquipName = equipName;
-        EquipScript = equipScript;
-        EquipAttack = equipAttack;
-        EquipDefense = equipDefense;
-        EquipType = equiptype;
-    }
-    private List<Equipment> equipments = new List<Equipment>
-    {
-        new Equipment("이름","어떤 아이템이다", 2, 3, Equipment.ItemType.Shop),
-        new Equipment("이름2", "어떤 아이템일까", 4, 5, ItemType.Drop)
+        new Equipment("견습용 단검", "초보 모험가도 들기 쉬운 단검이다.", 2, GetType.Shop, new int[]{3}, new EffectType[] { EffectType.ItemAtk } ),
+        new Equipment("고블린의 가죽갑옷", "적당히 몸에 맞게 수선해 입을 수 있을 것 같다. 몸통을 보호한다.", 5, GetType.Drop, new int[]{5}, new EffectType[] { EffectType.ItemDef}),
+        new Equipment("무거운 판금갑옷", "높은 방어력을 제공하지만, 무겁다... 민첩하게 움직이긴 어려워진다.", 10, GetType.Shop, new int[]{-2, 20}, new EffectType[] {EffectType.ItemAtk, EffectType.ItemDef})
     };
+    }
 }
+
