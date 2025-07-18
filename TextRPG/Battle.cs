@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TextRPG.Quest_Folder;
 using TextRPG.Skill_Folder;
+using TextRPG.ItemFolder;
 
 namespace TextRPG
 {
@@ -158,12 +159,19 @@ namespace TextRPG
         {
             if (monster.Hp <= 0)
             {
-                // ✅ 퀘스트 진행도 반영 + 보상 지급
                 QuestManager.CheckKill(monster.Name, player);
 
-                // 기존 아이템 드랍은 일단 생략
-                deadCount++;
+                // 🎁 아이템 드랍 (50% 확률)
+                if (random.Next(0, 100) < 50)
+                {
+                    if (Item.Items.Count > 0)
+                    {
+                        Item dropItem = Item.Items[random.Next(Item.Items.Count)];
+                        getItem.Add(dropItem);
+                    }
+                }
 
+                deadCount++;
                 if (deadCount == monsterSpanwed.Count)
                     return result(player);
 
@@ -228,10 +236,12 @@ namespace TextRPG
                     Console.WriteLine("\n📦 획득한 아이템:");
                     foreach (var item in getItem)
                     {
-                        Console.WriteLine($"- {item.ItemName}");
-                        player.AddItem(item);
+                        Console.WriteLine($"- {item.Name}");
+                        player.AddItem(item);  // 인벤토리에 추가 + 구매 상태 처리
                     }
+                    getItem.Clear(); // 다음 전투에 영향 없도록 초기화
                 }
+
 
                 Console.WriteLine("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
                 Console.WriteLine("어디로 이동하시겠습니까?");
@@ -246,7 +256,7 @@ namespace TextRPG
                 if (isWrong)
                     return BattleState.Result;
 
-                getItem.Clear();
+                //getItem.Clear();
                 monsterSpanwed.Clear();
 
                 return choice switch

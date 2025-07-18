@@ -55,8 +55,9 @@ namespace TextRPG.Quest_Folder
                         foreach (var itemName in quest.RewardItems)
                         {
                             // Equipment.Items에서 이름으로 찾기
-                            var item = Equipment.Items.Find(e => e.ItemName == itemName);
+                            //var item = Equipment.Items.Find(e => e.ItemName == itemName);
 
+                            /*
                             if (item != null)
                             {
                                 player.AddItem(item);
@@ -66,6 +67,7 @@ namespace TextRPG.Quest_Folder
                             {
                                 Console.WriteLine($"⚠️ '{itemName}' 아이템을 찾을 수 없습니다.");
                             }
+                            */
                         }
 
                         Console.WriteLine();

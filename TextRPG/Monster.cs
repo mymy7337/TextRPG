@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TextRPG.ItemFolder;
 
 namespace TextRPG
 {
@@ -38,7 +39,7 @@ namespace TextRPG
                 Hp = this.MaxHp,
                 Atk = this.Atk,
                 MaxHp = this.MaxHp,
-                Item = this.Item
+                //Item = this.Item
             };
         }
 

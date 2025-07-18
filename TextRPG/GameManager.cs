@@ -17,6 +17,7 @@ public class GameManager
     }
 
     private Player player;
+    Shop shop = new Shop();
 
     private Battle battle = new Battle();
 
@@ -29,6 +30,7 @@ public class GameManager
     {
         Console.OutputEncoding = Encoding.UTF8;
         Console.Title = "TextRPG";
+        shop.InitializeItems();
         QuestManager.InitializeQuestsFromMonsterDB();
         CreatePlayer();
         ShowFinalInfo(); // 스탯 확인 후 메인 씬으로 이동
@@ -111,7 +113,8 @@ public class GameManager
             Console.WriteLine("🎯 최종 정보 확인");
             Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━\n");
             Console.WriteLine("📊 [스탯 정보]");
-            PlayerUI.DisplayPlayerInfo(player);
+
+            PlayerUI.PlayerInfo_Color(player);
 
             Console.WriteLine("\n🔄 [B] 직업 변경  |  [Enter] 게임 시작");
             Console.Write("선택: ");
@@ -147,7 +150,6 @@ public class GameManager
         }
 
         bool running = true;
-        Shop shop = new Shop(player);
 
         while (running)
         {
@@ -155,7 +157,7 @@ public class GameManager
             Console.WriteLine("🏰 Text RPG에 오신 걸 환영합니다!");
             Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
 
-            PlayerUI.DisplayPlayerInfo(player);
+            PlayerUI.PlayerInfo_Color(player);
 
             Console.WriteLine("\n━━━━━━━━━━━━━━━━━━━━━━━");
             Console.ForegroundColor = ConsoleColor.Green;
@@ -174,7 +176,7 @@ public class GameManager
             switch (choice)
             {
                 case "1":
-                    VisitTown(shop);
+                    VisitTown();
                     break;
                 case "2":
                     battle.BattleStart(player, skillSet);
@@ -183,7 +185,8 @@ public class GameManager
                     Console.Clear();
                     Console.WriteLine("🎒 인벤토리 목록");
                     Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━");
-                    player.DisplayInventory(true);
+                    //player.DisplayInventory(true);
+                    Inventory.ShowInventory(player);
                     Console.WriteLine("\n아무 키나 누르면 돌아갑니다.");
                     Console.ReadKey();
                     break;
@@ -200,7 +203,7 @@ public class GameManager
     }
 
 
-    private void VisitTown(Shop shop)
+    private void VisitTown()
     {
         bool inTown = true;
 
@@ -220,7 +223,8 @@ public class GameManager
             switch (input)
             {
                 case "1":
-                    shop.OpenShop();
+                    shop.ShowShopMenu(player);
+                    //shop.OpenShop();
                     break;
 
                 case "2":
