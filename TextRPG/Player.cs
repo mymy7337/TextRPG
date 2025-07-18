@@ -82,28 +82,29 @@ namespace TextRPG
             Gold = gold;
         } 
 
-        public void DisplayPlayerInfo() // 플레이어 상태 정보 표시
-        {
-            Console.WriteLine($"Lv.{Level:D2}");
-            Console.WriteLine($"{Name} ({Job})");
-            Console.WriteLine($"공격력 : {FinalAtk}" + (ExtraAtk == 0 ? "" : $" (+{ExtraAtk})"));
-            Console.WriteLine($"방어력 : {FinalDef}" + (ExtraDef == 0 ? "" : $" (+{ExtraDef})"));
-            Console.WriteLine($"체 력 : {Hp}");
-            Console.WriteLine($"Gold : {Gold}");
-        }
+        //PlayerUI로 이동
+        //public void DisplayPlayerInfo() // 플레이어 상태 정보 표시 v
+        //{
+        //    Console.WriteLine($"Lv.{Level:D2}");
+        //    Console.WriteLine($"{Name} ({Job})");
+        //    Console.WriteLine($"공격력 : {FinalAtk}" + (ExtraAtk == 0 ? "" : $" (+{ExtraAtk})"));
+        //    Console.WriteLine($"방어력 : {FinalDef}" + (ExtraDef == 0 ? "" : $" (+{ExtraDef})"));
+        //    Console.WriteLine($"체 력 : {Hp}");
+        //    Console.WriteLine($"Gold : {Gold}");
+        //}
 
-        public void DisplayBattleInfo() // 전투 시작 전 플레이어 정보
-        {
-            Console.WriteLine($"Lv. {Level:D2} {Name} ({Job})");
-            Console.WriteLine($"Hp {Hp}/{MaxHp}");
-        }
+        //public void DisplayBattleInfo() // 전투 시작 전 플레이어 정보
+        //{
+        //    Console.WriteLine($"Lv. {Level:D2} {Name} ({Job})");
+        //    Console.WriteLine($"Hp {Hp}/{MaxHp}");
+        //}
 
-        public void DisplayHpInfo(int previousHp) // 전투 시 Hp 변화 정보 표시
-        {
-            Console.WriteLine($"Lv. {Level:D2} {Name} ({Job})" );
-            string nowHp = Hp <= 0 ? "Dead" : Hp.ToString(); // hp가 0 이하면 Dead 표시
-            Console.WriteLine($"Hp {previousHp} -> {nowHp}");
-        }
+        //public void DisplayHpInfo(int previousHp) // 전투 시 Hp 변화 정보 표시
+        //{
+        //    Console.WriteLine($"Lv. {Level:D2} {Name} ({Job})" );
+        //    string nowHp = Hp <= 0 ? "Dead" : Hp.ToString(); // hp가 0 이하면 Dead 표시
+        //    Console.WriteLine($"Hp {previousHp} -> {nowHp}");
+        //}
 
         public void Attack(Monster target) // 플레이어의 공격 행동
         {
@@ -197,9 +198,9 @@ namespace TextRPG
             {
                 EquipList.Remove(item);
                 //if (item.Type == 0)
-                //    ExtraAtk += item.Value;
+                //    ExtraAtk -= item.Value;
                 //else
-                //    ExtraDef += item.Value;
+                //    ExtraDef -= item.Value;
             }
             else
             {
