@@ -180,8 +180,12 @@ namespace TextRPG
                         getItem.Add(dropItem);
                     }
                 }
-
-                deadCount++;
+                deadCount = 0;
+                foreach(Monster mon in monsterSpanwed)
+                {
+                    if (mon.Hp <= 0)
+                        deadCount++;
+                }
                 if (deadCount == monsterSpanwed.Count)
                     return result(player);
 
