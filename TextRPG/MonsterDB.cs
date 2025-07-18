@@ -14,5 +14,7 @@ namespace TextRPG
             new() {Level = 3, Hp = 10, MaxHp = 10, Atk = 9, Name = "공허충", Item = Equipment.Items[1]},
             new() {Level = 5, Hp = 25, MaxHp = 25, Atk = 8, Name = "대포미니언", Item = Equipment.Items[1]},
         };
+
+
     }
 }

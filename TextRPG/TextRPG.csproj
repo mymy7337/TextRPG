@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Challenge_JaeEun\JSON_Data\" />
+    <Folder Include="JSON_Data\" />
   </ItemGroup>
 
 </Project>

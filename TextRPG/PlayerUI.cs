@@ -5,7 +5,6 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using TextRPG.Challenge_JaeEun.Character.Job_Folder;
 
 namespace TextRPG
 {

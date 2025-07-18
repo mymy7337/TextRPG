@@ -8,6 +8,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TextRPG.Quest_Folder;
+using TextRPG.Skill_Folder;
 
 namespace TextRPG
 {
@@ -28,7 +30,7 @@ namespace TextRPG
         int deadCount;
         int nowHp;
 
-        public void BattleStart(Player player)
+        public void BattleStart(Player player, SkillSet skillSet)
         {
             BattleState state = BattleState.Main;
 
@@ -40,7 +42,7 @@ namespace TextRPG
                         state = MainUI(player, state);
                         break;
                     case BattleState.Encounter:
-                        state = EncounterUI(player, state);
+                        state = EncounterUI(player, state, skillSet); // skillSet 전달
                         break;
                     case BattleState.Result:
                         state = result(player);
@@ -48,6 +50,7 @@ namespace TextRPG
                 }
             }
         }
+
 
         BattleState MainUI(Player player, BattleState state)
         {
@@ -83,7 +86,7 @@ namespace TextRPG
 
         }
 
-        BattleState EncounterUI(Player player, BattleState state)
+        BattleState EncounterUI(Player player, BattleState state, SkillSet skillSet)
         {
             List<string> option = new List<string>() { "0. 돌아가기" };
             DisplayUI(player, state, option);
@@ -96,44 +99,81 @@ namespace TextRPG
                 return BattleState.Main;
 
             int monsterIdx = choice - 1;
-            if(monsterIdx >= 0 && monsterIdx < monsterSpanwed.Count)
+            if (monsterIdx >= 0 && monsterIdx < monsterSpanwed.Count)
             {
                 Monster monster = monsterSpanwed[monsterIdx];
-                if(monster.Hp <= 0)
+                if (monster.Hp <= 0)
                 {
                     isWrong = true;
                     return BattleState.Encounter;
                 }
-                return PlayerPhase(player, monster);
+                return PlayerPhase(player, monster, skillSet); // skillSet 전달
             }
+
             return BattleState.Encounter;
         }
 
-        BattleState PlayerPhase(Player player, Monster monster)
+
+        BattleState PlayerPhase(Player player, Monster monster, SkillSet skillset)
         {
-            int prevHp = monster.Hp;
             Console.Clear();
-            player.Attack(monster);
-            monster.DisplayHpInfo(prevHp);
+            Console.WriteLine($"[전투] {monster.Name}에게 행동을 선택하세요.");
+
+            // 직업에 따라 스킬 세트 가져오기
+            SkillSet skillSet = SkillFactory.GetSkillSet(player.Job);
+
+            // 스킬 선택
+            int selected = SkillUI.SelectSkill(skillSet);
             Console.WriteLine();
-            Console.WriteLine("다음");
-            Console.Write(">>");
+
+            if (selected == -1)
+            {
+                Console.WriteLine("행동을 취소했습니다.");
+                Console.WriteLine("아무 키나 누르면 돌아갑니다.");
+                Console.ReadKey();
+                return BattleState.Encounter;
+            }
+            
+            /*
+            else if (selected == 0)
+            {
+                // ✅ 기본 공격 처리
+                int damage = player.FinalAtk;
+                bool isCrit = random.Next(0, 100) < player.CritChance;
+            }
+            */
+            else
+            {
+                skillSet.UseSkill(selected - 1, player, monster);
+            }
+            
+
+            Console.WriteLine();
+            monster.DisplayHpInfo(monster.Hp);
+            Console.WriteLine("\n다음으로 진행하려면 아무 키나 누르세요.");
             Console.ReadKey();
 
             return EnemyPhase(player, monster);
         }
 
+
+
         BattleState EnemyPhase(Player player, Monster monster)
         {
             if (monster.Hp <= 0)
             {
-                if (random.Next(1, 101) < 100)
-                    getItem.Add(monster.Item);
+                // ✅ 퀘스트 진행도 반영 + 보상 지급
+                QuestManager.CheckKill(monster.Name, player);
+
+                // 기존 아이템 드랍은 일단 생략
                 deadCount++;
+
                 if (deadCount == monsterSpanwed.Count)
                     return result(player);
+
                 return BattleState.Encounter;
             }
+
 
 
 
@@ -168,6 +208,15 @@ namespace TextRPG
                 Console.WriteLine();
                 Console.WriteLine($"HP {nowHp} -> {player.Hp}");
                 Console.WriteLine();
+
+                // ✅ MP 회복 추가
+                int oldMp = player.Mp;
+                player.Mp += 10;
+                if (player.Mp > player.MaxMp)
+                    player.Mp = player.MaxMp;
+
+                Console.WriteLine($"MP {oldMp} -> {player.Mp}");
+
                 if (getItem.Count > 0)
                 {
                     foreach (var item in getItem)

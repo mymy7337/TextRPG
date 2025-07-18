@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextRPG.Challenge_JaeEun.System_Folder
+namespace TextRPG.SaveSystem_Folder
 {
     public class SaveManager
     {

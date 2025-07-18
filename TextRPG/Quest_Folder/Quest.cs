@@ -1,4 +1,4 @@
-﻿namespace TextRPG.Challenge_JaeEun.Quest_Folder
+﻿namespace TextRPG.Quest_Folder
 {
     public class Quest
     {

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Numerics;
-    
+using TextRPG.Skill_Folder;
+using TextRPG.Quest_Folder;
+using System.Text;
+
 namespace TextRPG;
 
 public class GameManager
-    {
+{
     public static GameManager instance;
 
     public GameManager()
@@ -14,15 +17,19 @@ public class GameManager
     }
 
     private Player player;
-    
+
     private Battle battle = new Battle();
 
-    private string[] jobNames = { "검사", "마법사", "궁수", "도적", "해적" };
+    private SkillSet skillSet; // 각 직업의 스킬 저장
+
+    private string[] jobNames = { "전사", "마법사", "궁수", "도적", "해적" };
     private string[] statNames = { "공격력", "방어력", "민첩", "체력" };
 
     public void Start()
     {
+        Console.OutputEncoding = Encoding.UTF8;
         Console.Title = "TextRPG";
+        QuestManager.InitializeQuestsFromMonsterDB();
         CreatePlayer();
         ShowFinalInfo(); // 스탯 확인 후 메인 씬으로 이동
     }
@@ -61,6 +68,24 @@ public class GameManager
         string chosenJob = jobNames[selectedJobIndex];
         int[] stats = GetJobStats(chosenJob);
         player = new Player(01, name, chosenJob, 10, 5, 100, 1500);
+
+        // ✅ 플레이어 생성
+        player = new Player(1, name, chosenJob, stats[0], stats[1], stats[3] * 10, 1500)
+        {
+            Mp = 100,
+            MaxMp = 100
+        };
+
+        // ✅ 직업별 스킬 클래스 연결
+        skillSet = chosenJob switch
+        {
+            "검사" => new WarriorSkill(),
+            "마법사" => new MageSkill(),
+            "궁수" => new ArcherSkill(),
+            "도적" => new ThiefSkill(),
+            "해적" => new PirateSkill(),
+            _ => null
+        };
     }
 
     private int[] GetJobStats(string job) // 주석처리 가능성 있음
@@ -86,7 +111,7 @@ public class GameManager
             Console.WriteLine("====== 최종 정보 ======\n");
             Console.WriteLine("\n[스탯 정보]");
             player.DisplayPlayerInfo();
-            
+
             Console.WriteLine("\n[B] 직업 변경  |  [Enter] 게임 시작");
             Console.Write("선택: ");
             string input = Console.ReadLine().ToUpper();
@@ -145,7 +170,7 @@ public class GameManager
                     VisitTown(shop);
                     break;
                 case "2":
-                    battle.BattleStart(player);
+                    battle.BattleStart(player, skillSet);
                     break;
                 case "3":
                     Console.Clear();
@@ -174,10 +199,11 @@ public class GameManager
         while (inTown)
         {
             Console.Clear();
-            Console.WriteLine("마을에 오신 것을 환영합니다");
+            Console.WriteLine("🏘️ 마을에 오신 것을 환영합니다");
             Console.WriteLine("1. 상점");
             Console.WriteLine("2. 여관에서 휴식 (20골드)");
-            Console.WriteLine("3. 돌아가기");
+            Console.WriteLine("3. 퀘스트 보기"); // ✅ 추가
+            Console.WriteLine("4. 돌아가기");
             Console.Write("선택: ");
             string input = Console.ReadLine();
 
@@ -186,6 +212,7 @@ public class GameManager
                 case "1":
                     shop.OpenShop();
                     break;
+
                 case "2":
                     if (player.Gold >= 20)
                     {
@@ -195,18 +222,24 @@ public class GameManager
                     }
                     else
                     {
-                        Console.WriteLine(" 골드가 부족합니다!");
+                        Console.WriteLine("💸 골드가 부족합니다!");
                     }
                     Console.ReadKey();
                     break;
+
                 case "3":
+                    QuestUI.ShowQuestList(); // ✅ 퀘스트 UI 연결
+                    break;
+
+                case "4":
                     inTown = false;
                     break;
+
                 default:
                     Console.WriteLine("잘못된 입력입니다.");
                     Console.ReadKey();
                     break;
-                }
             }
         }
     }
+}
