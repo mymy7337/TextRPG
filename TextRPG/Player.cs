@@ -55,11 +55,49 @@ namespace TextRPG
             Atk = atk;
             Def = def;
             Dex = dex;
-            Hp = maxHp; // 체력 초기값은 최대체력
+            Hp = maxHp;
             MaxHp = maxHp;
             Mp = maxMp;
             MaxMp = maxMp;
             Gold = gold;
+
+            SetJobTraits(job);
+        }
+
+        private void SetJobTraits(string job)
+        {
+            switch (job)
+                {
+                case "전사":
+                    CritChance = 10;
+                    CritMultiplier = 1.5f;
+                    DodgeChance = 10;
+                    break;
+
+                case "마법사":
+                    CritChance = 15;
+                    CritMultiplier = 1.8f;
+                    DodgeChance = 10;
+                    break;
+
+                case "궁수":
+                    CritChance = 18;
+                    CritMultiplier = 2.0f;
+                    DodgeChance = 10;
+                    break;
+
+                case "도적":
+                    CritChance = 30;
+                    CritMultiplier = 1.6f;
+                    DodgeChance = 10;
+                    break;
+
+                case "해적":
+                    CritChance = 10;
+                    CritMultiplier = 1.7f;
+                    DodgeChance = 10;
+                    break;
+            }
         }
 
         public void Attack(Monster target) // 플레이어의 공격 행동
