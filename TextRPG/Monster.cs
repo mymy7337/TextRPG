@@ -60,6 +60,7 @@ namespace TextRPG
             Console.WriteLine($"Lv. {Level:D2} {Name}");
             string nowHp = Hp <= 0 ? "Dead" : Hp.ToString(); // hp가 0 이하면 Dead 표시
             Console.WriteLine($"Hp {previousHp} -> {nowHp}");
+
         }
 
         public void TakeDamage(int amount) //데미지를 받으면 hp 감소

@@ -9,7 +9,6 @@ namespace TextRPG.Skill_Folder
     {
         public static void ShowSkillList(SkillSet skillSet)
         {
-            //Console.Clear();
             Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
             Console.WriteLine("⚔️  [전투 행동 선택]");
             Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");

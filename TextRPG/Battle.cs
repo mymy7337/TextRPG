@@ -319,9 +319,22 @@ namespace TextRPG
             {
                 Monster monster = monsterSpanwed[i];
                 string prefix = state == BattleState.Encounter ? $"[{i + 1}] " : "   ";
-                Console.Write(prefix);
+
+                if (monster.Hp <= 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.Write(prefix + "[Dead] ");
+                    //Console.ResetColor();
+                }
+                else
+                {
+                    Console.Write(prefix);
+                }
+
                 monUI.DisplayMonsterInfo(monster);
+                Console.ResetColor();
             }
+
 
             Console.WriteLine("\n════════════════════════════════════════════════════════════");
 
