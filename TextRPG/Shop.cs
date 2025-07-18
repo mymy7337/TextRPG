@@ -316,13 +316,5 @@ namespace TextRPG
             Item.Items.Add(new Item("청동 도끼", "어디선가 사용됐던거 같은 도끼입니다.", 1500, ItemType.Weapon, 5));
             Item.Items.Add(new Item("스파르타의 창", "스파르타의 전사들이 사용했다는 전설의 창입니다.", 5000, ItemType.Weapon, 7));
         }
-
-
-
-
-
-
-
-
     }
 }
