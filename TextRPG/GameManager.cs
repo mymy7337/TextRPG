@@ -138,6 +138,7 @@ public class GameManager
             Console.Write("\n선택: ");
             string choice = Console.ReadLine();
 
+
             switch (choice)
             {
                 case "1":
@@ -147,8 +148,12 @@ public class GameManager
                     battle.BattleStart(player);
                     break;
                 case "3":
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("인벤토리 목록");
+                    Console.ResetColor();
                     player.DisplayInventory(true);
-                    running = false;
+                    Console.ReadLine();
                     break;
                 case "4":
                     running = false;
