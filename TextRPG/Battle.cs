@@ -79,6 +79,8 @@ namespace TextRPG
                         return BattleState.Exit;
                     }
                     player.Hp -= (monsterSpanwed.Count - deadCount) * 2;
+                    if(player.Hp <= 0)
+                        return BattleState.Result;
                     return BattleState.Main;
 
                 case 1:
