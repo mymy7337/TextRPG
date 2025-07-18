@@ -76,11 +76,14 @@ namespace TextRPG
                 Hp = 0;
             }
         }
-        public void Attack(Player target) // 몬스터의 공격 행동
+        public void Attack(Player target)
         {
             Console.WriteLine($"{Name} 의 공격!");
+
             double errorRate = rand.NextDouble() * 0.2 + 0.9; // 공격력 오차 0.9~1.1
-            int finalAtk = (int)Math.Ceiling(Atk * errorRate) - target.Def;
+            int rawDamage = (int)Math.Ceiling(Atk * errorRate);
+            int finalAtk = Math.Max(1, rawDamage - target.Def); // 최소 1 데미지 보장
+
             bool isDodge = rand.Next(0, 100) < DodgeChance; // 10% 회피율
 
             if (isDodge)
@@ -88,8 +91,10 @@ namespace TextRPG
                 Console.WriteLine($"Lv.{target.Level:D2} {target.Name} 을(를) 공격했지만 아무일도 일어나지 않았다.");
                 return;
             }
-            Console.WriteLine($"{target.Name} 을(를) 맞췄습니다. [데미지 : {finalAtk}]");
+
+            Console.WriteLine($"Lv.{target.Level:D2} {target.Name} 을(를) 맞췄습니다. [데미지 : {finalAtk}]");
             target.TakeDamage(finalAtk);
         }
+
     }
 }

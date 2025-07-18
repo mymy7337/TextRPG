@@ -116,6 +116,7 @@ namespace TextRPG
 
         BattleState PlayerPhase(Player player, Monster monster, SkillSet skillset)
         {
+            int previousHp = monster.Hp;
             Console.Clear();
             Console.WriteLine("━━━━━━━━━━━━━━ PLAYER PHASE ━━━━━━━━━━━━━━");
             Console.WriteLine($"🎯 {monster.Name} 을(를) 상대로 어떤 행동을 할까요?");
@@ -128,41 +129,20 @@ namespace TextRPG
             if (selected == -1)
             {
                 Console.WriteLine("\n🚫 행동을 취소했습니다.");
-                Console.WriteLine("🔙 아무 키나 누르면 돌아갑니다...");
+                Console.WriteLine("🔙 아무 키나 누르면 돌아갑니다...") ;
                 Console.ReadKey();
                 return BattleState.Encounter;
             }
 
             Console.WriteLine("━━━━━━━━━━━━━━ ACTION RESULT ━━━━━━━━━━━━━━");
 
-            // 기본 공격 처리
-            if (selected == 0)
-            {
-                int damage = player.FinalAtk;
-                bool isCrit = random.Next(0, 100) < player.CritChance;
 
-                if (isCrit)
-                {
-                    damage = (int)(damage * player.CritMultiplier);
-                    Console.WriteLine($"💥 치명타! {monster.Name}에게 {damage}의 피해!");
-                }
-                else
-                {
-                    Console.WriteLine($"🗡️ 기본 공격! {monster.Name}에게 {damage}의 피해!");
-                }
-
-                monster.TakeDamage(damage);
-            }
-            else
-            {
                 // 스킬 인덱스는 1부터 시작이므로 -1
                 skillset.UseSkill(selected - 1, player, monster);
-            }
 
-            Console.WriteLine("\n🧠 몬스터 체력 변화 확인...");
-            monster.DisplayHpInfo(monster.Hp);
-
-            Console.WriteLine("\n👉 다음으로 진행하려면 아무 키나 누르세요...");
+            MonsterUI monUI = new MonsterUI();
+            monUI.DisplayHpInfo(monster, previousHp);
+            Console.WriteLine("\n:다음으로 진행하려면 아무 키나 누르세요...");
             Console.ReadKey();
 
             return EnemyPhase(player, monster);
