@@ -76,7 +76,7 @@ namespace TextRPG
             }
             Console.WriteLine("\n아무 키나 누르면 상점 메뉴로 돌아갑니다...");
             Console.ReadKey();
-            ShowShopMenu(player);
+            //ShowShopMenu(player);
         }
 
         public void ShowShopItems(Player player)
