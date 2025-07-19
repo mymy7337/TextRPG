@@ -25,7 +25,8 @@ namespace TextRPG
         public int MaxMp { get; set; } // 최대마력: 오버힐 방지
         public int Gold { get; set; }
 
-        public int Exp { get; private set; } // 경험치
+        public int Exp { get; set; } // 경험치
+        public int ExpToNextLevel => Level * 100;
 
         public int ExtraAtk { get;  set; } // 추가공격력
         public int ExtraDef { get;  set; } // 추가방어력

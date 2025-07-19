@@ -18,7 +18,7 @@ namespace TextRPG
     {
         MonsterUI monUI = new MonsterUI();
         Random random = new Random();
-        enum BattleState
+        public enum BattleState
         {
             Main,
             Encounter,
@@ -32,9 +32,70 @@ namespace TextRPG
         int deadCount;
         int nowHp;
 
+        int dungeonLevel = 1; // 1: 쉬움, 2: 보통, 3: 어려움
+
+
+        public BattleState MainUI(Player player, BattleState state)
+        {
+            // 🧭 던전 진입 화면 처리
+            state = ShowDungeonMenu(player, state);
+            if (state != BattleState.Main)
+                return state; // 0번 누르면 Exit로 빠짐
+
+            // ✅ 몬스터 없으면 새로 소환
+            if (monsterSpanwed.Count == 0)
+            {
+                SpawnMonster();
+                deadCount = 0;
+            }
+
+            nowHp = player.Hp;
+
+            // ✅ 선택지 보여주기
+            List<string> option = new() { "1. 공격", "0. 돌아가기" };
+            DisplayUI(player, state, option);
+
+            isWrong = ChoiceCheck(0, option.Count - 1);
+            if (isWrong)
+                return BattleState.Main;
+
+            switch (choice)
+            {
+                case 0:
+                    if (random.Next(0, 100) < (100 - (monsterSpanwed.Count - deadCount) * 10))
+                    {
+                        monsterSpanwed.Clear();
+                        return BattleState.Exit;
+                    }
+                    player.Hp -= (monsterSpanwed.Count - deadCount) * 2;
+                    if (player.Hp <= 0)
+                        return BattleState.Result;
+                    return BattleState.Main;
+
+                case 1:
+                    return BattleState.Encounter;
+                default:
+                    return BattleState.Main;
+            }
+        }
+
+
         public void BattleStart(Player player, SkillSet skillSet)
         {
-            
+            // 던전 아트 출력 (선택한 난이도에 따라)
+            switch (dungeonLevel)
+            {
+                case 1:
+                    ShowDungeon1UI();
+                    break;
+                case 2:
+                    ShowDungeon2UI();
+                    break;
+                case 3:
+                    ShowDungeon3UI();
+                    break;
+            }
+
             BattleState state = BattleState.Main;
 
             while (state != BattleState.Exit)
@@ -45,7 +106,7 @@ namespace TextRPG
                         state = MainUI(player, state);
                         break;
                     case BattleState.Encounter:
-                        state = EncounterUI(player, state, skillSet); // skillSet 전달
+                        state = EncounterUI(player, state, skillSet);
                         break;
                     case BattleState.Result:
                         state = result(player);
@@ -54,42 +115,6 @@ namespace TextRPG
             }
         }
 
-
-        BattleState MainUI(Player player, BattleState state)
-        {
-            if (monsterSpanwed.Count == 0)
-            {
-                SpawnMonster();
-                deadCount = 0;
-            }
-            nowHp = player.Hp;
-            
-            List<string> option = new List<string>() { "1. 공격", "0. 돌아가기" };
-            DisplayUI(player, state, option);
-            isWrong = ChoiceCheck(0, option.Count-1);
-            if (isWrong)
-                return BattleState.Main;
-
-            switch (choice)
-            {
-                case 0:
-                    if (random.Next(0, 100) < (100 - (monsterSpanwed.Count-deadCount) * 10))
-                    {
-                        monsterSpanwed.Clear();
-                        return BattleState.Exit;
-                    }
-                    player.Hp -= (monsterSpanwed.Count - deadCount) * 2;
-                    if(player.Hp <= 0)
-                        return BattleState.Result;
-                    return BattleState.Main;
-
-                case 1:
-                    return BattleState.Encounter;
-                default:
-                    return BattleState.Main;
-            }
-
-        }
 
         BattleState EncounterUI(Player player, BattleState state, SkillSet skillSet)
         {
@@ -171,47 +196,69 @@ namespace TextRPG
         {
             if (monster.Hp <= 0)
             {
+                // 🎯 퀘스트 처리
                 QuestManager.CheckKill(monster.Name, player);
 
-                // 🎁 아이템 드랍 (50% 확률)
-                if (random.Next(0, 100) < 50)
+                // 🎯 경험치 획득
+                int earnedExp = monster.Level * 5;
+                player.Exp += earnedExp;
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($"\n📈 {monster.Name} 처치! 경험치 +{earnedExp} 획득!");
+                Console.ResetColor();
+
+                // 🎯 레벨업 처리
+                while (player.Exp >= player.ExpToNextLevel)
                 {
-                    if (Item.Items.Count > 0)
-                    {
-                        Item dropItem = Item.Items[random.Next(Item.Items.Count)];
-                        getItem.Add(dropItem);
-                    }
+                    player.Exp -= player.ExpToNextLevel;
+                    player.Level++;
+                    player.MaxHp += 10;
+                    player.Hp = player.MaxHp;
+                    player.Atk += 2;
+                    player.Def += 2;
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"🎉 레벨업! → Lv.{player.Level} (HP/공격/방어 증가)");
+                    Console.ResetColor();
                 }
-                deadCount = 0;
-                foreach(Monster mon in monsterSpanwed)
+
+                // 🎯 아이템 드랍 (50%)
+                if (random.Next(0, 100) < 50 && Item.Items.Count > 0)
                 {
-                    if (mon.Hp <= 0)
-                        deadCount++;
+                    Item dropItem = Item.Items[random.Next(Item.Items.Count)];
+                    getItem.Add(dropItem);
                 }
+
+                // 🎯 죽은 몬스터 수 갱신
+                deadCount = monsterSpanwed.Count(mon => mon.Hp <= 0);
+
+                // 🎯 전멸 시 전투 종료
                 if (deadCount == monsterSpanwed.Count)
                     return result(player);
 
                 return BattleState.Encounter;
             }
-            
+
+            // 몬스터가 생존했을 경우 → 공격
             int prevHp = player.Hp;
             Console.Clear();
             monster.Attack(player);
-            PlayerUI.DisplayHpInfo(player,prevHp);
+            PlayerUI.DisplayHpInfo(player, prevHp);
             Console.WriteLine();
             Console.WriteLine("다음");
             Console.Write(">>");
             Console.ReadKey();
+
+            // 플레이어 사망 시
             if (player.Hp <= 0)
                 return result(player);
+
+            // 몬스터가 전부 죽었는지 재확인
             if (deadCount == monsterSpanwed.Count)
-            {
                 return result(player);
-            }
-                
-            else
-                return BattleState.Encounter;
+
+            return BattleState.Encounter;
         }
+
 
         BattleState result(Player player)
         {
@@ -230,7 +277,12 @@ namespace TextRPG
 
                 Console.WriteLine($"🧟‍♂️ 잡은 몬스터 수: {monsterSpanwed.Count} 마리");
                 Console.WriteLine($"❤️ HP: {nowHp} → {player.Hp}");
-                
+
+                // 🎯 현재 경험치 출력만
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($"📈 현재 경험치: {player.Exp} / 다음 레벨까지 {player.ExpToNextLevel- player.Exp}");
+                Console.ResetColor();
+
                 // ✅ MP 회복
                 if (!isWrong)
                 {
@@ -300,15 +352,49 @@ namespace TextRPG
 
         void SpawnMonster()
         {
-            int monNum = random.Next(1, 5);
+            int monNum = random.Next(1, 4); // 생성할 몬스터 수 (1~3마리)
+
+            int minLevel = 1;
+            int maxLevel = 100;
+
+            // 🎯 dungeonLevel은 ShowDungeonMenu에서 세팅됨 (1: 쉬움, 2: 보통, 3: 어려움)
+            switch (dungeonLevel)
+            {
+                case 1: // 쉬움
+                    minLevel = 1;
+                    maxLevel = 10;
+                    break;
+                case 2: // 보통
+                    minLevel = 20;
+                    maxLevel = 30;
+                    break;
+                case 3: // 어려움
+                    minLevel = 50;
+                    maxLevel = 100;
+                    break;
+            }
+
+            // 🎯 레벨 조건에 맞는 몬스터만 필터링
+            var filteredMonsters = MonsterDB.monsterData
+                .Where(mon => mon.Level >= minLevel && mon.Level <= maxLevel)
+                .ToList();
+
+            // 예외 처리: 해당 난이도 몬스터가 없는 경우
+            if (filteredMonsters.Count == 0)
+            {
+                Console.WriteLine("⚠️ 해당 난이도에 맞는 몬스터가 없습니다.");
+                return;
+            }
+
+            // 무작위로 몬스터 소환
             for (int i = 0; i < monNum; i++)
             {
-                int monId = random.Next(0, MonsterDB.monsterData.Count);
-                Monster baseMon = MonsterDB.monsterData[monId];
-                Monster newMon = baseMon.Clone();
-                monsterSpanwed.Add(newMon);
+                Monster baseMon = filteredMonsters[random.Next(filteredMonsters.Count)];
+                monsterSpanwed.Add(baseMon.Clone());
             }
         }
+
+
         bool ChoiceCheck(int min, int max)
         {
             string input = Console.ReadLine();
@@ -322,11 +408,14 @@ namespace TextRPG
 
         void DisplayUI(Player player, BattleState state, List<string> option)
         {
-            Console.Clear();
+            Console.Clear(); // ✅ 다시 추가: 항상 같은 위치에서 새로 그림
+
+            ShowDungeonUIByLevel(); // ✅ 현재 던전에 해당하는 UI 다시 출력
+
             Console.WriteLine("═══════════════════════ ⚔️ Battle ⚔️ ═══════════════════════");
             Console.WriteLine();
 
-            // 📌 몬스터 목록 표시
+            // 📌 몬스터 목록
             Console.WriteLine("🧟‍♂️ 몬스터 목록");
             for (int i = 0; i < monsterSpanwed.Count; i++)
             {
@@ -337,7 +426,6 @@ namespace TextRPG
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.Write(prefix + "[Dead] ");
-                    //Console.ResetColor();
                 }
                 else
                 {
@@ -348,7 +436,6 @@ namespace TextRPG
                 Console.ResetColor();
             }
 
-
             Console.WriteLine("\n════════════════════════════════════════════════════════════");
 
             // 📌 플레이어 정보
@@ -357,7 +444,7 @@ namespace TextRPG
 
             Console.WriteLine("════════════════════════════════════════════════════════════\n");
 
-            // 📌 행동 선택 옵션
+            // 📌 선택지
             Console.WriteLine("🛡️ 선택지");
             foreach (string optionLine in option)
             {
@@ -376,6 +463,248 @@ namespace TextRPG
 
             Console.WriteLine(message);
             Console.Write(">> ");
+        }
+
+
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+        public BattleState ShowDungeonMenu(Player player, BattleState state)
+        {
+            Console.Clear();
+            DungeonScreen();
+
+            Console.WriteLine("0. 🔙 돌아가기");
+            Console.Write("\n>> ");
+
+            string input = Console.ReadLine();
+            switch (input)
+            {
+                case "1":
+                    dungeonLevel = 1;
+                    return BattleState.Main;
+                case "2":
+                    dungeonLevel = 2;
+                    return BattleState.Main;
+                case "3":
+                    dungeonLevel = 3;
+                    return BattleState.Main;
+                case "0":
+                    return BattleState.Exit;
+                default:
+                    Console.WriteLine("⚠️ 잘못된 입력입니다.");
+                    Console.ReadKey();
+                    return ShowDungeonMenu(player, state);
+            }
+        }
+
+
+
+        void ShowDungeonUIByLevel()
+        {
+            switch (dungeonLevel)
+            {
+                case 1: ShowDungeon1UI(); break;
+                case 2: ShowDungeon2UI(); break;
+                case 3: ShowDungeon3UI(); break;
+            }
+        }
+        public static void DungeonScreenUI()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("╔════════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║                                                                            ║");
+            Console.WriteLine("║     ███████╗ ██╗   ██╗███╗   ██╗ ██████╗  ███████╗ ██████╗ ███╗   ██╗      ║");
+            Console.WriteLine("║     ██╔═══██╗██║   ██║████╗  ██║██╔════╝  ██╔════╝██╔═══██╗████╗  ██║      ║");
+            Console.WriteLine("║     ██║   ██║██║   ██║██╔██╗ ██║██║  ███╗ █████╗  ██║   ██║██╔██╗ ██║      ║");
+            Console.WriteLine("║     ██║   ██║██║   ██║██║╚██╗██║██║   ██║ ██╔══╝  ██║   ██║██║╚██╗██║      ║");
+            Console.WriteLine("║     ███████╔╝╚██████╔╝██║ ╚████║╚██████╔╝ ███████╗╚██████╔╝██║ ╚████║      ║");
+            Console.WriteLine("║     ╚══════╝  ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝  ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝      ║");
+            Console.WriteLine("║                                                                            ║");
+            Console.WriteLine("╚════════════════════════════════════════════════════════════════════════════╝");
+            Console.ResetColor();
+        }
+
+        // 던전 선택 화면 UI 출력 함수
+        public static void DungeonScreen()
+        {
+            DungeonScreenUI();
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("\n⚔️ 입장할 던전을 선택하세요\n");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("1. 🟢 쉬운 던전    (권장 공격력: 10 / 방어력: 5)");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("2. 🟡 일반 던전    (권장 공격력: 45 / 방어력: 40)");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("3. 🔴 어려운 던전  (권장 공격력: 75 / 방어력: 60)");
+            Console.ResetColor();
+        }
+
+        public static void ShowDungeon3UI()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
+
+            string[] artLines = {
+        @"                ,'\   |\",
+        @"               / /.:  ;;",
+        @"              / :'|| //",
+        @"             (| | ||;'",
+        @"             / ||,;'-.._",
+        @"            : ,;,`';:.--`",
+        @"            |:|'`-(\\",
+        @"            ::: \-'\`'",
+        @"             \\\ \,-`.",
+        @"              `'\ `.,-`-._      ,-._",
+        @"       ,-.       \  `.,-' `-.  / ,..`.",
+        @"      / ,.`.      `.  \ _.-' \',: ``\ \",
+        @"     / / :..`-'''``-)  `.   _.:''  ''\ \",
+        @"    : :  '' `-..''`/    |-''  |''  '' \ \",
+        @"    | |  ''   ''  :     |__..-;''  ''  : :",
+        @"    | |  ''   ''  |     ;    / ''  ''  | |",
+        @"    | |  ''   ''  ;    /--../_ ''_ '' _| |",
+        @"    : :  ''  _;:_/    :._  /-.'',-.'',-. |",
+        @"    \ \  '',;'`;/     |_ ,(   `'   `'   \|",
+        @"     \ \  \(   /\     :,'  \\",
+        @"      \ \.'/  : /    ,)    /",
+        @"       \ ':   ':    / \   :",
+        @"        `.\    :   :\  \  |",
+        @"                \  | `. \ |..-_",
+        @"             SSt ) |.  `/___-.-`",
+        @"               ,'  -.'.  `. `'        _,)",
+        @"               \'\(`.\ `._ `-..___..-','",
+        @"                  `'      ``-..___..-'"
+    };
+
+            Console.WriteLine("╔════════════════════════════════════════════════════╗");
+            foreach (string line in artLines)
+            {
+                Console.WriteLine($"║ {line.PadRight(50)} ║");
+            }
+            Console.WriteLine("╚════════════════════════════════════════════════════╝");
+
+            Console.ResetColor();
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n🧟 [던전 3: 죽음의 계곡]");
+            //int winRate = GameSystem.CalculateWinRate(Program.player, 75, 60);
+            //Console.WriteLine($"📊 권장 공격력: 75 / 방어력: 60");
+            //Console.WriteLine($"🎯 예상 승리 확률: {winRate}%");
+            //Console.WriteLine("⚔️ 전투를 시작하시겠습니까?");
+            //Console.WriteLine("1. ✅ 예   2. ❌ 아니오");
+            Console.ResetColor();
+        }
+
+
+        // 던전 2 UI 출력 함수
+        public static void ShowDungeon2UI()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
+
+            string[] artLines = {
+        @"           """"---==____   ____==---""""",
+        @"        """"""---==='__  """"  __`===---""""""",
+        @"         """"""--===(___=-_-=___)===--""""""",
+        @"         """"""--=== ) _=====_ ( ===--""""""",
+        @"         """"--===//\""""\""/\\===--""""""",
+        @"   ___----______---|___-----___|---______-----___",
+        @" ,'        """"--==`\`       '/'==--\""""       __`----__",
+        @" \          """"---==| \   / |==---\""""  __--""  """"-_",
+        @"  \                  `:-| |-:'      \ /'              `\",
+        @"   )                 | `/ \' |      /'     ,------_      `\",
+        @"  '                  | `-^-' |    /'     /'        `\      \",
+        @"                    |       |   |     /\\           \      \",
+        @"                    |       |  |     |  \ \          \      \",
+        @"                    \       \  |     |___) )          |      |",
+        @"                    \       \-""|     |_---'          |      |",
+        @"                    _\       \-\     \              /       |",
+        @"                  /' \       \  \     \         _,-""       /",
+        @"                /   _-\       \__\_____\____--""         /",
+        @"               (   ""--\                               /'",
+        @"                `-__    \_                         _,-'",
+        @"                    `--_  ""-___________________--""",
+        @"                        `\   \__    )    )",
+        @"                          \     ""--""    /",
+        @"                           \__        /'",
+        @"                              ""---"""
+    };
+
+            Console.WriteLine("╔═════════════════════════════════════════════════════════════════════╗");
+            foreach (string line in artLines)
+            {
+                Console.WriteLine($"║ {line.PadRight(67)} ║");
+            }
+            Console.WriteLine("╚═════════════════════════════════════════════════════════════════════╝");
+
+            Console.ResetColor();
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n🌋 [던전 2: 용암 골짜기]");
+            //int winRate = GameSystem.CalculateWinRate(Program.player, 45, 40);
+            //Console.WriteLine($"📊 권장 공격력: 45 / 방어력: 40");
+            //Console.WriteLine($"🎯 예상 승리 확률: {winRate}%");
+            //Console.WriteLine("⚔️ 전투를 시작하시겠습니까?");
+            //Console.WriteLine("1. ✅ 예   2. ❌ 아니오");
+            Console.ResetColor();
+        }
+
+        // 던전 1 UI 출력 함수
+        public static void ShowDungeon1UI()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+
+            string[] artLines = {
+@" _________________________________________________________",
+@"/|     -_-                                             _-  |\",
+@"/ |_-_- _                                         -_- _-   -| \   ",
+@"  |                            _-  _--                      | ",
+@"  |                            ,                            |",
+@"  |      .-'````````'.        '(`        .-'```````'-.      |",
+@"  |    .` |           `.      `)'      .` |           `.    |",
+@"  |   /   |   ()        \      U      /   |    ()       \   |",
+@"  |  |    |    ;         | o   T   o |    |    ;         |  |",
+@"  |  |    |     ;        |  .  |  .  |    |    ;         |  |",
+@"  |  |    |     ;        |   . | .   |    |    ;         |  |",
+@"  |  |    |     ;        |    .|.    |    |    ;         |  |",
+@"  |  |    |____;_________|     |     |    |____;_________|  |",
+@"  |  |   /  __ ;   -     |     !     |   /     `'() _ -  |  |",
+@"  |  |  / __  ()        -|        -  |  /  __--      -   |  |",
+@"  |  | /        __-- _   |   _- _ -  | /        __--_    |  |",
+@"  |__|/__________________|___________|/__________________|__|",
+@"/                                             _ -        lc \",
+@"/   -_- _ -             _- _---                       -_-  -_ \"
+    };
+
+            // 박스 상단
+            Console.WriteLine("╔═════════════════════════════════════════════════════════════════════╗");
+
+            // 아트 삽입 (좌우 여백 3칸 삽입해서 박스에 정렬)
+            foreach (string line in artLines)
+            {
+                Console.WriteLine($"║ {line.PadRight(67)} ║");
+            }
+
+            // 박스 하단
+            Console.WriteLine("╚═════════════════════════════════════════════════════════════════════╝");
+
+            Console.ResetColor();
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n🦖 [던전 1: 해골의 던전]");
+            //int winRate = GameSystem.CalculateWinRate(Program.player, 10, 5);
+            //Console.WriteLine($"📊 예상 승리 확률: {winRate}%");
+            //Console.WriteLine("⚔️ 전투를 시작하시겠습니까?");
+            //Console.WriteLine("1. ✅ 예   2. ❌ 아니오");
+            Console.ResetColor();
         }
 
     }

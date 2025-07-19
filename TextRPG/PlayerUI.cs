@@ -28,7 +28,9 @@ namespace TextRPG
             Console.WriteLine($"🎖️ Lv. {player.Level:D2} {player.Name} ({player.Job})");
             Console.WriteLine($"❤️ HP : {player.Hp} / {player.MaxHp}");
             Console.WriteLine($"🔮 MP : {player.Mp} / {player.MaxMp}");
+            Console.WriteLine($"📈 EXP: {player.Exp} / {player.ExpToNextLevel}");
         }
+
 
         public static void DisplayHpInfo(Player player, int previousHp) // 전투 시 Hp
         {
@@ -50,7 +52,7 @@ namespace TextRPG
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine($"👤 이름       : {player.Name}");
             Console.WriteLine($"💼 직업       : {player.Job}");
-            Console.WriteLine($"📈 레벨       : Lv. {player.Level}"); //(Exp: {player.Exp}/{player.ExpToNextLevel})
+            Console.WriteLine($"📈 레벨       : Lv. {player.Level} (Exp: {player.Exp}/{player.ExpToNextLevel})");
             Console.WriteLine($"❤️ 체력       : {player.Hp}");
             Console.WriteLine($"🌀 마력       : {player.Mp}");
 
