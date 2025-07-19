@@ -12,7 +12,7 @@ namespace TextRPG
     public class Player
     {
         //player 기본상태
-        public int Level { get; set; }
+        public int Level { get; set; } 
         public string Name { get; set; }
         public string Job { get; set; }
         public int Atk { get; set; }

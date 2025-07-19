@@ -34,6 +34,8 @@ namespace TextRPG
 
         int dungeonLevel = 1; // 1: 쉬움, 2: 보통, 3: 어려움
 
+        public static bool isEnd = false;
+
 
         public BattleState MainUI(Player player, BattleState state)
         {
@@ -355,8 +357,8 @@ namespace TextRPG
                 Console.WriteLine("\n☠️ 게임 오버. 마을로 돌아갑니다...");
                 Console.Write(">> ");
                 Console.ReadKey();
-                //Environment.Exit(0); // 여기서만 진짜 종료
-                return BattleState.Exit; // 이건 실행되지 않지만, 문법상 남김
+                Story.ShowEnding(player);
+                return BattleState.Exit;
             }
 
 
@@ -554,11 +556,11 @@ namespace TextRPG
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("\n⚔️ 입장할 던전을 선택하세요\n");
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("1. 🟢 쉬운 던전    (권장 공격력: 10 / 방어력: 5)");
+            Console.WriteLine("1. 🟢 쉬운 던전");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("2. 🟡 일반 던전    (권장 공격력: 45 / 방어력: 40)");
+            Console.WriteLine("2. 🟡 일반 던전");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("3. 🔴 어려운 던전  (권장 공격력: 75 / 방어력: 60)");
+            Console.WriteLine("3. 🔴 어려움 던전");
             Console.ResetColor();
         }
 
@@ -609,11 +611,6 @@ namespace TextRPG
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n🧟 [던전 3: 죽음의 계곡]");
-            //int winRate = GameSystem.CalculateWinRate(Program.player, 75, 60);
-            //Console.WriteLine($"📊 권장 공격력: 75 / 방어력: 60");
-            //Console.WriteLine($"🎯 예상 승리 확률: {winRate}%");
-            //Console.WriteLine("⚔️ 전투를 시작하시겠습니까?");
-            //Console.WriteLine("1. ✅ 예   2. ❌ 아니오");
             Console.ResetColor();
         }
 
@@ -663,11 +660,6 @@ namespace TextRPG
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n🌋 [던전 2: 용암 골짜기]");
-            //int winRate = GameSystem.CalculateWinRate(Program.player, 45, 40);
-            //Console.WriteLine($"📊 권장 공격력: 45 / 방어력: 40");
-            //Console.WriteLine($"🎯 예상 승리 확률: {winRate}%");
-            //Console.WriteLine("⚔️ 전투를 시작하시겠습니까?");
-            //Console.WriteLine("1. ✅ 예   2. ❌ 아니오");
             Console.ResetColor();
         }
 
@@ -715,10 +707,6 @@ namespace TextRPG
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n🦖 [던전 1: 해골의 던전]");
-            //int winRate = GameSystem.CalculateWinRate(Program.player, 10, 5);
-            //Console.WriteLine($"📊 예상 승리 확률: {winRate}%");
-            //Console.WriteLine("⚔️ 전투를 시작하시겠습니까?");
-            //Console.WriteLine("1. ✅ 예   2. ❌ 아니오");
             Console.ResetColor();
         }
 
@@ -757,6 +745,8 @@ namespace TextRPG
 
             Thread.Sleep(3000); // 3초 동안 보여주기
             Console.Clear();
+
+            if(player.Level >= 10 && !isEnd) Story.ShowEnding(player);
         }
 
         //이스터에그 드래곤 에게 죽었을때
@@ -765,6 +755,7 @@ namespace TextRPG
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("\n🏆 업적 달성: [용은 나의 숙적]");
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("당신은 용의 피를 뒤집어쓰고 부활했다…");
             Console.ResetColor();
 
@@ -772,11 +763,13 @@ namespace TextRPG
 
             // 🎯 스토리 출력
             Console.Clear();
-            Console.WriteLine("🔥 붉은 용의 불길 속에서 당신은 죽었습니다...");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("🔥 당신은 용의 피를 뒤집어쓰고, 생사의 기로에서 전생을 떠올렸다….");
             Thread.Sleep(2000);
-            Console.WriteLine("💀 그러나 그 순간, 미지의 힘이 당신을 감쌉니다...");
+            Console.WriteLine("💀 그렇다, 당신은 선택받은 자…. 지크프리트의 환생.");
             Thread.Sleep(2000);
-            Console.WriteLine("🌟 당신은 새로운 모습으로 부활했습니다!");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("🌟 용살자의 진정한 숙명이 지금 이 순간 부활한다…!");
             Thread.Sleep(2000);
 
             // 🎯 능력치 변화

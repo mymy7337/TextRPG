@@ -39,6 +39,8 @@ public class GameManager
 
     private void CreatePlayer()
     {
+        Story.ShowIntroStory();
+
         Console.Clear();
         Console.WriteLine("🧙‍♂️ 플레이어를 생성합니다.\n");
         Console.Write("🔤 이름을 입력하세요: ");
@@ -259,5 +261,6 @@ public class GameManager
             }
         }
     }
+
 
 }
