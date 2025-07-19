@@ -206,9 +206,15 @@ namespace TextRPG
                 Console.WriteLine($"\n📈 {monster.Name} 처치! 경험치 +{earnedExp} 획득!");
                 Console.ResetColor();
 
+
+                int oldHp = player.MaxHp;
+                int oldAtk = player.Atk;
+                int oldDef = player.Def;
+
                 // 🎯 레벨업 처리
-                while (player.Exp >= player.ExpToNextLevel)
+                if (player.Exp >= player.ExpToNextLevel)
                 {
+                    // 레벨업 전 능력치 저장 후 레벨업
                     player.Exp -= player.ExpToNextLevel;
                     player.Level++;
                     player.MaxHp += 10;
@@ -216,9 +222,7 @@ namespace TextRPG
                     player.Atk += 2;
                     player.Def += 2;
 
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"🎉 레벨업! → Lv.{player.Level} (HP/공격/방어 증가)");
-                    Console.ResetColor();
+                    ShowLevelUpAnimation(player, oldHp, oldAtk, oldDef);
                 }
 
                 // 🎯 아이템 드랍 (50%)
@@ -339,12 +343,23 @@ namespace TextRPG
                 Console.WriteLine();
                 Console.WriteLine($"Lv{player.Level:D2} {player.Name}");
                 Console.WriteLine($"HP: 0");
-                Console.WriteLine("\n☠️ 게임 오버. 게임을 종료합니다...");
+
+                // 🎯 레드 드래곤 업적 + 부활
+                if (monsterSpanwed.Any(m => m.Name == "광포한 레드 드래곤"))
+                {
+                    TriggerDragonResurrection(player); // ✅ 부활
+                    //monsterSpanwed.Clear();            // 전투 리셋
+                    return BattleState.Main;           // 다시 전투로
+                }
+
+                Console.WriteLine("\n☠️ 게임 오버. 마을로 돌아갑니다...");
                 Console.Write(">> ");
                 Console.ReadKey();
-                Environment.Exit(0);
-                return BattleState.Exit;
+                //Environment.Exit(0); // 여기서만 진짜 종료
+                return BattleState.Exit; // 이건 실행되지 않지만, 문법상 남김
             }
+
+
         }
 
         List<Monster> monsterSpanwed = new List<Monster>();
@@ -706,6 +721,92 @@ namespace TextRPG
             //Console.WriteLine("1. ✅ 예   2. ❌ 아니오");
             Console.ResetColor();
         }
+
+        // 레벨업 애니메이션 함수
+        public static void ShowLevelUpAnimation(Player player, int oldHp, int oldAtk, int oldDef)
+        {
+            Console.Clear();
+            string[] frames =
+            {
+        "\n\n\n\n            🎉",
+        "\n\n\n      🎉     🎉",
+        "\n\n   🎉   🎉   🎉",
+        "\n🎉 🎉 LEVEL UP! 🎉 🎉",
+        $"         Lv. {player.Level} 도달!",
+    };
+
+            foreach (string frame in frames)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine(frame);
+                Console.ResetColor();
+                Thread.Sleep(300);
+            }
+
+            // 🎯 능력치 상승 정보 출력
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"🎉 Lv. {player.Level} 달성!\n");
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"❤️ 최대 HP ({oldHp} → {player.MaxHp}) +{player.MaxHp - oldHp}");
+            Console.WriteLine($"🗡️ 공격력 ({oldAtk} → {player.Atk}) +{player.Atk - oldAtk}");
+            Console.WriteLine($"🛡️ 방어력 ({oldDef} → {player.Def}) +{player.Def - oldDef}");
+            Console.ResetColor();
+
+            Thread.Sleep(3000); // 3초 동안 보여주기
+            Console.Clear();
+        }
+
+        //이스터에그 드래곤 에게 죽었을때
+        public static void TriggerDragonResurrection(Player player)
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\n🏆 업적 달성: [용은 나의 숙적]");
+            Console.WriteLine("당신은 용의 피를 뒤집어쓰고 부활했다…");
+            Console.ResetColor();
+
+            Thread.Sleep(3000);
+
+            // 🎯 스토리 출력
+            Console.Clear();
+            Console.WriteLine("🔥 붉은 용의 불길 속에서 당신은 죽었습니다...");
+            Thread.Sleep(2000);
+            Console.WriteLine("💀 그러나 그 순간, 미지의 힘이 당신을 감쌉니다...");
+            Thread.Sleep(2000);
+            Console.WriteLine("🌟 당신은 새로운 모습으로 부활했습니다!");
+            Thread.Sleep(2000);
+
+            // 🎯 능력치 변화
+            int prevLevel = player.Level;
+            int prevHp = player.MaxHp;
+            int prevAtk = player.Atk;
+            int prevDef = player.Def;
+
+            player.Level = 100;
+            player.Exp = 0;
+            player.Hp = 999;
+            player.MaxHp = 999;
+            player.Mp = 999;
+            player.MaxMp = 999;
+            player.Atk = 300;
+            player.Def = 300;
+
+            // 🎯 변화된 능력치 출력
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine($"🔥 당신은 전설의 용사로 부활했습니다!");
+            Console.WriteLine($"Lv. {prevLevel} → Lv. {player.Level}");
+            Console.WriteLine($"❤️ MaxHP : {prevHp} → {player.MaxHp}");
+            Console.WriteLine($"⚔️  공격력 : {prevAtk} → {player.Atk}");
+            Console.WriteLine($"🛡️  방어력 : {prevDef} → {player.Def}");
+            Console.ResetColor();
+
+            Thread.Sleep(5000);
+        }
+
 
     }
 }
