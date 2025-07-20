@@ -39,7 +39,7 @@ public class GameManager
 
     private void CreatePlayer()
     {
-        Story.ShowIntroStory();
+        //Story.ShowIntroStory();
 
         Console.Clear();
         Console.WriteLine("🧙‍♂️ 플레이어를 생성합니다.\n");
