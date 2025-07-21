@@ -481,18 +481,6 @@ namespace TextRPG
             Console.WriteLine(message);
             Console.Write(">> ");
         }
-
-
-
-
-
-        /////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
         public BattleState ShowDungeonMenu(Player player, BattleState state)
         {
             Console.Clear();
@@ -786,6 +774,7 @@ namespace TextRPG
             player.MaxMp = 999;
             player.Atk = 300;
             player.Def = 300;
+            player.Dex = 300;
 
             // 🎯 변화된 능력치 출력
             Console.Clear();
