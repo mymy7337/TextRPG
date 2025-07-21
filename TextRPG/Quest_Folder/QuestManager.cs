@@ -23,7 +23,6 @@ namespace TextRPG.Quest_Folder
                     IsAccepted = false,
                     IsCompleted = false,
                     RewardGold = monster.Level * 100,
-                    RewardItems = new List<string>() // 아이템 보상은 나중에
                 });
             }
         }
@@ -51,24 +50,6 @@ namespace TextRPG.Quest_Folder
                         // 💰 보상 지급
                         player.AddGold(quest.RewardGold);
                         Console.WriteLine($"💰 골드 +{quest.RewardGold}");
-
-                        foreach (var itemName in quest.RewardItems)
-                        {
-                            // Equipment.Items에서 이름으로 찾기
-                            //var item = Equipment.Items.Find(e => e.ItemName == itemName);
-
-                            /*
-                            if (item != null)
-                            {
-                                player.AddItem(item);
-                                Console.WriteLine($"🎁 아이템 획득: {item.ItemName}");
-                            }
-                            else
-                            {
-                                Console.WriteLine($"⚠️ '{itemName}' 아이템을 찾을 수 없습니다.");
-                            }
-                            */
-                        }
 
                         Console.WriteLine();
                     }

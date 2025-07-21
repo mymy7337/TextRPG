@@ -7,6 +7,7 @@ namespace TextRPG.Skill_Folder
 {
     internal static class SkillUI
     {
+
         public static void ShowSkillList(SkillSet skillSet)
         {
             Console.WriteLine("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
