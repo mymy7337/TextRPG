@@ -21,7 +21,7 @@ namespace TextRPG
         public int Dex { get; set; }
         public int Hp { get; set; }
         public int Mp { get; set; }
-        public int MaxHp { get; set; } // 최대체력: 오버힐 방지에
+        public int MaxHp { get; set; } // 최대체력: 오버힐 방지
         public int MaxMp { get; set; } // 최대마력: 오버힐 방지
         public int Gold { get; set; }
 
@@ -99,8 +99,8 @@ namespace TextRPG
             Console.WriteLine($"{Name} 의 공격!");
             double errorRate = rand.NextDouble() * 0.2 + 0.9; // 공격력 오차 0.9~1.1
             int finalAtk = (int)Math.Ceiling(Atk * errorRate);
-            bool isCritical = rand.Next(0, 100) < CritChance; // 15% 치명타 확률
-            bool isDodge = rand.Next(0, 100) < DodgeChance; // 10% 회피율
+            bool isCritical = rand.Next(0, 100) < CritChance; // 치명타 확률
+            bool isDodge = rand.Next(0, 100) < DodgeChance; // 회피율
 
             if (isDodge)
             {
@@ -174,37 +174,6 @@ namespace TextRPG
         public void AddGold(int amount) // 골드 획득
         {
             Gold += amount;
-        }
-
-        public void GetExp(int amount) // 경험치 획득
-        {
-            Exp += amount;
-            while (Exp >= GetRequiredExp(Level))
-            {
-                Exp -= GetRequiredExp(Level);
-                LevelUp();
-            }
-        }
-
-        public void LevelUp() // 레벨 업
-        {
-            Level++;
-            MaxHp += 10;
-            //MaxMp += 5;
-            Hp = MaxHp;
-            //Mp = MaxMp;
-        }
-
-        private int GetRequiredExp(int level) // 레벨업 필요 경험치량
-        {
-            switch (level)
-            {
-                case 1: return 10;
-                case 2: return 35;
-                case 3: return 65;
-                case 4: return 100;
-                default: return (int)(100 + Math.Pow(level - 4, 2) * 20); // 등차수열 적용
-            }
         }
     }
 }
